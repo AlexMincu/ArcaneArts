@@ -1,8 +1,8 @@
 #include "the_arcane_arts.h"
 
- void Summon::summon_creature(){
-    if (is_creature_alive)
-        std::cout << "Creature summoned!\n";
-    else
-        std::cout <<"Undead creature summoned!\n";
-}
+Evoker::Evoker(int ability_power, string name, bool gender, int mana){
+    this->ability_power = ability_power;
+    this->name = name;
+    this->gender = gender;
+    this->mana = mana;
+};

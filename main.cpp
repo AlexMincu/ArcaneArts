@@ -1,10 +1,7 @@
-#include <iostream>
 #include "the_arcane_arts.h"
 
 int main(){
-
-    Necromancer Necro;
-    Necro.summon_creature();
+    Evoker Dumbledore(100, "Albus Dumbledore", 0, 2000);
 
     return 0;
 }
