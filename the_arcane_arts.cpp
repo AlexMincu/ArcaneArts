@@ -8,6 +8,10 @@ int Evoker::getAbilityPower() const {
     return ability_power;
 }
 
+Fire_user::Fire_user() {
+    this->fire_power = 0;
+}
+
 Fire_user::Fire_user(string name, int mana, int ability_power, int fire_power) {
     this->name = name;
     this->mana = mana;
@@ -20,8 +24,7 @@ void Fire_user::cast_Fireball() {
     this->name << " cast Fireball!\n";
 
     int burn_chance = 20 * (1 + this->fire_power);
-    int burning = rand() % burn_chance + 1;
-    if(burning <= burn_chance)
+    if(rand() % 100 + 1 <= burn_chance)
         cout << "You also have a burning effect on you.\n";
 }
 
@@ -41,6 +44,10 @@ void Earth_user::cast_Earthquake() {
     }
 }
 
+Air_user::Air_user(){
+    this->wind_speed_control = 0;
+}
+
 Air_user::Air_user(string name, int mana, int ability_power, int wind_speed_control) {
     this->name = name;
     this->mana = mana;
@@ -52,7 +59,20 @@ void Air_user::cast_Flying_cloud() {
     if(this->wind_speed_control < 25)
         cout << "Brr, we CHILLing\n";
     else if(this->wind_speed_control < 80)
-        cout << "Gone with the wind\n";
-        else
+        cout << this->name << " is gone with the wind\n";
+    else
             cout << "Unlimited speeeed!!\n";
+}
+
+Ash_user::Ash_user(string name, int mana, int ability_power, int fire_power, int wind_speed_control) {
+    this->name = name;
+    this->mana = mana;
+    this->ability_power = ability_power;
+    this->fire_power = fire_power;
+    this->wind_speed_control = wind_speed_control;
+}
+
+void Ash_user::cast_Ash_tornado() {
+    if(this->fire_power > 0 && this->wind_speed_control > 50)
+        cout << this->name << " just smoked you.\n";
 }
