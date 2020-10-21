@@ -1,23 +1,45 @@
 #include "the_arcane_arts.h"
 
-Evoker::Evoker() {
-    this->ability_power = 0;
-}
-
-int Evoker::getAbilityPower() const {
-    return ability_power;
-}
-
-Fire_user::Fire_user() {
-    this->fire_power = 0;
-}
-
-Fire_user::Fire_user(string name, int mana, int ability_power, int fire_power) {
+/*
+ * Wizzard Class
+ */
+Wizzard::Wizzard(string name, int mana) {
     this->name = name;
     this->mana = mana;
+}
+
+void Wizzard::show_stats(){
+    printf("\nVrajitorul %s are %d Mana", name.c_str(), mana);
+}
+
+
+/*
+ * Evoker Class
+ */
+Evoker::Evoker(string name, int mana, int ability_power)
+: Wizzard(name, mana) {
     this->ability_power = ability_power;
+}
+
+void Evoker::show_stats(){
+    Wizzard::show_stats();
+    printf(", %d Ability Power", ability_power);
+}
+
+
+/*
+ * Evoker - Fire User Class
+ */
+Fire_user::Fire_user(string name, int mana, int ability_power, int fire_power)
+: Evoker(name, mana, ability_power) {
     this->fire_power = fire_power;
 };
+
+void Fire_user::show_stats(){
+    Evoker::show_stats();
+    printf(", %d Fire Power", fire_power);
+}
+
 
 void Fire_user::cast_Fireball() {
     cout << "I tell her baby, baby, baby. I'm a fireball... - Mr.Worldwide Pitbull\n" <<
@@ -28,11 +50,18 @@ void Fire_user::cast_Fireball() {
         cout << "You also have a burning effect on you.\n";
 }
 
-Earth_user::Earth_user(string name, int mana, int ability_power, int stamina) {
-    this->name = name;
-    this->mana = mana;
-    this->ability_power = ability_power;
+
+/*
+ * Evoker - Earth User Class
+ */
+Earth_user::Earth_user(string name, int mana, int ability_power, int stamina)
+: Evoker(name, mana, ability_power) {
     this->stamina = stamina;
+}
+
+void Earth_user::show_stats(){
+    Evoker::show_stats();
+    printf(", %d Stamina", stamina);
 }
 
 void Earth_user::cast_Earthquake() {
@@ -44,32 +73,42 @@ void Earth_user::cast_Earthquake() {
     }
 }
 
-Air_user::Air_user(){
-    this->wind_speed_control = 0;
+
+
+/*
+ * Evoker - Air User Class
+ */
+Air_user::Air_user(string name, int mana, int ability_power, int wind_speed_control)
+:Evoker(name, mana, ability_power) {
+    this->wind_speed_control = wind_speed_control;
 }
 
-Air_user::Air_user(string name, int mana, int ability_power, int wind_speed_control) {
-    this->name = name;
-    this->mana = mana;
-    this->ability_power = ability_power;
-    this->wind_speed_control = wind_speed_control;
+void Air_user::show_stats(){
+    Evoker::show_stats();
+    printf(", %d Wind Speed Control", wind_speed_control);
 }
 
 void Air_user::cast_Flying_cloud() {
     if(this->wind_speed_control < 25)
         cout << "Brr, we CHILLing\n";
     else if(this->wind_speed_control < 80)
-        cout << this->name << " is gone with the wind\n";
+        cout << this->name << "'s gone with the wind\n";
     else
             cout << "Unlimited speeeed!!\n";
 }
 
-Ash_user::Ash_user(string name, int mana, int ability_power, int fire_power, int wind_speed_control) {
-    this->name = name;
-    this->mana = mana;
-    this->ability_power = ability_power;
-    this->fire_power = fire_power;
-    this->wind_speed_control = wind_speed_control;
+/*
+ * Evoker - Air User Class
+ */
+Ash_user::Ash_user(string name, int mana, int ability_power, int fire_power, int wind_speed_control)
+: Evoker(name, mana, ability_power),
+  Fire_user(name, mana, ability_power, fire_power),
+  Air_user(name, mana, ability_power, wind_speed_control){
+}
+
+void Ash_user::show_stats(){
+    Evoker::show_stats();
+    printf(",%d Fire Power, %d Wind Speed Control", fire_power, wind_speed_control);
 }
 
 void Ash_user::cast_Ash_tornado() {
