@@ -12,6 +12,14 @@ void Wizzard::show_stats() const{
     printf("\nVrajitorul %s are %d Mana", name.c_str(), mana);
 }
 
+const string &Wizzard::getName() const {
+    return name;
+}
+
+int Wizzard::getMana() const {
+    return mana;
+}
+
 
 /*
  * Evoker Class
@@ -21,9 +29,28 @@ Evoker::Evoker(string name, int mana, int ability_power)
     this->ability_power = ability_power;
 }
 
+Evoker::~Evoker() {
+    cout << "----------Deleting----------\n";
+}
+
+Evoker::Evoker(const Evoker &wiz)
+: Evoker(wiz.name, wiz.mana, wiz.ability_power) {
+    cout << "----------Copying----------\n";
+}
+
 void Evoker::show_stats() const{
     Wizzard::show_stats();
     printf(", %d Ability Power", ability_power);
+}
+
+Evoker * Evoker::cast_Mirror(Evoker w) {
+    Evoker *Obj = new Evoker;
+    *Obj = w;
+    return Obj;
+}
+
+int Evoker::getAbilityPower() const {
+    return ability_power;
 }
 
 

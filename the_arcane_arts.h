@@ -15,6 +15,9 @@ protected:
 public:
     Wizzard(string name = "Dummy", int mana = 0);
     virtual void show_stats() const;
+
+    const string &getName() const;
+    int getMana() const;
 };
 
 
@@ -27,7 +30,13 @@ protected:
     int ability_power;
 public:
     Evoker(string name = "Dummy", int mana = 0, int ability_power = 0);
+    ~Evoker();
+    Evoker(const Evoker &wiz);
+
+    int getAbilityPower() const;
+
     void show_stats() const override;
+    static Evoker *cast_Mirror(Evoker Wizz);
 };
 
 /*

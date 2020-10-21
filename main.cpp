@@ -25,5 +25,8 @@ int main(){
     PassatB6.show_stats();
     Harry.show_stats();
 
+    Evoker *Santa = new Evoker;
+    Santa = Evoker::cast_Mirror(Harry);
+    Santa->show_stats();
     return 0;
 }
