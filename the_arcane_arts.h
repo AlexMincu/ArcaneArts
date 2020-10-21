@@ -14,7 +14,7 @@ protected:
     int mana;
 public:
     Wizzard(string name = "Dummy", int mana = 0);
-    void show_stats();
+    void show_stats() const;
 };
 
 
@@ -27,7 +27,7 @@ protected:
     int ability_power;
 public:
     Evoker(string name = "Dummy", int mana = 0, int ability_power = 0);
-    void show_stats();
+    void show_stats() const;
 };
 
 /*
@@ -38,8 +38,8 @@ protected:
     int fire_power; // 0 - low, 1 - medium, 2 - high
 public:
     Fire_user(string name = "Dummy", int mana = 0, int ability_power = 0, int fire_power = 0);
-    void show_stats();
-    void cast_Fireball();
+    void show_stats() const;
+    void cast_Fireball() const;
 
 };
 
@@ -48,8 +48,8 @@ protected:
     int stamina; // 0 - low, 1 - medium, 2 - high, 3 - unlimited
 public:
     Earth_user(string name = "Dummy", int mana = 0, int ability_power = 0, int stamina = 0);
-    void show_stats();
-    void cast_Earthquake();
+    void show_stats() const;
+    void cast_Earthquake() const;
 };
 
 class Air_user : virtual public Evoker{
@@ -57,15 +57,15 @@ protected:
     int wind_speed_control;
 public:
     Air_user(string name = "Dummy", int mana = 0, int ability_power = 0, int wind_speed_control = 0);
-    void show_stats();
-    void cast_Flying_cloud();
+    void show_stats() const;
+    void cast_Flying_cloud() const;
 };
 
 class Ash_user : public Fire_user, public Air_user {
 public:
     Ash_user(string name = "Dummy", int mana = 0, int ability_power = 0, int fire_power = 0, int wind_speed_control = 0);
-    void show_stats();
-    void cast_Ash_tornado();
+    void show_stats() const;
+    void cast_Ash_tornado() const;
 };
 
 

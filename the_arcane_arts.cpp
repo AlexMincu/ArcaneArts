@@ -8,7 +8,7 @@ Wizzard::Wizzard(string name, int mana) {
     this->mana = mana;
 }
 
-void Wizzard::show_stats(){
+void Wizzard::show_stats() const{
     printf("\nVrajitorul %s are %d Mana", name.c_str(), mana);
 }
 
@@ -21,7 +21,7 @@ Evoker::Evoker(string name, int mana, int ability_power)
     this->ability_power = ability_power;
 }
 
-void Evoker::show_stats(){
+void Evoker::show_stats() const{
     Wizzard::show_stats();
     printf(", %d Ability Power", ability_power);
 }
@@ -35,13 +35,13 @@ Fire_user::Fire_user(string name, int mana, int ability_power, int fire_power)
     this->fire_power = fire_power;
 };
 
-void Fire_user::show_stats(){
+void Fire_user::show_stats() const{
     Evoker::show_stats();
     printf(", %d Fire Power", fire_power);
 }
 
 
-void Fire_user::cast_Fireball() {
+void Fire_user::cast_Fireball() const{
     cout << "I tell her baby, baby, baby. I'm a fireball... - Mr.Worldwide Pitbull\n" <<
     this->name << " cast Fireball!\n";
 
@@ -59,12 +59,12 @@ Earth_user::Earth_user(string name, int mana, int ability_power, int stamina)
     this->stamina = stamina;
 }
 
-void Earth_user::show_stats(){
+void Earth_user::show_stats() const{
     Evoker::show_stats();
     printf(", %d Stamina", stamina);
 }
 
-void Earth_user::cast_Earthquake() {
+void Earth_user::cast_Earthquake() const{
     switch (this->stamina){
         case 0: cout << this->name << " cast a 1 second Earthquake..\n";
         case 1: cout << this->name << " cast a 10 second Earthquake\n";
@@ -83,12 +83,12 @@ Air_user::Air_user(string name, int mana, int ability_power, int wind_speed_cont
     this->wind_speed_control = wind_speed_control;
 }
 
-void Air_user::show_stats(){
+void Air_user::show_stats() const{
     Evoker::show_stats();
     printf(", %d Wind Speed Control", wind_speed_control);
 }
 
-void Air_user::cast_Flying_cloud() {
+void Air_user::cast_Flying_cloud() const{
     if(this->wind_speed_control < 25)
         cout << "Brr, we CHILLing\n";
     else if(this->wind_speed_control < 80)
@@ -106,12 +106,12 @@ Ash_user::Ash_user(string name, int mana, int ability_power, int fire_power, int
   Air_user(name, mana, ability_power, wind_speed_control){
 }
 
-void Ash_user::show_stats(){
+void Ash_user::show_stats() const{
     Evoker::show_stats();
     printf(",%d Fire Power, %d Wind Speed Control", fire_power, wind_speed_control);
 }
 
-void Ash_user::cast_Ash_tornado() {
+void Ash_user::cast_Ash_tornado() const{
     if(this->fire_power > 0 && this->wind_speed_control > 50)
         cout << this->name << " just smoked you.\n";
 }
