@@ -33,7 +33,7 @@ void Evoker::show_stats() const{
 Fire_user::Fire_user(string name, int mana, int ability_power, int fire_power)
 : Evoker(name, mana, ability_power) {
     this->fire_power = fire_power;
-};
+}
 
 void Fire_user::show_stats() const{
     Evoker::show_stats();

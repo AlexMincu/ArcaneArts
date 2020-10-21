@@ -1,7 +1,7 @@
 #include "the_arcane_arts.h"
 
 int main(){
-    srand(time(NULL));
+    srand(time(nullptr));
 
     Fire_user Dumbledore("Albus Dumbledore", 2000, 100, 2);
     Dumbledore.cast_Fireball();
