@@ -17,10 +17,10 @@ Wizzard::Wizzard(const Wizzard &wiz)
     std::cout << "Copy of " << this->name << "\n";
 }
 
-std::ostream &operator<<(std::ostream &os,const Wizzard &obj){
-    os << "Wizzard " << obj.name << " has:\n" << obj.mana << " Mana left\n\n";
-    return os;
+void Wizzard::print(std::ostream &os) const {
+    os << "Wizzard " << name << " has: " << mana << " Mana left ";
 };
+
 
 
 /**
@@ -30,10 +30,9 @@ Evoker::Evoker(std::string name, int mana, int ability_power)
     : Wizzard{name, mana}, ability_power{ability_power} {
 }
 
-std::ostream &operator<<(std::ostream &os,const Evoker &obj){
-    os << "Evoker " << obj.name << " has:\n" << obj.mana << " Mana left\n" <<
-    obj.ability_power << " Ability power\n\n";
-    return os;
+void Evoker::print(std::ostream &os) const {
+    Wizzard::print(os);
+    os << ", " << ability_power << " Ability power ";
 };
 
 /****** To do

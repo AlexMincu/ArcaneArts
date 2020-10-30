@@ -3,10 +3,10 @@
 #include <iostream>
 #include <string>
 #include <time.h>
+#include "I_Print.h"
 
 
-class Wizzard{
-  friend std::ostream &operator<<(std::ostream &os,const Wizzard &obj);
+class Wizzard : public I_Print{
 protected:
     std::string name;
     int mana;
@@ -14,6 +14,8 @@ public:
     Wizzard(std::string name = "Dummy", int mana = 0);
     ~Wizzard();
     Wizzard(const Wizzard &wiz);
+
+    void print (std::ostream &os) const override;
 };
 
 
@@ -22,11 +24,12 @@ public:
  * Evocation Art
  */
 class Evoker : public Wizzard {
-    friend std::ostream &operator<<(std::ostream &os,const Evoker &obj);
 protected:
     int ability_power;
 public:
     Evoker(std::string name = "Dummy", int mana = 0, int ability_power = 0);
+
+    void print (std::ostream &os) const override;
 //    static Evoker *cast_Mirror(Evoker Wizz);
 };
 
