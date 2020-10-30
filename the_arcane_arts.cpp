@@ -17,10 +17,17 @@ Wizzard::Wizzard(const Wizzard &wiz)
     std::cout << "Copy of " << this->name << "\n";
 }
 
+Wizzard &Wizzard::operator=(const Wizzard &wiz) {
+    name = wiz.name;
+    mana = wiz.mana;
+    std::cout << "Copy of " << this->name << " using assignment\n";
+
+    return *this;
+}
+
 void Wizzard::print(std::ostream &os) const {
     os << "Wizzard " << name << " has: " << mana << " Mana left ";
-};
-
+}
 
 
 /**

@@ -11,9 +11,10 @@ protected:
     std::string name;
     int mana;
 public:
-    Wizzard(std::string name = "Dummy", int mana = 0);
-    ~Wizzard();
-    Wizzard(const Wizzard &wiz);
+    Wizzard(std::string name = "Dummy", int mana = 0);  //Constructor
+    ~Wizzard();                                         //Destructor
+    Wizzard (const Wizzard &wiz);                       //Copy Ctor
+    Wizzard &operator=(const Wizzard &wiz);             //Copy assignment
 
     void print (std::ostream &os) const override;
 };

@@ -7,7 +7,8 @@ int main(){
 
     Wizzard Shinobu ("Shinobu", 9999);
     Evoker Nothing ("Nothing");
-    Evoker Dummy = Nothing;
+    Wizzard Dummy = Nothing;
+    Dummy = Shinobu;
     Fire_user Dumbledore("Albus Dumbledore", 2000, 100, 2);
     Earth_user Alegu("Alegu Marian", 100, 101, 3);
     Air_user PassatB6("Morun", 100, 102, 50);
