@@ -7,24 +7,17 @@
 
 std::vector <std::unique_ptr<Wizzard>> entities;
 
-class Select_character {
+class Menu {
 public:
+    static void start_game();
+
+    static void create_character();
+    static void create_character_evoker();
+
     static void select_character();
     static void list_characters();
     static void actions(int);
 };
-
-class Create_character {
-public:
-    static void create_character();
-    static void create_character_evoker();
-};
-
-class Menu : public Create_character, public Select_character{
-public:
-    static void start_game();
-};
-
 
 
 void Menu::start_game(){
@@ -64,7 +57,7 @@ void Menu::start_game(){
     }
 }
 
-void Create_character::create_character() {
+void Menu::create_character() {
     std::cout << "===== Character creation =====" << std::endl;
     std::cout << "Choose what type of Arts will your Wizzard master:" << std::endl;
     std::cout << "1. Evoker" << std::endl;
@@ -89,7 +82,7 @@ void Create_character::create_character() {
     }
 }
 
-void Create_character::create_character_evoker(){
+void Menu::create_character_evoker(){
     std::cout << "===== Evoker creation =====" << std::endl;
     std::cout << "Select which specialization will your Evoker have: " << std::endl;
     std::cout << "1. Fire" << std::endl;
@@ -153,7 +146,7 @@ void Create_character::create_character_evoker(){
     }
 }
 
-void Select_character::select_character(){
+void Menu::select_character(){
     while(true) {
         std::cout << "===== Character selection =====" << std::endl;
         std::cout << "Please chose your desired character:" << std::endl;
@@ -176,14 +169,14 @@ void Select_character::select_character(){
     }
 }
 
-void Select_character::list_characters(){
+void Menu::list_characters(){
     for(int i = 0; i < entities.size(); i++){
         std::cout << i+1 << ": " << *(entities[i]) << std::endl;
     }
     std::cout << std::endl;
 }
 
-void Select_character::actions(int no){
+void Menu::actions(int no){
 //    while(true) {
     std::cout << "===== " << entities[no]->getName() << " =====" << std::endl;
     entities[no]->show_status();
