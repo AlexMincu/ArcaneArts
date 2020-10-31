@@ -3,4 +3,4 @@ project(ArcaneArts)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(ArcaneArts main.cpp the_arcane_arts.cpp the_arcane_arts.h evoker_subclasses.cpp evoker_subclasses.h Ash_user.cpp Ash_user.h I_Print.cpp I_Print.h)
+add_executable(ArcaneArts main.cpp evoker_subclasses.cpp evoker_subclasses.h Ash_user.h I_Print.h Evoker.cpp Evoker.h Wizzard.cpp Wizzard.h I_Menu.h)

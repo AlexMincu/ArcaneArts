@@ -1,35 +1,25 @@
-#include "the_arcane_arts.h"
-#include "evoker_subclasses.h"
-#include "Ash_user.h"
+#include "I_Menu.h"
 
 int main(){
-    srand(time(nullptr));
 
-    Wizzard Shinobu ("Shinobu", 9999);
-    Evoker Nothing ("Nothing");
-    Wizzard Dummy = Nothing;
-    Dummy = Shinobu;
-    Fire_user Dumbledore("Albus Dumbledore", 2000, 100, 2);
-    Earth_user Alegu("Alegu Marian", 100, 101, 3);
-    Air_user PassatB6("Morun", 100, 102, 50);
-    Ash_user Harry("Harry Potah", 150, 103, 2, 80);
-    Ash_user newWizz;
+    entities.push_back(std::make_unique<Fire_user>("Alex"));
+    entities.push_back(std::make_unique<Earth_user>("Dumbo"));
+    entities.push_back(std::make_unique<Air_user>("Mambo"));
 
-//    Dumbledore.cast_Fireball();
-//    Alegu.cast_Earthquake();
-//    PassatB6.cast_Flying_cloud();
-//    Harry.cast_Ash_tornado();
-//    newWizz.cast_Flying_cloud();
+//    {
+//        std::cout << "======== Test ========" << std::endl;
+//
+//
+//
+//        std::cout << "======== Test ========" << std::endl;
+//    }
 
-    std::cout << Shinobu << std::endl;
-    std::cout << Nothing << std::endl;
-    std::cout << Dummy << std::endl;
-    std::cout << Dumbledore << std::endl;
-    std::cout << Alegu << std::endl;
-    std::cout << PassatB6 << std::endl;
-    std::cout << Harry << std::endl;
-    std::cout << newWizz << std::endl;
+    Menu::start_game();
 
 
+//    system("PAUSE");
     return 0;
 }
+
+
+
