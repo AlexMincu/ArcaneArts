@@ -14,7 +14,7 @@ int main(){
 //        std::cout << "======== Test ========" << std::endl;
 //    }
 
-    Menu::start_game();
+  //  Menu::start_game();
 
 
 //    system("PAUSE");
