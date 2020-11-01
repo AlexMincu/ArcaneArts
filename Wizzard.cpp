@@ -10,7 +10,7 @@ Wizzard::~Wizzard() {
 }
 
 Wizzard::Wizzard(const Wizzard &wiz)
-        : Wizzard(wiz.name, wiz.mana, wiz.HP) {
+        : Wizzard(wiz.name, wiz.HP, wiz.mana) {
     std::cout << "Copy of " << this->name << "\n";
 }
 

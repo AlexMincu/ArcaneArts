@@ -102,7 +102,7 @@ void Menu::create_character_evoker(){
             std::string name;
             std::cin >> name;
 
-            entities.push_back(make_unique<Fire_user>(name));
+            entities.push_back(std::make_unique<Fire_user>(name));
 
             system("CLS");
             break;
@@ -116,7 +116,7 @@ void Menu::create_character_evoker(){
             std::string name;
             std::cin >> name;
 
-            entities.push_back(make_unique<Earth_user>(name));
+            entities.push_back(std::make_unique<Earth_user>(name));
 
             system("CLS");
             break;
@@ -130,7 +130,7 @@ void Menu::create_character_evoker(){
             std::string name;
             std::cin >> name;
 
-            entities.push_back(make_unique<Air_user>(name));
+            entities.push_back(std::make_unique<Air_user>(name));
 
             system("CLS");
             break;
