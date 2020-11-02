@@ -3,7 +3,12 @@
 #include <iostream>
 #include <vector>
 #include <memory>
+#include <string>
 #include "Ash_user.h"
+//#include <ncurses.h>
+
+
+void clrscr(void) {std::cout << "\033[2J\033[1;1H" << std::flush;};
 
 std::vector <std::unique_ptr<Wizzard>> entities;
 
@@ -34,23 +39,23 @@ void Menu::start_game(){
         std::cin >> selection;
         switch(selection){
             case '1': {
-                system("CLS");
+                clrscr();
                 create_character();
                 break;
             }
             case '2': {
-                system("CLS");
+                clrscr();
                 select_character();
                 break;
             }
             case '0': {
-                system("CLS");
+                clrscr();
                 std::cout << "Goodbye!" << std::endl;
                 game_status = false;
                 break;
             }
             default : {
-                system("CLS");
+                clrscr();
                 std::cout << "Please try again" << std::endl;
             }
         }
@@ -67,16 +72,16 @@ void Menu::create_character() {
     std::cin >> selection;
     switch (selection) {
         case '1': {
-            system("CLS");
+            clrscr();
             create_character_evoker();
             break;
         }
         case '0': {
-            system("CLS");
+            clrscr();
             break;
         }
         default: {
-            system("CLS");
+            clrscr();
             std::cout << "Please try again" << std::endl;
         }
     }
@@ -94,7 +99,7 @@ void Menu::create_character_evoker(){
     std::cin >> selection;
     switch(selection) {
         case '1': {
-            system("CLS");
+            clrscr();
             std::cout << "===== Evoker creation =====" << std::endl;
             std::cout << "You chose Fire specialization" << std::endl;
             std::cout << "Now give your wizzard a name: " << std::endl;
@@ -104,11 +109,11 @@ void Menu::create_character_evoker(){
 
             entities.push_back(std::make_unique<Fire_user>(name));
 
-            system("CLS");
+            clrscr();
             break;
         }
         case '2': {
-            system("CLS");
+            clrscr();
             std::cout << "===== Evoker creation =====" << std::endl;
             std::cout << "You chose Earth specialization" << std::endl;
             std::cout << "Now give your wizzard a name: " << std::endl;
@@ -118,11 +123,11 @@ void Menu::create_character_evoker(){
 
             entities.push_back(std::make_unique<Earth_user>(name));
 
-            system("CLS");
+            clrscr();
             break;
         }
         case '3': {
-            system("CLS");
+            clrscr();
             std::cout << "===== Evoker creation =====" << std::endl;
             std::cout << "You chose Air specialization" << std::endl;
             std::cout << "Now give your wizzard a name: " << std::endl;
@@ -132,15 +137,15 @@ void Menu::create_character_evoker(){
 
             entities.push_back(std::make_unique<Air_user>(name));
 
-            system("CLS");
+            clrscr();
             break;
         }
         case '0': {
-            system("CLS");
+            clrscr();
             break;
         }
         default : {
-            system("CLS");
+            clrscr();
             std::cout << "Please try again" << std::endl;
         }
     }
@@ -158,12 +163,12 @@ void Menu::select_character(){
         if (selection == '0')
             break;
         else if (selection >= '1' && selection <= static_cast<char>(entities.size() + '0') ) {
-            system("CLS");
+            clrscr();
             actions(static_cast<int>(selection - '0')-1);
             break;
         }
         else {
-            system("CLS");
+            clrscr();
             std::cout << "Please try again" << std::endl;
         }
     }
