@@ -1,4 +1,5 @@
 #pragma once
+
 #include "Evoker.h"
 
 class Earth_user : virtual public Evoker {
@@ -6,6 +7,7 @@ private:
     int stamina; // 0 - low, 1 - medium, 2 - high, 3 - unlimited
 public:
     Earth_user(std::string name = "Dummy", int HP = 0, int mana = 0, int ability_power = 0, int stamina = 0);
+
     void print (std::ostream &os) const override;
     void show_status() const override;
     void cast_Earthquake() const;
@@ -14,7 +16,7 @@ public:
 
 
 Earth_user::Earth_user(std::string name, int HP, int mana, int ability_power, int stamina)
-        : Evoker(name, HP, mana, ability_power), stamina{stamina} {
+        : Evoker(std::move(name), HP, mana, ability_power), stamina{stamina} {
 }
 
 void Earth_user::print(std::ostream &os) const {
@@ -32,16 +34,16 @@ void Earth_user::cast_Earthquake() const{
     char sel = stamina + '0';
     switch (sel){
         case '0':
-            std::cout << this->name << " cast a 1 second Earthquake..\n";
+            std::cout << this->name << " cast a 1 second Earthquake.." << std::endl;
             break;
         case '1':
-            std::cout << this->name << " cast a 10 second Earthquake\n";
+            std::cout << this->name << " cast a 10 second Earthquake" << std::endl;
             break;
         case '2':
-            std::cout << "Warning: Rockfall!\n" << this->name << " cast a magnitude 10 Earthquake!\n";
+            std::cout << "Warning: Rockfall!" << std::endl << this->name << " cast a magnitude 10 Earthquake!" << std::endl;
             break;
         case '3':
-            std::cout << this->name << " just destroyed this planet and himself. :(\n";
+            std::cout << this->name << " just destroyed this planet and himself. :(" << std::endl;
             break;
         default:
             std::cout << "You got no stamina left.." << std::endl;

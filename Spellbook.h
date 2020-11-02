@@ -2,13 +2,14 @@
 #include <string>
 #include <iostream>
 
-class Spellbook{
+class Spellbook {
 protected:
     const std::string rarity[4] = {"Common", "Rare", "Epic", "Legendary"};
     int rarity_level; // 0 - Common, 1 - Rare, 2 - Epic, 3 - Legendary
     int power_level;
 public:
     Spellbook(int rarity_level = 0, int power_level = 0);
+
     void setSpellbook(int rarity_level, int power_level);
     void brag();
 };
