@@ -10,7 +10,7 @@ protected:
     class Spellbook;
 public:
     Wizzard(std::string name = "Dummy", int HP = 0, int mana = 0);  //Constructor
-    ~Wizzard();                                         //Destructor
+    virtual ~Wizzard();                                         //Destructor
     Wizzard (const Wizzard &wiz);                       //Copy Ctor
     Wizzard &operator=(const Wizzard &wiz);             //Copy assignment
     const std::string &getName() const;
