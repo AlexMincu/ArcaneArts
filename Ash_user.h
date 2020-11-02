@@ -8,6 +8,7 @@ public:
     void cast_Ash_tornado() const;
     void print (std::ostream &os) const override;
     void show_status() const override;
+    void cast_Spells(char) const override;
 };
 
 
@@ -33,4 +34,26 @@ void Ash_user::cast_Ash_tornado() const{
         std::cout << this->name << " just smoked you.\n";
 }
 
+void Ash_user::cast_Spells(char selection) const {
+    switch(selection){
+        case '0':   //cast All spells
+            std::cout << "I'm going full power!" << std::endl;
+            cast_Fireball();
+            cast_Flying_cloud();
+            cast_Ash_tornado();
+            break;
+        case '1':   //cast Fireball
+            cast_Fireball();
+            break;
+        case '2':   //cast Flying Cloud
+            cast_Flying_cloud();
+            break;
+        case '3':   //cast Ash Tornado Spell
+            cast_Ash_tornado();
+            break;
+        default:
+            std::cout << "I'm not ready for that..." << std::endl;
+            break;
+    }
+}
 

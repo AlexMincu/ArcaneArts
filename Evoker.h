@@ -9,6 +9,7 @@ public:
 
     void print (std::ostream &os) const override;
     void show_status() const override;
+    void cast_Spells(char) const override{};
 
 //    static Evoker *cast_Mirror(Evoker Wizz);
 };

@@ -9,6 +9,7 @@ public:
     void print (std::ostream &os) const override;
     void show_status() const override;
     void cast_Flying_cloud() const;
+    void cast_Spells(char) const override;
 };
 
 
@@ -36,3 +37,17 @@ void Air_user::cast_Flying_cloud() const{
         std::cout << "Unlimited speeeed!!\n";
 }
 
+void Air_user::cast_Spells(char selection) const {
+    switch(selection){
+        case '0':   //cast All spells
+            std::cout << "I'm going full power!" << std::endl;
+            cast_Flying_cloud();
+            break;
+        case '1':   //cast Flying cloud
+            cast_Flying_cloud();
+            break;
+        default:
+            std::cout << "I'm not ready for that..." << std::endl;
+            break;
+    }
+}

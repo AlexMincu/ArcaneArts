@@ -1,11 +1,13 @@
 #pragma once
 #include "I_Print.h"
+#include "Spellbook.h"
 
-class Wizzard : public I_Print{
+class Wizzard : public I_Print, public Spellbook{
 protected:
     std::string name;
     int HP;
     int mana;
+    class Spellbook;
 public:
     Wizzard(std::string name = "Dummy", int HP = 0, int mana = 0);  //Constructor
     ~Wizzard();                                         //Destructor
@@ -16,11 +18,15 @@ public:
     void print (std::ostream &os) const override;
 
     virtual void show_status() const;
+    virtual void cast_Spells(char) const{};
 };
 
 
 Wizzard::Wizzard(std::string name, int HP, int mana)
         : name{name}, mana{mana}, HP{HP} {
+    this->rarity_level = 0;
+    this->power_level = 0;
+
     std::cout << "Initializing " << this->name << "\n";
 }
 

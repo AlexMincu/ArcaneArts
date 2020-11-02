@@ -9,6 +9,7 @@ public:
     void print (std::ostream &os) const override;
     void show_status() const override;
     void cast_Fireball() const;
+    void cast_Spells(char) const override;
 };
 
 
@@ -35,4 +36,19 @@ void Fire_user::cast_Fireball() const{
     int burn_chance = 20 * (1 + this->fire_power);
     if(rand() % 100 + 1 <= burn_chance)
         std::cout << "You also have a burning effect on you.\n";
+}
+
+void Fire_user::cast_Spells(char selection) const {
+    switch(selection){
+        case '0':   //cast All spells
+            std::cout << "I'm going full power!" << std::endl;
+            cast_Fireball();
+            break;
+        case '1':   //cast Fireball
+            cast_Fireball();
+            break;
+        default:
+            std::cout << "I'm not ready for that..." << std::endl;
+            break;
+    }
 }
