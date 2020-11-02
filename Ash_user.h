@@ -1,6 +1,6 @@
-#ifndef ARCANEARTS_ASH_USER_H
-#define ARCANEARTS_ASH_USER_H
-#include "evoker_subclasses.h"
+#pragma once
+#include "Fire_user.h"
+#include "Air_user.h"
 
 class Ash_user : public Fire_user, public Air_user {
 public:
@@ -34,4 +34,3 @@ void Ash_user::cast_Ash_tornado() const{
 }
 
 
-#endif //ARCANEARTS_ASH_USER_H

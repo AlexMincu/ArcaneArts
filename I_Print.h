@@ -1,5 +1,4 @@
-#ifndef ARCANEARTS_I_PRINT_H
-#define ARCANEARTS_I_PRINT_H
+#pragma once
 #include <iostream>
 
 class I_Print {
@@ -10,5 +9,3 @@ class I_Print {
 public:
     virtual void print (std::ostream &os) const = 0;
 };
-
-#endif //ARCANEARTS_I_PRINT_H
