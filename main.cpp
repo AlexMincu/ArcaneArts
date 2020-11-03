@@ -56,7 +56,7 @@ int main(){
 
     std::cout << "\n======== End of Test ========" << std::endl;
 
-//    system("PAUSE");
+    system("PAUSE");
     return 0;
 }
 
