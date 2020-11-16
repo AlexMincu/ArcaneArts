@@ -17,14 +17,14 @@ int main(){
     entities.push_back(std::make_unique<Ash_user>("Gandhara", 100, 100, 50, 60, 80));
 
     std::cout << "\n====== Overloaded << from I_Print ======" << std::endl;
-    for(auto i = 0; i < entities.size(); i++) {
-        std::cout << *entities[i] << std::endl;
+    for(auto & entitie : entities) {
+        std::cout << *entitie << std::endl;
     }
 
     std::cout << "\n====== \"Show status\" virtual function ======" << std::endl;
-    for(auto i = 0; i < entities.size(); i++) {
-        std::cout << entities[i]->getName() << " has: " << std::endl;
-        entities[i]->show_status();
+    for(auto & entitie : entities) {
+        std::cout << entitie->getName() << " has: " << std::endl;
+        entitie->show_status();
         std::cout << std::endl;
     }
 
@@ -41,22 +41,22 @@ int main(){
 
 
     std::cout << "\n====== The use of Class Spellbook ======" << std::endl;
-    entities[1]->setSpellbook(0, 100);
-    entities[2]->setSpellbook(3, 9999);
-    entities[3]->setSpellbook(2, 200);
-    entities[4]->setSpellbook(1, 500);
-    entities[5]->setSpellbook(50, 10000);
+    entities[1]->setSpellbook(Spellbook::rarity_level::Common, 100);
+    entities[2]->setSpellbook(Spellbook::rarity_level::Legendary, 9999);
+    entities[3]->setSpellbook(Spellbook::rarity_level::Epic, 200);
+    entities[4]->setSpellbook(Spellbook::rarity_level::Rare, 500);
+    entities[5]->setSpellbook(Spellbook::rarity_level::Legendary, 10000);
 
 
-    for(auto i = 0; i < entities.size(); i++){
-        std::cout << entities[i]->getName() << ": ";
-        entities[i]->brag();
+    for(auto & entitie : entities){
+        std::cout << entitie->getName() << ": ";
+        entitie->brag();
     }
 
 
     std::cout << "\n======== End of Test ========" << std::endl;
 
-    system("PAUSE");
+//    system("PAUSE");
     return 0;
 }
 
