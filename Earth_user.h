@@ -3,22 +3,35 @@
 #include "Evoker.h"
 
 class Earth_user : virtual public Evoker {
-private:
-    int stamina; // 0 - low, 1 - medium, 2 - high, 3 - unlimited
 public:
-    Earth_user(std::string name = "Dummy", int HP = 0, int mana = 0, int ability_power = 0, int stamina = 0);
+    enum class stamina_levels {low = 0, medium = 1, high = 2, unlimited = 3};
+    Earth_user(std::string name = "Dummy", int HP = 0, int mana = 0, int ability_power = 0, stamina_levels stamina = stamina_levels::low);
 
     void print (std::ostream &os) const override;
     void show_status() const override;
     void cast_Earthquake() const;
     void cast_Spells(char) const override;
+
+private:
+    stamina_levels stamina; // 0 - low, 1 - medium, 2 - high, 3 - unlimited
 };
 
 
-Earth_user::Earth_user(std::string name, int HP, int mana, int ability_power, int stamina)
+Earth_user::Earth_user(std::string name, int HP, int mana, int ability_power, stamina_levels stamina)
         : Evoker(std::move(name), HP, mana, ability_power), stamina{stamina} {
 }
 
+
+std::ostream& operator<<(std::ostream& os, Earth_user::stamina_levels s) {
+    switch(s) {
+        case Earth_user::stamina_levels::low        : os << "Low";    break;
+        case Earth_user::stamina_levels::medium     : os << "Medium";      break;
+        case Earth_user::stamina_levels::high       : os << "High";      break;
+        case Earth_user::stamina_levels::unlimited  : os << "Unlimited";      break;
+        default                                     : os.setstate(std::ios_base::failbit);
+    }
+    return os;
+}
 void Earth_user::print(std::ostream &os) const {
     Evoker::print(os);
     os << ", " << stamina << " Stamina ";
@@ -31,7 +44,7 @@ void Earth_user::show_status() const {
 
 /// Spells
 void Earth_user::cast_Earthquake() const{
-    char sel = stamina + '0';
+    char sel = static_cast<int>(stamina);
     switch (sel){
         case '0':
             std::cout << this->name << " cast a 1 second Earthquake.." << std::endl;

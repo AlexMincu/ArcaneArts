@@ -8,4 +8,5 @@ class I_Print {
     }
 public:
     virtual void print (std::ostream &os) const = 0;
+    virtual ~I_Print() = default;
 };
