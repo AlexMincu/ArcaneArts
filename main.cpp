@@ -12,7 +12,7 @@ int main(){
     entities.push_back(std::make_unique<Wizzard>("Dummy", 100, 100));
     entities.push_back(std::make_unique<Evoker>("Magician", 100, 100, 50));
     entities.push_back(std::make_unique<Fire_user>("Pyro", 100, 100, 50, Fire_user::fire_levels::high));
-    entities.push_back(std::make_unique<Earth_user>("Earth bender", 100, 100, 50, 1));
+    entities.push_back(std::make_unique<Earth_user>("Earth bender", 100, 100, 50, Earth_user::stamina_levels::medium));
     entities.push_back(std::make_unique<Air_user>("WindMaster", 100, 100, 50, 15));
     entities.push_back(std::make_unique<Ash_user>("Gandhara", 100, 100, 50, Fire_user::fire_levels::high, 80));
 
