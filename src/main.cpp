@@ -1,7 +1,7 @@
 #include <vector>
 #include <memory>
-#include "../headers/Ash_user.h"
-#include "../headers/Earth_user.h"
+#include "Earth_user.h"
+#include "Ash_user.h"
 
 int main(){
 
