@@ -3,5 +3,5 @@ project(ArcaneArts)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(ArcaneArts main.cpp Ash_user.h I_Print.h Evoker.h Wizzard.h Spellbook.h Fire_user.h Earth_user.h Air_user.h)
+add_executable(ArcaneArts src/main.cpp headers/Ash_user.h headers/I_Print.h headers/Evoker.h headers/Wizzard.h headers/Spellbook.h headers/Fire_user.h headers/Earth_user.h headers/Air_user.h)
 
