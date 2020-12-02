@@ -1,62 +1,34 @@
 #include <vector>
 #include <memory>
-#include "Earth_user.h"
-#include "Ash_user.h"
+#include <Characters/Character.h>
+#include <SFML/Graphics.hpp>
+#include <iostream>
+
 
 int main(){
+    sf::err().rdbuf(NULL);
 
-    std::cout << "======== Test ========" << std::endl;
+    sf::RenderWindow window(sf::VideoMode(1000,1000),"Arcane Arts");
+    window.setFramerateLimit(60);
 
-    std::vector <std::unique_ptr<Wizzard>> entities;
+    sf::Texture texture;
+    texture.loadFromFile("assets/enemies/minotaur/idle.png");
 
-    entities.push_back(std::make_unique<Wizzard>("Dummy", 100, 100));
-    entities.push_back(std::make_unique<Evoker>("Magician", 100, 100, 50));
-    entities.push_back(std::make_unique<Fire_user>("Pyro", 100, 100, 50, Fire_user::fire_levels::high));
-    entities.push_back(std::make_unique<Earth_user>("Earth bender", 100, 100, 50, Earth_user::stamina_levels::medium));
-    entities.push_back(std::make_unique<Air_user>("WindMaster", 100, 100, 50, 15));
-    entities.push_back(std::make_unique<Ash_user>("Gandhara", 100, 100, 50, Fire_user::fire_levels::high, 80));
+    sf::Sprite enemy_sprite;
+    enemy_sprite.setTexture(texture);
 
-    std::cout << "\n====== Overloaded << from I_Print ======" << std::endl;
-    for(auto & entitie : entities) {
-        std::cout << *entitie << std::endl;
+    while (window.isOpen()){
+        sf::Event event;
+        while (window.pollEvent(event)){
+            if (event.type == sf::Event::Closed)
+                window.close();
+        }
+
+        window.clear();
+        window.draw(enemy_sprite);
+        window.display();
     }
 
-    std::cout << "\n====== \"Show status\" virtual function ======" << std::endl;
-    for(auto & entitie : entities) {
-        std::cout << entitie->getName() << " has: " << std::endl;
-        entitie->show_status();
-        std::cout << std::endl;
-    }
-
-    std::cout << "\n====== Subclasses spells ======" << std::endl;
-
-    std::cout << entities[2]->getName() << ": " << std::endl;
-    entities[2]->cast_Spells('0');
-    std::cout << std::endl << entities[3]->getName() << ": " << std::endl;
-    entities[3]->cast_Spells('0');
-    std::cout << std::endl << entities[4]->getName() << ": " << std::endl;
-    entities[4]->cast_Spells('0');
-    std::cout << std::endl << entities[5]->getName() << ": " << std::endl;
-    entities[5]->cast_Spells('0');
-
-
-    std::cout << "\n====== The use of Class Spellbook ======" << std::endl;
-    entities[1]->setSpellbook(Spellbook::rarity_level::Common, 100);
-    entities[2]->setSpellbook(Spellbook::rarity_level::Legendary, 9999);
-    entities[3]->setSpellbook(Spellbook::rarity_level::Epic, 200);
-    entities[4]->setSpellbook(Spellbook::rarity_level::Rare, 500);
-    entities[5]->setSpellbook(Spellbook::rarity_level::Legendary, 10000);
-
-
-    for(auto & entitie : entities){
-        std::cout << entitie->getName() << ": ";
-        entitie->brag();
-    }
-
-
-    std::cout << "\n======== End of Test ========" << std::endl;
-
-//    system("PAUSE");
     return 0;
 }
 

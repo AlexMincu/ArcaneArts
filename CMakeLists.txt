@@ -3,10 +3,10 @@ project(ArcaneArts)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(ArcaneArts src/main.cpp headers/Ash_user.h headers/I_Print.h headers/Evoker.h headers/Wizzard.h headers/Spellbook.h headers/Fire_user.h headers/Earth_user.h headers/Air_user.h)
+add_executable(ArcaneArts src/main.cpp src/Characters/Character.cpp headers/Characters/Character.h src/Items/Item.cpp headers/Items/Item.h src/Characters/Human.cpp headers/Characters/Human.h src/Items/Weapon.cpp headers/Items/Weapon.h src/Items/Sword.cpp headers/Items/Sword.h src/Characters/Elf.cpp headers/Characters/Elf.h src/Characters/Enemy.cpp headers/Characters/Enemy.h src/Characters/Slime.cpp headers/Characters/Slime.h)
 
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake_modules")
-include_directories(headers /usr/include C:/SFML/include)
+include_directories(headers assets /usr/include c:/SFML/include)
 
 #SFML Library
     find_package(SFML REQUIRED system window graphics)
