@@ -1,5 +1,8 @@
 #include "Game/Game.h"
 
+bool Game::debug = false;
+
+// Init Private Functions
 void Game::initVariables() {
     this->window = nullptr;
     this->dt = 0.f;
@@ -7,7 +10,6 @@ void Game::initVariables() {
 
 void Game::initWindow() {
     this->window = new sf::RenderWindow(sf::VideoMode(800,600),"Arcane Arts");
-    this->window->setFramerateLimit(120);
 }
 
 void Game::initKeys() {
@@ -25,6 +27,7 @@ void Game::initStates() {
 }
 
 
+// Constructor/Destructor
 Game::Game() {
     this->initWindow();
     this->initKeys();
@@ -40,18 +43,22 @@ Game::~Game() {
     }
 }
 
-void Game::endApplication() {
-    std::cout << "Ending Game window\n";
-}
 
+// Updating
 void Game::updateDt() {
-    /* Updating the time it takes to update and render a frame
-     */
+    if(isDebug()) {
+//        std::cout << "dt: " << this->dt << "\n";
+        std::cout << "fps: " << (1.0f / dt) << "\n";
+    }
+
+    // Updating the time it takes to update and render a frame - Delta Time
     this->dt = this->dtClock.restart().asSeconds();
 }
 
 void Game::updateSFMLEvents() {
+    // Pulls out an event
     while(this->window->pollEvent(this->event)){
+        // Closing the window event
         if (this->event.type == sf::Event::Closed)
             this->window->close();
     }
@@ -60,31 +67,44 @@ void Game::updateSFMLEvents() {
 void Game::update() {
     this->updateSFMLEvents();
 
+    // If there is a state available
     if (!this->states.empty()) {
         this->states.top()->update(dt);
 
+        // Ending state
         if(this->states.top()->getQuit()){
             this->states.top()->endState();
             delete this->states.top();
             this->states.pop();
         }
     }
+    // If states stack is empty close the game
     else{
-        this->endApplication();
+        std::cout << "Closing the Game\n";
         this->window->close();
     }
 }
 
+
+// Rendering
 void Game::render() {
     this->window->clear();
 
+    // Display the state
     if(!this->states.empty())
             this->states.top()->render(this->window);
 
     this->window->display();
 }
 
-void Game::run() {
+
+// Functions
+void Game::run(const bool &Debug) {
+    // Debug option
+    if(Debug) {
+        Game::debug = true;
+    }
+
     while (this->window->isOpen()){
         this->updateDt();
         this->update();
@@ -93,6 +113,10 @@ void Game::run() {
 }
 
 
+// Getters and Setters
+bool Game::isDebug() {
+    return debug;
+}
 
 
 

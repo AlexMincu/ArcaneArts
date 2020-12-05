@@ -1,36 +1,39 @@
 #include "Characters/Character.h"
 
-void Character::initVariables() {
 
-}
-
+// Constructor/Destructor
 Character::Character() {
-    this->initVariables();
+
 }
 
 Character::~Character() {
     delete this->animationComponent;
 }
 
-void Character::setTexture(sf::Texture &texture) {
-    this->sprite.setTexture(texture);
+
+// Update
+
+
+// Render
+void Character::render(sf::RenderTarget *target) {
+    target->draw(this->sprite);
 }
 
+
+// Functions
 void Character::createAnimationComponent(sf::Texture &texture_sheet) {
     this->animationComponent = new AnimationComponent(this->sprite, texture_sheet);
 }
 
 
-void Character::setPosition(const float x, const float y) {
+// Getters and Setters
+void Character::setTexture(sf::Texture &texture) {
+    this->sprite.setTexture(texture);
+}
+void Character::setPosition(const float &x, const float &y) {
     this->sprite.setPosition(x, y);
 }
 
-void Character::update(const float &dt) {
 
-}
-
-void Character::render(sf::RenderTarget *target) {
-    target->draw(this->sprite);
-}
 
 

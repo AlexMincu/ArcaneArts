@@ -1,19 +1,28 @@
 #include "Game/State.h"
 
-State::State(sf::RenderWindow *window, std::map<std::string, int> *supportedKeys) {
-    this->window = window;
-    this->supportedKeys = supportedKeys;
-    this->quit = false;
-}
-
-State::~State() {
+// Constructor/Destructor
+State::State(sf::RenderWindow *window, std::map<std::string, int> *supportedKeys)
+    : window{window}, supportedKeys{supportedKeys}, quit{false} {
 
 }
 
-const bool &State::getQuit() const {
-    return this->quit;
+State::~State() = default;
+
+
+// Update
+void State::updateMousePosition() {
+    this->mouse_pos_screen = sf::Mouse::getPosition();
+    this->mouse_pos_window = sf::Mouse::getPosition(*this->window);
 }
 
+
+// Functions
 void State::endState() {
     this->quit = true;
+}
+
+
+// Getters and Setters
+const bool &State::getQuit() const {
+    return this->quit;
 }

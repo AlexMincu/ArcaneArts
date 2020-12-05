@@ -4,21 +4,28 @@
 
 class Character {
 public:
+    // Constructor/Destructor
     Character();
     virtual ~Character();
 
-    void setTexture (sf::Texture &texture);
-    void createAnimationComponent(sf::Texture &texture_sheet);
+    // Update
+    virtual void update(const float &dt) = 0;
 
-    virtual void setPosition(const float x, const float y);
-
-    virtual void update(const float &dt);
+    // Render
     virtual void render(sf::RenderTarget *target);
 
-protected:
-    sf::Sprite sprite;
+    // Functions
+    void createAnimationComponent(sf::Texture &texture_sheet);
 
+    // Getters and Setters
+    void setTexture (sf::Texture &texture);
+    virtual void setPosition(const float &x, const float &y);
+
+protected:
+    // Variables
+    sf::Sprite sprite;
     AnimationComponent *animationComponent;
+
 private:
-    void initVariables();
+
 };

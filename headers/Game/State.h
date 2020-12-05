@@ -1,25 +1,40 @@
 #pragma once
 
-#include "../Characters/Enemy.h"
+#include "../Characters/Minotaur.h"
 
 class State {
 public:
-    explicit State(sf::RenderWindow *window, std::map<std::string, int> *supportedKeys);
+    // Constructor/Destructor
+    State(sf::RenderWindow *window, std::map<std::string, int> *supportedKeys);
     virtual ~State();
 
+    // Update
+    virtual void updateMousePosition();
     virtual void updateInput(const float &dt) = 0;
     virtual void update(const float &dt) = 0;
+
+    // Render
     virtual void render(sf::RenderTarget *target) = 0;
 
-    const bool &getQuit() const;
+    // Functions
     void endState();
 
-protected:
+    // Getters and Setters
+    const bool &getQuit() const;
+
+private:
+    // Init Private Functions
     virtual void initKeybinds() = 0;
 
+protected:
+    // Variables
     sf::RenderWindow *window;
+    std::map<std::string, sf::Texture> textures;
+        // Inputs
+    sf::Vector2i mouse_pos_screen;
+    sf::Vector2i mouse_pos_window;
     std::map<std::string, int> *supportedKeys;
     std::map<std::string, int> keybinds;
+        // Others
     bool quit;
-    std::map<std::string, sf::Texture> textures;
 };
