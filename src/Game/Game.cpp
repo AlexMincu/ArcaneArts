@@ -74,8 +74,8 @@ void Game::updateStates() {
 
 
 void Game::update() {
-    this->updateSFMLEvents();
     this->updateDt();
+    this->updateSFMLEvents();
     this->updateStates();
 }
 

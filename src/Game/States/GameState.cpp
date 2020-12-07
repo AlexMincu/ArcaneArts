@@ -50,9 +50,6 @@ void GameState::updateInput(const float &dt) {
     this->updateMousePosition();
 
     // Keyboard
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("ATTACK"))))
-                                                            //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@22
-
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("EXIT"))))
         this->endState();
 }

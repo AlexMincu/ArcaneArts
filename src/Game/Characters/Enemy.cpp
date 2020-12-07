@@ -27,6 +27,10 @@ void Enemy::updateInput() {
         this->animationComponent->manual_reset("ATTACK");
         setEnemyState(E_ATTACKED);
     }
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space)){
+        this->animationComponent->manual_reset("ATTACK");
+        setEnemyState(E_ATTACKED);
+    }
 }
 
 void Enemy::updateAnimation(const float &dt) {
