@@ -1,20 +1,14 @@
-#include "Game/AnimationComponent.h"
-
-// Init Private Functions
-void AnimationComponent::initVariables(){
-    this->last_animation = nullptr;
-}
+#include "Game/Animations/AnimationComponent.h"
 
 // Constuctor/Destructor
 AnimationComponent::AnimationComponent(sf::Sprite &sprite, sf::Texture &texture_sheet)
 : sprite(sprite), texture_sheet(texture_sheet) {
-    this->initVariables();
+
 }
 
 AnimationComponent::~AnimationComponent() {
     for (auto &i : this->animations)
         delete i.second;
-    delete last_animation;
 }
 
 
@@ -32,15 +26,17 @@ void AnimationComponent::addAnimation(const std::string &key,
                                           width, height);
 }
 
-void AnimationComponent::play(const std::string key, const float &dt) {
-    if(this->last_animation != this->animations[key]){
-        if(this->last_animation == nullptr)
-            this->last_animation = this->animations[key];
-        else{
-            this->last_animation->reset();
-            this->last_animation = this->animations[key];
-        }
-    }
+const bool & AnimationComponent::play(const std::string &key, const float &dt) {
+    return this->animations[key]->play(key, dt);
 
-    this->animations[key]->play(dt);
+}
+
+
+// Getters and Setters
+const bool &AnimationComponent::isDone(const std::string &key){
+    return this->animations[key]->isDone();
+}
+
+void AnimationComponent::manual_reset(const std::string &key) {
+    this->animations[key]->manual_reset();
 }

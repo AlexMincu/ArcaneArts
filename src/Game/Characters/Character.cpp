@@ -1,5 +1,4 @@
-#include "Characters/Character.h"
-
+#include "Game/Characters/Character.h"
 
 // Constructor/Destructor
 Character::Character() {
@@ -33,7 +32,4 @@ void Character::setTexture(sf::Texture &texture) {
 void Character::setPosition(const float &x, const float &y) {
     this->sprite.setPosition(x, y);
 }
-
-
-
 

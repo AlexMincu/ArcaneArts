@@ -1,6 +1,6 @@
 #pragma once
 
-#include "GameState.h"
+#include "Game/States/GameState.h"
 
 class Game {
 public:
@@ -11,34 +11,31 @@ public:
     // Update
     void updateDt();
     void updateSFMLEvents();
+    void updateStates();
     void update();
 
     // Render
     void render();
 
     // Functions
-    void run(const bool &Debug = false);
-
-    // Getters and Setter
-    static bool isDebug();
+    void run();
 
 private:
+    // Variables
+    sf::RenderWindow *window;
+    sf::Event event;
+    std::stack<State*> states;
+        // Delta Time
+    sf::Clock dtClock;
+    float dt;
+        // Inputs
+    std::map<std::string, int> supportedKeys;
+
     // Init Private Functions
-    void initVariables();
     void initWindow();
     void initKeys();
     void initStates();
 
-    // Variables
-    sf::RenderWindow *window;
-    sf::Event event;
-        // Delta Time
-    sf::Clock dtClock;
-    float dt;
-        // States
-    std::stack<State*> states;
-        // Inputs
-    std::map<std::string, int> supportedKeys;
 protected:
-    static bool debug;
+
 };

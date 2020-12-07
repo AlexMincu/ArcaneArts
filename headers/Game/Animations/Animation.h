@@ -5,6 +5,7 @@
 #include <stack>
 #include <map>
 #include <string>
+#include <sstream>
 
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
@@ -22,8 +23,11 @@ public:
     virtual ~Animation();
 
     // Functions
-    void play(const float &dt);
-    void reset();
+    const bool & play(const std::string &key, const float &dt);
+
+    // Getters and Setter
+    const bool & isDone() const;
+    void manual_reset();
 
 private:
     // Variables
@@ -40,4 +44,6 @@ private:
         // Timers for the animation
     float animation_timer;
     float timer;
+        // Others
+    bool done;
 };

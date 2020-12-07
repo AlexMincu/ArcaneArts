@@ -12,6 +12,8 @@ public:
 
     // Update
     void update(const float &dt) override;
+    void updateInput();
+    void updateAnimation(const float &dt);
 
     // Render
         //Use render(sf::RenderTarget *target);                         from Character
@@ -22,14 +24,13 @@ public:
     // Getters and Setters
         //Use setTexture (sf::Texture &texture);                        from Character
         //Use setPosition(const float &x, const float &y);              from Character
-    void isAttacked();
     unsigned short getEnemyState() const;
+    void setEnemyState(enemy_states);
 
 private:
-    // Init Private Functions
-    void initVariables();
-    void initAnimationComponent(const float &x, const float &y, sf::Texture &texture_sheet);
-
     // Variables
     short unsigned enemy_state;
+
+    // Init Private Functions
+    void initAnimationComponent(sf::Texture &texture_sheet);
 };

@@ -1,4 +1,6 @@
-#include "Game/Animation.h"
+#include <Game/Animations/Animation.h>
+
+
 
 // Constructor/Destructor
 Animation::Animation(sf::Sprite &sprite, sf::Texture &texture_sheet,
@@ -7,7 +9,7 @@ Animation::Animation(sf::Sprite &sprite, sf::Texture &texture_sheet,
                      int frames_x, int frames_y,
                      int width, int height)
 : sprite(sprite), texture_sheet(texture_sheet),
-  animation_timer(animation_timer), timer{0.f},
+  animation_timer(animation_timer), timer{0.f}, done{false},
   width(width), height(height) {
 
     // Set the texture for the animation
@@ -26,23 +28,46 @@ Animation::~Animation() {
 
 
 // Functions
-void Animation::play(const float &dt) {
-    this->timer += 100.f * dt;
-    if(this->timer >= this->animation_timer){
-        // reset timer
+const bool & Animation::play(const std::string &key, const float &dt) {
+    /*  this->timer = this->timer + x * dt;
+     *      x - number of images inside the sheet
+     *      dt - the times is take to update and render a frame
+     *
+     *      animation_timer - How much time in seconds will an animation sheet render
+     */
+
+    this->done = false;
+    this->timer += 12.f * dt;   // 12 image animation sheet
+
+    if(this->timer >= this->animation_timer)
+    {
+        // Reset timer
         this->timer = 0.f;
 
-        // animate
-        if(this->current_rect != this->end_rect)
+        // Animate
+        if(this->current_rect != this->end_rect) {
             this->current_rect.left += this->width;
-        else    // reset
+        }
+        // Reset the position of the rect to the beginning
+        else {
             this->current_rect.left = this->start_rect.left;
+            this->done = true;
+        }
 
+        // Set current frame of animation
         this->sprite.setTextureRect(this->current_rect);
     }
+    return this->done;
 }
 
-void Animation::reset() {
+
+
+// Setters and Getters
+const bool & Animation::isDone() const {
+    return this->done;
+}
+
+void Animation::manual_reset() {
     this->timer = 0.f;
     this->current_rect = this->start_rect;
 }

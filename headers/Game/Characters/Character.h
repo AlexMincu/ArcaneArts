@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../Game/AnimationComponent.h"
+#include "Game/Animations/AnimationComponent.h"
 
 class Character {
 public:
@@ -25,7 +25,7 @@ protected:
     // Variables
     sf::Sprite sprite;
     AnimationComponent *animationComponent;
-
 private:
+
 
 };

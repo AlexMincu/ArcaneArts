@@ -10,6 +10,8 @@ public:
 
     // Update
     void updateInput(const float &dt) override;
+    void updateEntities(const float &dt);
+    void updateFPS(const float &dt);
     void update(const float &dt) override;
 
     // Render
@@ -20,8 +22,16 @@ private:
     void initKeybinds() override;
     void initTextures();
     void initEnemy();
+    void initText();
 
     // Variables
-    Minotaur *enemy;
+    Enemy *enemy;
     sf::Texture texture;
+
+    // FPS
+    sf::Font font;
+    sf::Text fps;
+    float fps_render_timing;
+    float dt_average;
+    float dt_frames;
 };

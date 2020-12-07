@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../Characters/Minotaur.h"
+#include "Game/Characters/Enemy.h"
 
 class State {
 public:

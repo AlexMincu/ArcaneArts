@@ -1,23 +1,13 @@
 #include "Game/Game.h"
 
-bool Game::debug = false;
 
 // Init Private Functions
-void Game::initVariables() {
-    this->window = nullptr;
-    this->dt = 0.f;
-}
-
 void Game::initWindow() {
     this->window = new sf::RenderWindow(sf::VideoMode(800,600),"Arcane Arts");
+    this->window->setFramerateLimit(60);
 }
 
 void Game::initKeys() {
-    this->supportedKeys["Q"] = sf::Keyboard::Key::Q;
-    this->supportedKeys["W"] = sf::Keyboard::Key::W;
-    this->supportedKeys["A"] = sf::Keyboard::Key::A;
-    this->supportedKeys["S"] = sf::Keyboard::Key::S;
-    this->supportedKeys["D"] = sf::Keyboard::Key::D;
     this->supportedKeys["Space"] = sf::Keyboard::Key::Space;
     this->supportedKeys["Escape"] = sf::Keyboard::Key::Escape;
 }
@@ -27,13 +17,16 @@ void Game::initStates() {
 }
 
 
-// Constructor/Destructor
-Game::Game() {
+// Constructor
+Game::Game()
+: window{nullptr}, dt{0.f} {
     this->initWindow();
     this->initKeys();
     this->initStates();
 }
 
+
+// Destructor
 Game::~Game() {
     delete this->window;
 
@@ -46,11 +39,6 @@ Game::~Game() {
 
 // Updating
 void Game::updateDt() {
-    if(isDebug()) {
-//        std::cout << "dt: " << this->dt << "\n";
-        std::cout << "fps: " << (1.0f / dt) << "\n";
-    }
-
     // Updating the time it takes to update and render a frame - Delta Time
     this->dt = this->dtClock.restart().asSeconds();
 }
@@ -58,16 +46,15 @@ void Game::updateDt() {
 void Game::updateSFMLEvents() {
     // Pulls out an event
     while(this->window->pollEvent(this->event)){
+
         // Closing the window event
         if (this->event.type == sf::Event::Closed)
             this->window->close();
     }
 }
 
-void Game::update() {
-    this->updateSFMLEvents();
-
-    // If there is a state available
+void Game::updateStates() {
+// If there is a state available
     if (!this->states.empty()) {
         this->states.top()->update(dt);
 
@@ -78,11 +65,18 @@ void Game::update() {
             this->states.pop();
         }
     }
-    // If states stack is empty close the game
+        // If states stack is empty close the game
     else{
         std::cout << "Closing the Game\n";
         this->window->close();
     }
+}
+
+
+void Game::update() {
+    this->updateSFMLEvents();
+    this->updateDt();
+    this->updateStates();
 }
 
 
@@ -99,24 +93,10 @@ void Game::render() {
 
 
 // Functions
-void Game::run(const bool &Debug) {
-    // Debug option
-    if(Debug) {
-        Game::debug = true;
-    }
-
+void Game::run() {
     while (this->window->isOpen()){
-        this->updateDt();
         this->update();
         this->render();
     }
 }
-
-
-// Getters and Setters
-bool Game::isDebug() {
-    return debug;
-}
-
-
 

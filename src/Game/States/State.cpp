@@ -1,4 +1,4 @@
-#include "Game/State.h"
+#include "Game/States/State.h"
 
 // Constructor/Destructor
 State::State(sf::RenderWindow *window, std::map<std::string, int> *supportedKeys)

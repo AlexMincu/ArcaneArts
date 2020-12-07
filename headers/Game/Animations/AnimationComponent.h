@@ -14,14 +14,16 @@ public:
                       int start_frame_x, int start_frame_y,
                       int frames_x, int frames_y,
                       int width, int height);
-    void play(const std::string key, const float &dt);
-private:
-    // Init Private Functions
-    void initVariables();
 
+    const bool & play(const std::string &key, const float &dt);
+
+    // Getters and Setters
+    const bool &isDone(const std::string &key);
+    void manual_reset(const std::string &key);
+
+private:
     // Variables
     sf::Sprite &sprite;
     sf::Texture &texture_sheet;
     std::map<std::string, Animation*> animations;
-    Animation* last_animation;
 };
