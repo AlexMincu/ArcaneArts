@@ -23,10 +23,12 @@ private:
     void initTextures();
     void initEnemy();
     void initText();
+    void initProgressBars();
 
     // Variables
     Enemy *enemy;
     sf::Texture texture;
+    ProgressBar *hp_bar;
 
     // FPS
     sf::Font font;
@@ -34,4 +36,5 @@ private:
     float fps_render_timing;
     float dt_average;
     float dt_frames;
+
 };

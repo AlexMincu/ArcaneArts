@@ -33,3 +33,19 @@ void Character::setPosition(const float &x, const float &y) {
     this->sprite.setPosition(x, y);
 }
 
+const sf::Vector2f &Character::getPosition() const {
+    return this->sprite.getPosition();
+}
+
+sf::Rect<float> Character::getSize() const {
+    return this->sprite.getGlobalBounds();
+}
+
+float Character::getCurrentHealth() const {
+    return this->current_health;
+}
+
+float Character::getCurrentHealthPercentage() const {
+    return (this->current_health / this->base_health) * 100.f;
+}
+

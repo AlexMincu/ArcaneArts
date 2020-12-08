@@ -15,7 +15,7 @@ add_executable(ArcaneArts
         src/Game/States/GameState.cpp headers/Game/States/GameState.h
         src/Game/Animations/AnimationComponent.cpp headers/Game/Animations/AnimationComponent.h
         src/Game/Animations/Animation.cpp headers/Game/Animations/Animation.h
-        )
+        src/Game/GUI/ProgressBar.cpp headers/Game/GUI/ProgressBar.h)
 
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake_modules")
 include_directories(headers assets /usr/include c:/SFML/include)

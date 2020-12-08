@@ -28,7 +28,7 @@ Animation::~Animation() {
 
 
 // Functions
-const bool & Animation::play(const std::string &key, const float &dt) {
+const bool & Animation::play(const std::string &key, const float &dt, float* hp, const float &damage) {
     /*  this->timer = this->timer + x * dt;
      *      x - number of images inside the sheet
      *      dt - the times is take to update and render a frame
@@ -43,6 +43,12 @@ const bool & Animation::play(const std::string &key, const float &dt) {
     {
         // Reset timer
         this->timer = 0.f;
+
+        // Deal damage
+        if(this->current_rect == this->start_rect && hp){
+            *hp -= damage;
+            std::cout << "Hp after hit: " << *hp << "\n";
+        }
 
         // Animate
         if(this->current_rect != this->end_rect) {

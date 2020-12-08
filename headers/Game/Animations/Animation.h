@@ -23,7 +23,7 @@ public:
     virtual ~Animation();
 
     // Functions
-    const bool & play(const std::string &key, const float &dt);
+    const bool & play(const std::string &key, const float &dt, float* hp = nullptr, const float &damage = 0);
 
     // Getters and Setter
     const bool & isDone() const;

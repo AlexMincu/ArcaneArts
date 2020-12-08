@@ -26,9 +26,11 @@ void AnimationComponent::addAnimation(const std::string &key,
                                           width, height);
 }
 
-const bool & AnimationComponent::play(const std::string &key, const float &dt) {
-    return this->animations[key]->play(key, dt);
+const bool & AnimationComponent::play(const std::string &key, const float &dt, float* hp, const float &damage) {
+    if(hp)
+        return this->animations[key]->play(key, dt, hp, damage);
 
+    return this->animations[key]->play(key, dt);
 }
 
 

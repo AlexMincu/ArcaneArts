@@ -10,10 +10,12 @@ void Enemy::initAnimationComponent(sf::Texture &texture_sheet) {
 
 // Constructor/Destructor
 Enemy::Enemy(const float &x, const float &y, sf::Texture &texture_sheet)
-: enemy_state{E_IDLE}{
-
+: enemy_state{E_IDLE} {
     this->initAnimationComponent(texture_sheet);
     this->setPosition(x, y);
+
+    this->base_health = 100;
+    this->current_health = this->base_health;
 }
 
 Enemy::~Enemy() {
@@ -26,16 +28,22 @@ void Enemy::updateInput() {
     if(sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
         this->animationComponent->manual_reset("ATTACK");
         setEnemyState(E_ATTACKED);
+
+        //debug
+        std::cout << "MLEFT pressed\n";
     }
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space)){
         this->animationComponent->manual_reset("ATTACK");
         setEnemyState(E_ATTACKED);
+
+        //debug
+        std::cout << "SPACE pressed\n";
     }
 }
 
 void Enemy::updateAnimation(const float &dt) {
     if(this->enemy_state == E_ATTACKED) {
-        if (this->animationComponent->play("ATTACK", dt))
+        if (this->animationComponent->play("ATTACK", dt, &current_health, 10))
             this->enemy_state = E_IDLE;
     }
     if(this->enemy_state == E_IDLE){
@@ -54,7 +62,6 @@ void Enemy::update(const float &dt) {
 
 // Functions
 
-
 // Getters and Setters
 unsigned short Enemy::getEnemyState() const {
     return enemy_state;
@@ -63,6 +70,7 @@ unsigned short Enemy::getEnemyState() const {
 void Enemy::setEnemyState(enemy_states state) {
     this->enemy_state = state;
 }
+
 
 
 
