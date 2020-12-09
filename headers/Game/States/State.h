@@ -23,8 +23,6 @@ public:
     const bool &getQuit() const;
 
 private:
-    // Init Private Functions
-    virtual void initKeybinds() = 0;
 
 protected:
     // Variables

@@ -19,16 +19,14 @@ public:
 
 private:
     // Init Private Functions
-    void initKeybinds() override;
+    void initKeybinds();
     void initTextures();
     void initEnemy();
     void initText();
-    void initProgressBars();
 
     // Variables
     Enemy *enemy;
     sf::Texture texture;
-    ProgressBar *hp_bar;
 
     // FPS
     sf::Font font;

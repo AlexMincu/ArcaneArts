@@ -8,11 +8,11 @@
 class ProgressBar {
 public:
     // Constructor/Destructor
-    ProgressBar(float x, float y, sf::Texture &texture_sheet);
+    ProgressBar(const float& x, const float& y, sf::Texture &texture_sheet);
     virtual ~ProgressBar();
 
     // Update
-    void update(float hp, const float &dt);
+    void update(const float & hp, const float &dt);
 
     // Render
     virtual void render(sf::RenderTarget *target);
@@ -30,6 +30,4 @@ private:
 
     sf::Vector2f progress_size;
 
-    // Init Private Functions
-    void initTexture();
 };

@@ -30,6 +30,8 @@ protected:
     // Variables
     sf::Sprite sprite;
     AnimationComponent *animationComponent;
+
+    ProgressBar *hp_bar;
     float base_health;
     float current_health;
 

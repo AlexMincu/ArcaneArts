@@ -4,7 +4,7 @@
 // Init Private Functions
 void Game::initWindow() {
     std::string title = "Arcane Arts";
-    uint16_t framerate_limit = 60;
+    uint16_t framerate_limit = 10;
     bool vert_sync = false;
     sf::VideoMode window_bounds(600, 800);
     /*
@@ -15,7 +15,7 @@ void Game::initWindow() {
      *    this->window = new sf::RenderWindow(window_bounds[0],title, sf::Style::Fullscreen);
      */
     this->window = new sf::RenderWindow(window_bounds,title, sf::Style::Close);
-    this->window->setFramerateLimit(framerate_limit);
+//    this->window->setFramerateLimit(framerate_limit);
     this->window->setVerticalSyncEnabled(vert_sync);
 }
 
@@ -94,7 +94,7 @@ void Game::update() {
 
 // Rendering
 void Game::render() {
-    this->window->clear(sf::Color::White);
+    this->window->clear(sf::Color::Black);
 
     // Display the state
     if(!this->states.empty())
