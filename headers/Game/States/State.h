@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Game/Characters/Enemy.h"
+#include "Game/Characters/EnemySpawner.h"
 
 class State {
 public:

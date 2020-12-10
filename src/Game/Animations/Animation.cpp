@@ -47,7 +47,6 @@ const bool & Animation::play(const std::string &key, const float &dt, float* hp,
         // Deal damage
         if(this->current_rect == this->start_rect && hp){
             *hp -= damage;
-            std::cout << "Hp after hit: " << *hp << "\n";
         }
 
         // Animate

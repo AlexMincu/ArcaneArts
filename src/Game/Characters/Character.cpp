@@ -33,9 +33,7 @@ void Character::setTexture(sf::Texture &texture) {
     this->sprite.setTexture(texture);
 }
 void Character::setPosition(const float &x, const float &y) {
-    std::cout << "Set char pos\n";
     this->sprite.setPosition(x, y);
-    std::cout << "Done with char pos\n";
 }
 
 const sf::Vector2f &Character::getPosition() const {

@@ -8,24 +8,15 @@ void GameState::initKeybinds() {
 }
 
 void GameState::initTextures() {
-    if(!this->textures["MINOTAUR_SHEET"].loadFromFile("assets/enemies/minotaur_sheet.png")) {
-        std::cerr << "Failed to load Minotaur Sheet\n";
-        exit(1);
-    }
-    if(!this->textures["HP_BAR_TEXTURE"].loadFromFile("assets/hp_bar.png")) {
-        std::cerr << "Failed to load ProgressBar Texture\n";
-        exit(1);
-    }
+
 }
 
-void GameState::initEnemy() {
-    std::cout << "Find enemy pos\n";
+void GameState::initEnemySpawner() {
     // Find the position to set the enemy in the middle of the window
     float enemy_pos_x = this->window->getSize().x/2.f - 180.f;       // Enemy image asset:
     float enemy_pos_y = this->window->getSize().y/2.f - 122.5f;      // 360 x 245
 
-    std::cout << "Creating enemy\n";
-    this->enemy = new Enemy(100, enemy_pos_x, enemy_pos_y, this->textures["MINOTAUR_SHEET"], this->textures["HP_BAR_TEXTURE"]);
+    this->enemy_spawner = new EnemySpawner(enemy_pos_x, enemy_pos_y, this->textures);
 }
 
 void GameState::initText() {
@@ -44,15 +35,18 @@ void GameState::initText() {
 
 // Constructor/Destructor
 GameState::GameState(sf::RenderWindow *window, std::map<std::string, int> *supportedKeys)
-    : State(window, supportedKeys), fps_render_timing{0.f}, dt_frames{0.f}, dt_average{0.f} {
+    : State(window, supportedKeys),
+    fps_render_timing{0.f}, dt_frames{0.f}, dt_average{0.f},
+    enemy{nullptr}, enemy_spawner{nullptr} {
+
     this->initKeybinds();
     this->initTextures();
-    this->initEnemy();
     this->initText();
+    this->initEnemySpawner();
 }
 
 GameState::~GameState() {
-    delete this->enemy;
+    delete enemy_spawner;
 }
 
 // Update
@@ -63,11 +57,6 @@ void GameState::updateInput(const float &dt) {
     // Keyboard
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("EXIT"))))
         this->endState();
-}
-
-void GameState::updateEntities(const float &dt) {
-    // Enemies
-    this->enemy->update(dt);
 }
 
 void GameState::updateFPS(const float &dt) {
@@ -97,9 +86,9 @@ void GameState::updateFPS(const float &dt) {
 }
 
 void GameState::update(const float &dt) {
-    this->updateInput(dt);
-    this->updateEntities(dt);
     this->updateFPS(dt);
+    this->updateInput(dt);
+    this->enemy_spawner->update(dt);
 }
 
 
@@ -108,10 +97,9 @@ void GameState::render(sf::RenderTarget *target) {
     if(!target)
         target = this->window;
 
-    // Entities
-    this->enemy->render(target);
+    // Enemy spawner
+    this->enemy_spawner->render(target);
 
     // FPS
     this->window->draw(fps);
 }
-

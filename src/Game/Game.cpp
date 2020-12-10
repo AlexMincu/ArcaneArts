@@ -4,7 +4,7 @@
 // Init Private Functions
 void Game::initWindow() {
     std::string title = "Arcane Arts";
-    uint16_t framerate_limit = 10;
+    uint16_t framerate_limit = 30;
     bool vert_sync = false;
     sf::VideoMode window_bounds(600, 800);
     /*

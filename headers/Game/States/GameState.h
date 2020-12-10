@@ -21,11 +21,12 @@ private:
     // Init Private Functions
     void initKeybinds();
     void initTextures();
-    void initEnemy();
+    void initEnemySpawner();
     void initText();
 
     // Variables
-    Enemy *enemy;
+    EnemySpawner* enemy_spawner;
+    Enemy* enemy;
     sf::Texture texture;
 
     // FPS

@@ -46,14 +46,14 @@ void Enemy::updateInput() {
         setEnemyState(E_ATTACKED);
 
         //debug
-        std::cout << "MLEFT pressed\n";
+//        std::cout << "MLEFT pressed\n";
     }
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space)){
         this->animationComponent->manual_reset("ATTACK");
         setEnemyState(E_ATTACKED);
 
         //debug
-        std::cout << "SPACE pressed\n";
+//        std::cout << "SPACE pressed\n";
     }
 }
 
