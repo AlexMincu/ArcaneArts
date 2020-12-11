@@ -28,6 +28,4 @@ private:
     float spawn_pos_y;
 
     std::map<std::string, sf::Texture> textures;
-
-
 };

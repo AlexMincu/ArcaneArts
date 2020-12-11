@@ -21,7 +21,7 @@ void GameState::initEnemySpawner() {
 
 void GameState::initText() {
     if(!this->font.loadFromFile("assets/Fonts/courier.ttf")) {
-        std::cerr << "Failed to load Courier Font\n";
+        std::cerr << "Failed to load Courier Font for Game State\n";
         exit(1);
     }
 
@@ -37,7 +37,7 @@ void GameState::initText() {
 GameState::GameState(sf::RenderWindow *window, std::map<std::string, int> *supportedKeys)
     : State(window, supportedKeys),
     fps_render_timing{0.f}, dt_frames{0.f}, dt_average{0.f},
-    enemy{nullptr}, enemy_spawner{nullptr} {
+    enemy_spawner{nullptr} {
 
     this->initKeybinds();
     this->initTextures();
@@ -46,7 +46,7 @@ GameState::GameState(sf::RenderWindow *window, std::map<std::string, int> *suppo
 }
 
 GameState::~GameState() {
-    delete enemy_spawner;
+    delete this->enemy_spawner;
 }
 
 // Update

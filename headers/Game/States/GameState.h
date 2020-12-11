@@ -10,7 +10,6 @@ public:
 
     // Update
     void updateInput(const float &dt) override;
-    void updateEntities(const float &dt);
     void updateFPS(const float &dt);
     void update(const float &dt) override;
 
@@ -26,7 +25,6 @@ private:
 
     // Variables
     EnemySpawner* enemy_spawner;
-    Enemy* enemy;
     sf::Texture texture;
 
     // FPS

@@ -56,6 +56,8 @@ void EnemySpawner::render(sf::RenderTarget *target){
 // Functions
 void EnemySpawner::spawn_minotaur() {
     if(this->enemies.empty()){
-        this->enemies.push_back(new Enemy (30, this->spawn_pos_x, this->spawn_pos_y, this->textures["MINOTAUR_SHEET"], this->textures["HP_BAR_TEXTURE"]));
+        this->enemies.push_back(new Enemy (30, this->spawn_pos_x, this->spawn_pos_y,
+                                           this->textures["MINOTAUR_SHEET"],
+                                           this->textures["HP_BAR_TEXTURE"]));
     }
 }

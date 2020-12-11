@@ -36,6 +36,9 @@ private:
     void initKeys();
     void initStates();
 
+    // Debug
+    sf::RectangleShape line[2];
+
 protected:
 
 };

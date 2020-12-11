@@ -13,6 +13,8 @@ State::~State() = default;
 void State::updateMousePosition() {
     this->mouse_pos_screen = sf::Mouse::getPosition();
     this->mouse_pos_window = sf::Mouse::getPosition(*this->window);
+//    std::cout << sf::Mouse::getPosition(*this->window).x << "  " << sf::Mouse::getPosition(*this->window).y << "\n";
+
 }
 
 

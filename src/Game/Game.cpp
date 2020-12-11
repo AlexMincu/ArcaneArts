@@ -35,8 +35,17 @@ Game::Game()
     this->initWindow();
     this->initKeys();
     this->initStates();
-}
 
+    // Debug
+    line[0].setPosition(window->getSize().x / 2.f, 0);
+    line[1].setPosition(0, window->getSize().y / 2.f);
+
+    line[0].setSize(sf::Vector2f(1, 2000));
+    line[1].setSize(sf::Vector2f(2000, 1));
+
+    line[0].setFillColor(sf::Color::Green);
+    line[1].setFillColor(sf::Color::Green);
+}
 
 // Destructor
 Game::~Game() {
@@ -96,11 +105,18 @@ void Game::update() {
 void Game::render() {
     this->window->clear(sf::Color::Black);
 
+    // Debug
+    this->window->draw(line[0]);
+    this->window->draw(line[1]);
+
+
     // Display the state
     if(!this->states.empty())
             this->states.top()->render(this->window);
 
+
     this->window->display();
+
 }
 
 
