@@ -28,15 +28,7 @@ void Game::initStates() {
     this->states.push(new GameState(this->window, &supportedKeys));
 }
 
-
-// Constructor
-Game::Game()
-: window{nullptr}, dt{0.f} {
-    this->initWindow();
-    this->initKeys();
-    this->initStates();
-
-    // Debug
+void Game::initDebug(){
     line[0].setPosition(window->getSize().x / 2.f, 0);
     line[1].setPosition(0, window->getSize().y / 2.f);
 
@@ -45,6 +37,16 @@ Game::Game()
 
     line[0].setFillColor(sf::Color::Green);
     line[1].setFillColor(sf::Color::Green);
+}
+
+// Constructor
+Game::Game()
+: window{nullptr}, dt{0.f} {
+    this->initWindow();
+    this->initKeys();
+    this->initStates();
+
+    this->initDebug();
 }
 
 // Destructor
@@ -93,7 +95,6 @@ void Game::updateStates() {
     }
 }
 
-
 void Game::update() {
     this->updateDt();
     this->updateSFMLEvents();
@@ -102,13 +103,14 @@ void Game::update() {
 
 
 // Rendering
+void Game::renderDebug(){
+    this->window->draw(line[0]);
+    this->window->draw(line[1]);
+}
 void Game::render() {
     this->window->clear(sf::Color::Black);
 
-    // Debug
-    this->window->draw(line[0]);
-    this->window->draw(line[1]);
-
+    this->renderDebug();
 
     // Display the state
     if(!this->states.empty())

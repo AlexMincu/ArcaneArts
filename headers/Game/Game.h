@@ -37,6 +37,8 @@ private:
     void initStates();
 
     // Debug
+    void initDebug();
+    void renderDebug();
     sf::RectangleShape line[2];
 
 protected:

@@ -11,6 +11,8 @@ public:
 
     // Update
     void update(const float &dt);
+    void updateEnemy(const float &dt);
+    void updateText();
 
     // Render
     void render(sf::RenderTarget *target);
@@ -21,6 +23,7 @@ public:
 private:
     // Init Private Functions
     void initTextures();
+    void initText();
 
     // Variables
     std::vector<Enemy*> enemies;
@@ -28,4 +31,8 @@ private:
     float spawn_pos_y;
 
     std::map<std::string, sf::Texture> textures;
+
+    int enemies_killed_count;
+    sf::Font font;
+    sf::Text enemies_killed;
 };

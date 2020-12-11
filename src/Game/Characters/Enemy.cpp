@@ -5,7 +5,7 @@
 void Enemy::initAnimationComponent(sf::Texture &char_texture_sheet) {
     this->createAnimationComponent(char_texture_sheet);
     this->animationComponent->addAnimation("IDLE", 0.6f, 0, 0, 11, 0, 360, 245);
-    this->animationComponent->addAnimation("ATTACK", 0.4f, 0, 1, 11, 1, 360, 245);
+    this->animationComponent->addAnimation("ATTACK", 0.3f, 0, 1, 11, 1, 360, 245);
 }
 
 void Enemy::initHealthBar(sf::Texture &health_bar_texture_sheet){

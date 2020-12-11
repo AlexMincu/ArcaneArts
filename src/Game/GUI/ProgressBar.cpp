@@ -12,36 +12,29 @@ void ProgressBar::initHealthBar(const float& x, const float & y){
 }
 
 void ProgressBar::initText(){
-    if(!this->font.loadFromFile("assets/Fonts/courier.ttf")){
-        std::cerr << "Failed to load Courier Font for Progress Bar\n";
+    if(!this->font.loadFromFile("assets/Fonts/langar.ttf")){
+        std::cerr << "Failed to load Langar Font for Progress Bar\n";
         exit(1);
     }
-
 
     this->health.setFont(font);
     this->health.setFillColor(sf::Color::White);
     this->health.setCharacterSize(20);
     this->health.setOutlineColor(sf::Color::Black);
     this->health.setOutlineThickness(1);
-
     this->health.setString("100%");
 
-    sf::Rect<float> text_pos = this->progress.getGlobalBounds();
-    std::cout << text_pos.left << " " << text_pos.top << "\n";
+    sf::Vector2 text_pos = this->progress.getPosition();
+    text_pos.x += this->progress_size.x/2;
+    text_pos.y += this->progress_size.y/2;
+    text_pos.x -= health.getGlobalBounds().width;
+    text_pos.y -= health.getGlobalBounds().height;
 
-    text_pos.left += text_pos.width/2;
-    text_pos.top += text_pos.height/2;
-    std::cout << text_pos.left << " " << text_pos.top << "\n";
-
-    sf::Rect<float> temp = this->health.getGlobalBounds();
-    std::cout << "temp  " << temp.width << " " << temp.height << "\n";
-
-    text_pos.left -= temp.width;
-    text_pos.top -= temp.height;
-    std::cout << text_pos.left << " " << text_pos.top << "\n";
-
-    this->health.setPosition(text_pos.left + 10, text_pos.top+2);
-
+    /*      Text of health:
+     *    (Position of the Health Bar) + (Half the size of the Health Bar) -
+     *          - (Text Size) +- (some variables to center the text in a correct way)
+     */
+    this->health.setPosition(text_pos.x + 10, text_pos.y + 5);
 }
 
 
