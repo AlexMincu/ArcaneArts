@@ -8,13 +8,16 @@ void GameState::initKeybinds() {
 }
 
 void GameState::initTextures() {
-
+    if(!background_texture.loadFromFile("assets/backgrounds/stage1_background.png")) {
+        std::cerr << "Failed to load Background1 for Game State\n";
+        exit(1);
+    }
 }
 
 void GameState::initEnemySpawner() {
     // Find the position to set the enemy in the middle of the window
     float enemy_pos_x = this->window->getSize().x/2.f - 180.f;       // Enemy image asset:
-    float enemy_pos_y = this->window->getSize().y/2.f - 122.5f;      // 360 x 245
+    float enemy_pos_y = this->window->getSize().y/2.f - 90.f;      // 360 x 245
 
     this->enemy_spawner = new EnemySpawner(enemy_pos_x, enemy_pos_y, this->textures);
 }
@@ -32,6 +35,11 @@ void GameState::initText() {
     this->fps.setPosition(5.f, 5.f);
 }
 
+void GameState::initBackground(){
+    background.setTexture(this->background_texture);
+    background.setPosition(0, 0);
+}
+
 
 // Constructor/Destructor
 GameState::GameState(sf::RenderWindow *window, std::map<std::string, int> *supportedKeys)
@@ -43,6 +51,7 @@ GameState::GameState(sf::RenderWindow *window, std::map<std::string, int> *suppo
     this->initTextures();
     this->initText();
     this->initEnemySpawner();
+    this->initBackground();
 }
 
 GameState::~GameState() {
@@ -96,6 +105,8 @@ void GameState::update(const float &dt) {
 void GameState::render(sf::RenderTarget *target) {
     if(!target)
         target = this->window;
+
+    target->draw(background);
 
     // Enemy spawner
     this->enemy_spawner->render(target);

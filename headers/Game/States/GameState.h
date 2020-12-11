@@ -22,10 +22,14 @@ private:
     void initTextures();
     void initEnemySpawner();
     void initText();
+    void initBackground();
 
     // Variables
     EnemySpawner* enemy_spawner;
-    sf::Texture texture;
+
+    // Background
+    sf::Sprite background;
+    sf::Texture background_texture;
 
     // FPS
     sf::Font font;
