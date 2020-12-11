@@ -18,7 +18,8 @@ public:
     void render(sf::RenderTarget *target);
 
     // Functions
-    void spawn_minotaur();
+    void spawn_minotaur1();
+    void spawn_minotaur2();
 
 private:
     // Init Private Functions
@@ -35,4 +36,7 @@ private:
     int enemies_killed_count;
     sf::Font font;
     sf::Text enemies_killed;
+
+    //temp
+    int last_killed;
 };

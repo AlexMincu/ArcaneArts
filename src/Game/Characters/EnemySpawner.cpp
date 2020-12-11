@@ -3,10 +3,16 @@
 
 // Init Private Functions
 void EnemySpawner::initTextures() {
-    if(!this->textures["MINOTAUR_SHEET"].loadFromFile("assets/enemies/minotaur_sheet.png")) {
-        std::cerr << "Failed to load Minotaur Sheet\n";
+    if(!this->textures["MINOTAUR_SHEET1"].loadFromFile("assets/enemies/minotaur_sheet1.png")) {
+        std::cerr << "Failed to load Minotaur1 Sheet\n";
         exit(1);
     }
+
+    if(!this->textures["MINOTAUR_SHEET2"].loadFromFile("assets/enemies/minotaur_sheet2.png")) {
+        std::cerr << "Failed to load Minotaur2 Sheet\n";
+        exit(1);
+    }
+
     if(!this->textures["HP_BAR_TEXTURE"].loadFromFile("assets/hp_bar.png")) {
         std::cerr << "Failed to load ProgressBar Texture\n";
         exit(1);
@@ -34,12 +40,13 @@ void EnemySpawner::initText() {
 
 // Constructor
 EnemySpawner::EnemySpawner(const float &spawn_pos_x, const float &spawn_pos_y, const std::map<std::string, sf::Texture>& textures)
-                           : spawn_pos_x{spawn_pos_x}, spawn_pos_y{spawn_pos_y}, enemies_killed_count{0} {
+                           : spawn_pos_x{spawn_pos_x}, spawn_pos_y{spawn_pos_y}, enemies_killed_count{0},
+                           last_killed{0}{
 
     this->textures = textures;
     this->initTextures();
     this->initText();
-    this->spawn_minotaur();
+
 }
 
 // Destructor
@@ -61,7 +68,17 @@ void EnemySpawner::updateText(){
 
 void EnemySpawner::updateEnemy(const float &dt){
     // Spawning
-    spawn_minotaur();
+
+    // temp
+        if(last_killed == 1) {
+            spawn_minotaur2();
+        }
+        else if(last_killed == 2) {
+            spawn_minotaur1();
+        }
+        else {
+            spawn_minotaur1();
+        }
 
     // Updating
     enemies.at(0)->update(dt);
@@ -98,11 +115,22 @@ void EnemySpawner::render(sf::RenderTarget *target){
 
 
 // Functions
-void EnemySpawner::spawn_minotaur() {
+void EnemySpawner::spawn_minotaur1() {
 
     if(this->enemies.empty()){
-        this->enemies.push_back(new Enemy (30, this->spawn_pos_x, this->spawn_pos_y,
-                                           this->textures["MINOTAUR_SHEET"],
+        this->enemies.push_back(new Enemy (50, this->spawn_pos_x, this->spawn_pos_y,
+                                           this->textures["MINOTAUR_SHEET1"],
                                            this->textures["HP_BAR_TEXTURE"]));
+        this->last_killed = 1;
+    }
+}
+
+void EnemySpawner::spawn_minotaur2() {
+
+    if(this->enemies.empty()){
+        this->enemies.push_back(new Enemy (100, this->spawn_pos_x, this->spawn_pos_y,
+                                           this->textures["MINOTAUR_SHEET2"],
+                                           this->textures["HP_BAR_TEXTURE"]));
+        this->last_killed = 2;
     }
 }

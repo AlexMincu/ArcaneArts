@@ -43,7 +43,8 @@ Enemy::~Enemy() {
 // Update
 void Enemy::updateInput() {
     if(this->getCurrentHealth() > 0)
-        if( (sf::Mouse::isButtonPressed(sf::Mouse::Left)) || (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) ) {
+        if( (sf::Mouse::isButtonPressed(sf::Mouse::Left)) ||
+            (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) ) {
             this->animationComponent->manual_reset("ATTACK");
             setEnemyState(E_ATTACKED);
 
