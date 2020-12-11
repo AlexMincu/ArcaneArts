@@ -2,7 +2,7 @@
 
 #include "Character.h"
 
-enum enemy_states {E_IDLE = 0, E_ATTACKED};
+enum enemy_states {E_IDLE = 0, E_ATTACKED, E_DYING};
 
 class Enemy : public Character{
 public:

@@ -39,6 +39,7 @@ EnemySpawner::EnemySpawner(const float &spawn_pos_x, const float &spawn_pos_y, c
     this->textures = textures;
     this->initTextures();
     this->initText();
+    this->spawn_minotaur();
 }
 
 // Destructor
@@ -67,12 +68,14 @@ void EnemySpawner::updateEnemy(const float &dt){
 
     // Deleting
     if(enemies.at(0)->getCurrentHealth() <= 0) {
-        delete this->enemies.at(0);
-        this->enemies.erase(this->enemies.begin());
+        if(enemies.at(0)->getEnemyState() == E_IDLE) {
+            delete this->enemies.at(0);
+            this->enemies.erase(this->enemies.begin());
 
-        // Killed enemies Text
-        enemies_killed_count++;
-        this->updateText();
+            // Killed enemies Text
+            enemies_killed_count++;
+            this->updateText();
+        }
     }
 }
 

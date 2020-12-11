@@ -110,12 +110,11 @@ void Game::renderDebug(){
 void Game::render() {
     this->window->clear(sf::Color::Black);
 
-    this->renderDebug();
-
     // Display the state
     if(!this->states.empty())
             this->states.top()->render(this->window);
 
+    this->renderDebug();
 
     this->window->display();
 

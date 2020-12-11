@@ -4,8 +4,9 @@
 // Init Private Functions
 void Enemy::initAnimationComponent(sf::Texture &char_texture_sheet) {
     this->createAnimationComponent(char_texture_sheet);
-    this->animationComponent->addAnimation("IDLE", 0.6f, 0, 0, 11, 0, 360, 245);
-    this->animationComponent->addAnimation("ATTACK", 0.3f, 0, 1, 11, 1, 360, 245);
+    this->animationComponent->addAnimation("IDLE", 0.6f, 1, 1, 12, 1, 360, 245);
+    this->animationComponent->addAnimation("ATTACK", 0.3f, 1, 2, 12, 1, 360, 245);
+    this->animationComponent->addAnimation("DYING", 0.4f, 1, 3, 15, 1, 360, 245);
 }
 
 void Enemy::initHealthBar(sf::Texture &health_bar_texture_sheet){
@@ -41,29 +42,31 @@ Enemy::~Enemy() {
 
 // Update
 void Enemy::updateInput() {
-    if(sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-        this->animationComponent->manual_reset("ATTACK");
-        setEnemyState(E_ATTACKED);
+    if(this->getCurrentHealth() > 0)
+        if( (sf::Mouse::isButtonPressed(sf::Mouse::Left)) || (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) ) {
+            this->animationComponent->manual_reset("ATTACK");
+            setEnemyState(E_ATTACKED);
 
-        //debug
-//        std::cout << "MLEFT pressed\n";
-    }
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space)){
-        this->animationComponent->manual_reset("ATTACK");
-        setEnemyState(E_ATTACKED);
-
-        //debug
-//        std::cout << "SPACE pressed\n";
-    }
+            //debug
+            //  std::cout << "MLEFT or SPACE pressed\n";
+        }
 }
 
 void Enemy::updateAnimation(const float &dt) {
     if(this->enemy_state == E_ATTACKED) {
-        if (this->animationComponent->play("ATTACK", dt, &current_health, 10))
-            this->enemy_state = E_IDLE;
+        if (this->animationComponent->play("ATTACK", dt, &current_health, 10)) {
+            if (this->getCurrentHealth() <= 0)
+                this->enemy_state = E_DYING;
+            else
+                this->enemy_state = E_IDLE;
+        }
     }
     if(this->enemy_state == E_IDLE){
         this->animationComponent->play("IDLE", dt);
+    }
+    if(this->enemy_state == E_DYING){
+        if(this->animationComponent->play("DYING", dt))
+            this->enemy_state = E_IDLE;
     }
 }
 

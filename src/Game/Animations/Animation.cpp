@@ -14,9 +14,9 @@ Animation::Animation(sf::Sprite &sprite, sf::Texture &texture_sheet,
 
     // Set the texture for the animation
         // Animated texture positioning inside the sheet
-    this->start_rect = sf::IntRect (start_frame_x * width, start_frame_y * height, width, height);
+    this->start_rect = sf::IntRect ((start_frame_x - 1) * width, (start_frame_y - 1) * height, width, height);
     this->current_rect = this->start_rect;
-    this->end_rect = sf::IntRect (frames_x * width, frames_y * height, width, height);
+    this->end_rect = sf::IntRect (start_rect.left + ((frames_x - 1)* width), start_rect.top + ((frames_y - 1) * height), width, height);
         // Set the texture to the sprite
     this->sprite.setTexture(this->texture_sheet, true);
     this->sprite.setTextureRect(this->start_rect);
