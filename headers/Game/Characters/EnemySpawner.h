@@ -11,7 +11,7 @@ public:
 
     // Update
     void update(const float &dt);
-    void updateEnemy(const float &dt);
+    void deleteKilledEnemies();
     void updateText();
 
     // Render
@@ -23,6 +23,9 @@ public:
 
     // Getters and Setters
     int getEnemiesKilledCount() const;
+
+    //temp
+    int getLastKilled() const;
 
 private:
     // Init Private Functions

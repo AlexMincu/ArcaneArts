@@ -24,12 +24,11 @@ private:
     // Init Private Functions
     void initKeybinds();
     void initTextures();
-    void initEnemySpawner();
     void initText();
     void initBackground();
 
     // Variables
-    EnemySpawner* enemy_spawner;
+    Level *current_level;
 
     // Background
     sf::Sprite background;

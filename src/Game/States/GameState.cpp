@@ -14,14 +14,6 @@ void GameState::initTextures() {
     }
 }
 
-void GameState::initEnemySpawner() {
-    // Find the position to set the enemy in the middle of the window
-    float enemy_pos_x = this->window->getSize().x/2.f - 180.f;       // Enemy image asset:
-    float enemy_pos_y = this->window->getSize().y/2.f - 90.f;      // 360 x 245
-
-    this->enemy_spawner = new EnemySpawner(enemy_pos_x, enemy_pos_y, this->textures);
-}
-
 void GameState::initText() {
     if(!this->font.loadFromFile("assets/Fonts/courier.ttf")) {
         std::cerr << "Failed to load Courier Font for Game State\n";
@@ -44,21 +36,22 @@ void GameState::initBackground(){
 // Constructor/Destructor
 GameState::GameState(sf::RenderWindow *window, std::map<std::string, int> *supportedKeys)
     : State(window, supportedKeys),
-    fps_render_timing{0.f}, dt_frames{0.f}, dt_average{0.f},
-    enemy_spawner{nullptr} {
+    fps_render_timing{0.f}, dt_frames{0.f}, dt_average{0.f}{
 
     this->load();
 
     this->initKeybinds();
     this->initTextures();
     this->initText();
-    this->initEnemySpawner();
     this->initBackground();
+
+    this->current_level = new MinotaurForest(*window, textures);
 }
 
 GameState::~GameState() {
     this->save();
-    delete this->enemy_spawner;
+
+    delete this->current_level;
 }
 
 // Update
@@ -100,7 +93,8 @@ void GameState::updateFPS(const float &dt) {
 void GameState::update(const float &dt) {
     this->updateFPS(dt);
     this->updateInput(dt);
-    this->enemy_spawner->update(dt);
+
+    this->current_level->update(dt);
 }
 
 
@@ -111,11 +105,11 @@ void GameState::render(sf::RenderTarget *target) {
 
     target->draw(background);
 
-    // Enemy spawner
-    this->enemy_spawner->render(target);
-
     // FPS
     this->window->draw(fps);
+
+    // Level
+    this->current_level->render(target);
 }
 
 
@@ -143,9 +137,9 @@ void GameState::save(){
         fout << "===Some character information===" << "\n";
         fout << "===Some items information===" << "\n";
 //        fout << "===Overall progression: how many mobs killed===" << "\n";
-        fout << enemy_spawner->getEnemiesKilledCount() << "\n";
-        fout << "===Current Level===" << "\n";
-        fout << "===Level progression: last mob alive===" << "\n";
+//        fout << current_level->enemy_spawner->getEnemiesKilledCount() << "\n";
+        fout << "===Current Levels===" << "\n";
+        fout << "===Levels progression: last mob alive===" << "\n";
 
         std::cout << "Saving done\n";
         fout.close();

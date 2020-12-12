@@ -66,38 +66,29 @@ void EnemySpawner::updateText(){
     this->enemies_killed.setString(string2print);
 }
 
-void EnemySpawner::updateEnemy(const float &dt){
-    // Spawning
-
-    // temp
-        if(last_killed == 1) {
-            spawn_minotaur2();
-        }
-        else if(last_killed == 2) {
-            spawn_minotaur1();
-        }
-        else {
-            spawn_minotaur1();
-        }
-
-    // Updating
-    enemies.at(0)->update(dt);
-
+void EnemySpawner::deleteKilledEnemies(){
     // Deleting
-    if(enemies.at(0)->getCurrentHealth() <= 0) {
-        if(enemies.at(0)->getEnemyState() == E_IDLE) {
-            delete this->enemies.at(0);
-            this->enemies.erase(this->enemies.begin());
+    if(!enemies.empty()) {
 
-            // Killed enemies Text
-            enemies_killed_count++;
-            this->updateText();
+        if (enemies.at(0)->getCurrentHealth() <= 0) {
+            if (enemies.at(0)->getEnemyState() == E_IDLE) {
+                delete this->enemies.at(0);
+                this->enemies.erase(this->enemies.begin());
+
+                // Killed enemies Text
+                enemies_killed_count++;
+                this->updateText();
+            }
         }
+
     }
 }
 
 void EnemySpawner::update(const float &dt) {
-    this->updateEnemy(dt);
+    if(!enemies.empty())
+        enemies.at(0)->update(dt);
+
+    this->deleteKilledEnemies();
 }
 
 
@@ -139,4 +130,9 @@ void EnemySpawner::spawn_minotaur2() {
 // Getters and Setters
 int EnemySpawner::getEnemiesKilledCount() const {
     return enemies_killed_count;
+}
+
+// temp
+int EnemySpawner::getLastKilled() const {
+    return last_killed;
 }
