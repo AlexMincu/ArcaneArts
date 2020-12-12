@@ -47,6 +47,8 @@ GameState::GameState(sf::RenderWindow *window, std::map<std::string, int> *suppo
     fps_render_timing{0.f}, dt_frames{0.f}, dt_average{0.f},
     enemy_spawner{nullptr} {
 
+    this->load();
+
     this->initKeybinds();
     this->initTextures();
     this->initText();
@@ -55,6 +57,7 @@ GameState::GameState(sf::RenderWindow *window, std::map<std::string, int> *suppo
 }
 
 GameState::~GameState() {
+    this->save();
     delete this->enemy_spawner;
 }
 
@@ -113,4 +116,38 @@ void GameState::render(sf::RenderTarget *target) {
 
     // FPS
     this->window->draw(fps);
+}
+
+
+// Functions
+void GameState::load(){
+    std::cout << "Loading savings...\n";
+    std::fstream fin;
+    fin.open("save.txt");
+    if(fin.is_open()){
+
+
+        std::cout << "Done loading previous savings\n";
+        fin.close();
+    }
+    else
+        std::cout << "No previous savings exist, loading a new game!\n";
+}
+
+
+void GameState::save(){
+    std::cout << "Saving the game...\n";
+    std::fstream fout;
+    fout.open("save.txt", std::ios::out);
+    if(fout.is_open()){
+        fout << "===Some character information===" << "\n";
+        fout << "===Some items information===" << "\n";
+//        fout << "===Overall progression: how many mobs killed===" << "\n";
+        fout << enemy_spawner->getEnemiesKilledCount() << "\n";
+        fout << "===Current Level===" << "\n";
+        fout << "===Level progression: last mob alive===" << "\n";
+
+        std::cout << "Saving done\n";
+        fout.close();
+    }
 }

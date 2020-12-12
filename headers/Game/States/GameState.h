@@ -16,6 +16,10 @@ public:
     // Render
     void render(sf::RenderTarget *target) override;
 
+    // Functions
+    void load();
+    void save();
+
 private:
     // Init Private Functions
     void initKeybinds();

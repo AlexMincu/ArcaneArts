@@ -6,6 +6,7 @@
 #include <map>
 #include <string>
 #include <sstream>
+#include <fstream>
 
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>

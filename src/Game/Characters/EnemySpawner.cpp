@@ -134,3 +134,9 @@ void EnemySpawner::spawn_minotaur2() {
         this->last_killed = 2;
     }
 }
+
+
+// Getters and Setters
+int EnemySpawner::getEnemiesKilledCount() const {
+    return enemies_killed_count;
+}

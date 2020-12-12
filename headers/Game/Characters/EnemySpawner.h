@@ -21,6 +21,9 @@ public:
     void spawn_minotaur1();
     void spawn_minotaur2();
 
+    // Getters and Setters
+    int getEnemiesKilledCount() const;
+
 private:
     // Init Private Functions
     void initTextures();
