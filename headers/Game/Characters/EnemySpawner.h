@@ -12,7 +12,6 @@ public:
     // Update
     void update(const float &dt);
     void deleteKilledEnemies();
-    void updateText();
 
     // Render
     void render(sf::RenderTarget *target);
@@ -23,6 +22,7 @@ public:
 
     // Getters and Setters
     int getEnemiesKilledCount() const;
+    bool isEnemySpawned() const;
 
     //temp
     int getLastKilled() const;
@@ -30,7 +30,7 @@ public:
 private:
     // Init Private Functions
     void initTextures();
-    void initText();
+//    void initText();
 
     // Variables
     std::vector<Enemy*> enemies;
@@ -40,8 +40,6 @@ private:
     std::map<std::string, sf::Texture> textures;
 
     int enemies_killed_count;
-    sf::Font font;
-    sf::Text enemies_killed;
 
     //temp
     int last_killed;

@@ -30,10 +30,6 @@ private:
     // Variables
     Level *current_level;
 
-    // Background
-    sf::Sprite background;
-    sf::Texture background_texture;
-
     // FPS
     sf::Font font;
     sf::Text fps;

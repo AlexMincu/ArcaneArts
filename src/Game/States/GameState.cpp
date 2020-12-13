@@ -8,10 +8,6 @@ void GameState::initKeybinds() {
 }
 
 void GameState::initTextures() {
-    if(!background_texture.loadFromFile("assets/backgrounds/stage1_background.png")) {
-        std::cerr << "Failed to load Background1 for Game State\n";
-        exit(1);
-    }
 }
 
 void GameState::initText() {
@@ -27,12 +23,6 @@ void GameState::initText() {
     this->fps.setPosition(5.f, 5.f);
 }
 
-void GameState::initBackground(){
-    background.setTexture(this->background_texture);
-    background.setPosition(0, 0);
-}
-
-
 // Constructor/Destructor
 GameState::GameState(sf::RenderWindow *window, std::map<std::string, int> *supportedKeys)
     : State(window, supportedKeys),
@@ -43,14 +33,12 @@ GameState::GameState(sf::RenderWindow *window, std::map<std::string, int> *suppo
     this->initKeybinds();
     this->initTextures();
     this->initText();
-    this->initBackground();
 
-    this->current_level = new MinotaurForest(*window, textures);
+    this->current_level = new MinotaurForest(window, textures);
 }
 
 GameState::~GameState() {
     this->save();
-
     delete this->current_level;
 }
 
@@ -103,8 +91,6 @@ void GameState::render(sf::RenderTarget *target) {
     if(!target)
         target = this->window;
 
-    target->draw(background);
-
     // FPS
     this->window->draw(fps);
 
@@ -131,17 +117,19 @@ void GameState::load(){
 
 void GameState::save(){
     std::cout << "Saving the game...\n";
-    std::fstream fout;
-    fout.open("save.txt", std::ios::out);
-    if(fout.is_open()){
-        fout << "===Some character information===" << "\n";
-        fout << "===Some items information===" << "\n";
-//        fout << "===Overall progression: how many mobs killed===" << "\n";
-//        fout << current_level->enemy_spawner->getEnemiesKilledCount() << "\n";
-        fout << "===Current Levels===" << "\n";
-        fout << "===Levels progression: last mob alive===" << "\n";
 
-        std::cout << "Saving done\n";
+    std::fstream fout;
+    fout.open("save.txt", std::fstream::out);
+    fout.close();
+
+    fout.open("save.txt", std::fstream::app);
+
+    if(fout.is_open()){
+        fout << "=== GameState savings... ===" << "\n";
+        fout << "current_level = " << this->current_level->getTitle() << "\n";
+        fout << "=== GameState savings done ===\n\n";
         fout.close();
     }
+
+    std::cout << "Saving the game done\n";
 }
