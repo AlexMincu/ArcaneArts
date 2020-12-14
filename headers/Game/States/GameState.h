@@ -21,12 +21,6 @@ public:
     void save();
 
 private:
-    // Init Private Functions
-    void initKeybinds();
-    void initTextures();
-    void initText();
-    void initBackground();
-
     // Variables
     Level *current_level;
 
@@ -37,4 +31,9 @@ private:
     float dt_average;
     float dt_frames;
 
+    // Init Private Functions
+    void initKeybinds();
+    void initTextures();
+    void initText();
+    void initBackground();
 };

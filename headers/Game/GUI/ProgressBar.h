@@ -19,26 +19,20 @@ public:
     // Render
     virtual void render(sf::RenderTarget *target);
 
-    // Functions
-
-    // Getters and Setters
-
 private:
-    // Init Private Functions
-    void initHealthBar(const float& x, const float & y);
-    void initText();
-
-    // Variables
+     // Variables
         // Texture
     sf::Sprite sprite;
     sf::Texture &texture_sheet;
     sf::RectangleShape progress;
-
+        // Dynamic component (a resizeable rectangle)
     sf::Vector2f progress_size;
-
+        // Text
     sf::Font font;
     sf::Text health;
 
 
-
+    // Init Private Functions
+    void initHealthBar(const float& x, const float & y);
+    void initText();
 };

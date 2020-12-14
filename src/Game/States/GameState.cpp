@@ -101,35 +101,39 @@ void GameState::render(sf::RenderTarget *target) {
 
 // Functions
 void GameState::load(){
+    //Debug
     std::cout << "Loading savings...\n";
+
     std::fstream fin;
+
     fin.open("save.txt");
     if(fin.is_open()){
 
-
+        //Debug
         std::cout << "Done loading previous savings\n";
         fin.close();
     }
     else
+        //Debug
         std::cout << "No previous savings exist, loading a new game!\n";
 }
 
 
 void GameState::save(){
+    //Debug
     std::cout << "Saving the game...\n";
 
     std::fstream fout;
+
     fout.open("save.txt", std::fstream::out);
     fout.close();
 
     fout.open("save.txt", std::fstream::app);
-
     if(fout.is_open()){
-        fout << "=== GameState savings... ===" << "\n";
-        fout << "current_level = " << this->current_level->getTitle() << "\n";
-        fout << "=== GameState savings done ===\n\n";
+        fout << "current_level = " << this->current_level->getTitle() << "\n\n";
         fout.close();
     }
 
+    //Debug
     std::cout << "Saving the game done\n";
 }

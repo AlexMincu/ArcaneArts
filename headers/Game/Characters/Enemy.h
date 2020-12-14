@@ -16,9 +16,6 @@ public:
     void updateInput();
     void updateAnimation(const float &dt);
 
-    // Render
-        //Use render(sf::RenderTarget *target);                         from Character
-
     // Functions
         //Use createAnimationComponent(sf::Texture &texture_sheet);     from Character
 

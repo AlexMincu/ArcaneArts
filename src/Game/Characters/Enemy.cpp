@@ -25,7 +25,7 @@ void Enemy::initHealthBar(sf::Texture &health_bar_texture_sheet){
 // Constructor/Destructor
 Enemy::Enemy(const float &hp, const float &x, const float &y,
              sf::Texture &char_texture_sheet, sf::Texture &health_bar_texture_sheet)
-: enemy_state{E_IDLE} {
+             : enemy_state{E_IDLE} {
     this->initAnimationComponent(char_texture_sheet);
     this->setPosition(x, y);
 
@@ -44,7 +44,7 @@ Enemy::~Enemy() {
 void Enemy::updateInput() {
     if(this->getCurrentHealth() > 0)
         if( (sf::Mouse::isButtonPressed(sf::Mouse::Left)) ||
-            (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) ) {
+        (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) ) {
             this->animationComponent->manual_reset("ATTACK");
             setEnemyState(E_ATTACKED);
 
@@ -78,12 +78,6 @@ void Enemy::update(const float &dt) {
     // Progress Bars
     this->hp_bar->update(this->getCurrentHealthPercentage(), dt);
 }
-
-
-// Render
-
-
-// Functions
 
 // Getters and Setters
 unsigned short Enemy::getEnemyState() const {

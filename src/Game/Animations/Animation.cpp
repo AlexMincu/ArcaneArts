@@ -8,9 +8,9 @@ Animation::Animation(sf::Sprite &sprite, sf::Texture &texture_sheet,
                      int start_frame_x, int start_frame_y,
                      int frames_x, int frames_y,
                      int width, int height)
-: sprite(sprite), texture_sheet(texture_sheet),
-  animation_timer(animation_timer), timer{0.f}, done{false},
-  width(width), height(height) {
+                : sprite(sprite), texture_sheet(texture_sheet),
+                  animation_timer(animation_timer), timer{0.f}, done{false},
+                  width(width), height(height) {
 
     // Set the texture for the animation
         // Animated texture positioning inside the sheet
@@ -33,7 +33,7 @@ const bool & Animation::play(const std::string &key, const float &dt, float* hp,
      *      x - number of images inside the sheet
      *      dt - the times is take to update and render a frame
      *
-     *      animation_timer - How much time in seconds will an animation sheet render
+     *      animation_timer - How much time in seconds will an animation render
      */
 
     this->done = false;

@@ -6,9 +6,9 @@ set(CMAKE_CXX_STANDARD 20)
 add_executable(ArcaneArts
         src/main.cpp
         src/Game/Characters/Character.cpp headers/Game/Characters/Character.h
-        src/Items/Item.cpp headers/Items/Item.h
-        src/Items/Weapon.cpp headers/Items/Weapon.h
-        src/Items/Sword.cpp headers/Items/Sword.h
+        src/Game/Items/Item.cpp headers/Game/Items/Item.h
+        src/Game/Items/Weapon.cpp headers/Game/Items/Weapon.h
+        src/Game/Items/Sword.cpp headers/Game/Items/Sword.h
         src/Game/Characters/Enemy.cpp headers/Game/Characters/Enemy.h
         src/Game/Game.cpp headers/Game/Game.h
         src/Game/States/State.cpp headers/Game/States/State.h

@@ -14,23 +14,30 @@ public:
     void updateProgress() override;
     void updateText() override;
 
-    // Render
-
     // Functions
     void run() override;
 
 protected:
 
 private:
+    // Inherited from Level
+    /*
+        float progress;
+        int total_enemies;
+        int current_enemies;
+
+        EnemySpawner* enemy_spawner;
+
+        sf::Font font;
+        sf::Text title;
+        sf::Text enemies_killed;
+        sf::Text enemies_killed_count;
+
+        sf::Sprite background;
+        sf::Texture background_texture;
+    */
+
     // Init functions
     void initSettings();
 
-    // Variables
-        //    float progression;        from Level
-        //    int total_enemies;        from Level
-        //    int current_enemies;      from Level
-
-    // Components
-        //    EnemySpawner* enemy_spawner;  from Level
- //to-do >>>>       //Background                        from Level
 };

@@ -65,17 +65,17 @@ void EnemySpawner::deleteKilledEnemies(){
 // Render
 void EnemySpawner::render(sf::RenderTarget *target){
     // Mobs
-    for (auto *enemy : this->enemies)
-    {
-        enemy->render(target);
-    }
+    if(!this->enemies.empty())
+        this->enemies[0]->render(target);
 }
 
 
 // Functions
 void EnemySpawner::spawn_minotaur1() {
+    //DEBUG
     std::cout << "Spawning minotaru1\n";
-    if(this->enemies.empty()){  // Recheck for safety
+
+    if(this->enemies.empty()){
         this->enemies.push_back(new Enemy (50, this->spawn_pos_x, this->spawn_pos_y,
                                            this->textures["MINOTAUR_SHEET1"],
                                            this->textures["HP_BAR_TEXTURE"]));
@@ -83,8 +83,10 @@ void EnemySpawner::spawn_minotaur1() {
 }
 
 void EnemySpawner::spawn_minotaur2() {
+    //DEBUG
     std::cout << "Spawning minotaru2\n";
-    if(this->enemies.empty()){  // Recheck for safety
+
+    if(this->enemies.empty()){
         this->enemies.push_back(new Enemy (100, this->spawn_pos_x, this->spawn_pos_y,
                                            this->textures["MINOTAUR_SHEET2"],
                                            this->textures["HP_BAR_TEXTURE"]));

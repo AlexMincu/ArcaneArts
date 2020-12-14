@@ -27,7 +27,8 @@ void MinotaurForest::initSettings() {
 // Constructor
 MinotaurForest::MinotaurForest(const sf::Window *window,
                                const std::map<std::string, sf::Texture>& textures)
-: Level(window, textures){
+                               : Level(window, textures) {
+
     this->initSettings();
 }
 
@@ -79,8 +80,7 @@ void MinotaurForest::updateText() {
         // Upper half of the screen ( 600x800 resolution )
         this->enemies_killed_count.setPosition(300, 200);
         // Added half of the text width to x_pos to center it horizontally
-        this->enemies_killed_count.setPosition(this->enemies_killed_count.getPosition().x - this->enemies_killed_count.getGlobalBounds().width/2,
-                                               this->enemies_killed_count.getPosition().y);
+        this->enemies_killed_count.setPosition(
+                this->enemies_killed_count.getPosition().x - this->enemies_killed_count.getGlobalBounds().width/2,
+                this->enemies_killed_count.getPosition().y);
 }
-
-// Getters and Setters

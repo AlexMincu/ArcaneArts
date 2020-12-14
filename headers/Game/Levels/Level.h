@@ -32,17 +32,15 @@ protected:
 
     // Components
     EnemySpawner* enemy_spawner;
-    //Background
-
-    // Text
+        // Text
     sf::Font font;
     sf::Text title;
     sf::Text enemies_killed;
     sf::Text enemies_killed_count;
-
-    // Background
+        // Background
     sf::Sprite background;
     sf::Texture background_texture;
+
 private:
     // Init functions
     void initEnemySpawner(const sf::Window *window,

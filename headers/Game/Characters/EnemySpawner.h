@@ -24,23 +24,15 @@ public:
     int getEnemiesKilledCount() const;
     bool isEnemySpawned() const;
 
-    //temp
-    int getLastKilled() const;
-
 private:
-    // Init Private Functions
-    void initTextures();
-//    void initText();
-
     // Variables
     std::vector<Enemy*> enemies;
     float spawn_pos_x;
     float spawn_pos_y;
+    int enemies_killed_count;
 
     std::map<std::string, sf::Texture> textures;
 
-    int enemies_killed_count;
-
-    //temp
-    int last_killed;
+    // Init Private Functions
+    void initTextures();
 };

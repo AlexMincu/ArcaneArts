@@ -63,6 +63,7 @@ void Level::initText() {
 // Constructor
 Level::Level(const sf::Window *window,
              const std::map<std::string, sf::Texture>& textures) {
+
     this->initEnemySpawner(window, textures);
     this->initText();
 }
@@ -97,18 +98,18 @@ void Level::render(sf::RenderTarget *target) {
 
 // Functions
 void Level::save() {
+    // Debug
     std::cout << "Saving Level...\n";
 
     std::fstream fout;
     fout.open("save.txt", std::fstream::app);
     if(fout.is_open()){
-        fout << "=== Level savings... ===" << "\n";
         fout << "progress = " << progress << "\n";
-        fout << "current_enemies = " << current_enemies << "\n";
-        fout << "=== Level savings done ===\n\n";
+        fout << "current_enemies = " << current_enemies << "\n\n";
         fout.close();
     }
 
+    // Debug
     std::cout << "Saving Level done\n";
 }
 
