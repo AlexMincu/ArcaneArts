@@ -5,9 +5,15 @@
 void GameState::initKeybinds() {
     this->keybinds ["ATTACK"] = this->supportedKeys->at("Space");
     this->keybinds ["EXIT"] = this->supportedKeys->at("Escape");
+
+    this->keybinds ["UP"] = this->supportedKeys->at("Up");
+    this->keybinds ["DOWN"] = this->supportedKeys->at("Down");
+    this->keybinds ["LEFT"] = this->supportedKeys->at("Left");
+    this->keybinds ["RIGHT"] = this->supportedKeys->at("Right");
 }
 
 void GameState::initTextures() {
+
 }
 
 void GameState::initText() {
@@ -23,10 +29,22 @@ void GameState::initText() {
     this->fps.setPosition(5.f, 5.f);
 }
 
+void GameState::initPausePop(){
+    this->pause_pop = new PopMessage();
+
+    this->pause_pop->setWindowPosition( static_cast<float>(this->window->getSize().x) / 2 -
+                                        this->pause_pop->getWindowSize().width / 2,
+                                        static_cast<float>(this->window->getSize().y) / 2 -
+                                        this->pause_pop->getWindowSize().height / 2 );
+
+    this->pause_pop->setMessageTitle("GAME PAUSED");
+}
+
 // Constructor/Destructor
 GameState::GameState(sf::RenderWindow *window, std::map<std::string, int> *supportedKeys)
-    : State(window, supportedKeys),
-    fps_render_timing{0.f}, dt_frames{0.f}, dt_average{0.f}{
+                     : State(window, supportedKeys),
+    fps_render_timing{0.f}, dt_frames{0.f}, dt_average{0.f},
+    paused{false}, pause_pop{nullptr} {
 
     this->load();
 
@@ -35,11 +53,15 @@ GameState::GameState(sf::RenderWindow *window, std::map<std::string, int> *suppo
     this->initText();
 
     this->current_level = new MinotaurForest(window, textures);
+    this->level = minotaur_forest;
+
+    this->initPausePop();
 }
 
 GameState::~GameState() {
     this->save();
     delete this->current_level;
+    delete this->pause_pop;
 }
 
 // Update
@@ -48,8 +70,26 @@ void GameState::updateInput(const float &dt) {
     this->updateMousePosition();
 
     // Keyboard
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("EXIT"))))
-        this->endState();
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("EXIT")))){
+        this->paused = true;
+    }
+
+
+    if(this->paused) {
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("UP")))) {
+
+        } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("DOWN")))) {
+
+        } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("LEFT")))) {
+
+        } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("RIGHT")))) {
+
+        }
+
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("EXIT")))){
+            this->endState();
+        }
+    }
 }
 
 void GameState::updateFPS(const float &dt) {
@@ -102,6 +142,9 @@ void GameState::render(sf::RenderTarget *target) {
 
     // FPS
     this->window->draw(fps);
+
+    // Pause Pop
+    this->pause_pop->render(target);
 }
 
 
@@ -136,7 +179,7 @@ void GameState::save(){
 
     fout.open("save.txt", std::fstream::app);
     if(fout.is_open()){
-        fout << "current_level = " << this->current_level->getTitle() << "\n\n";
+        fout << "current_level = " << this->level << "\n\n";
         fout.close();
     }
 

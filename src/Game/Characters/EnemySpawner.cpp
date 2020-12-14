@@ -18,7 +18,7 @@ void EnemySpawner::initTextures() {
         exit(1);
     }
 
-    if(!this->textures["HP_BAR_TEXTURE"].loadFromFile("assets/hp_bar.png")) {
+    if(!this->textures["HP_BAR_TEXTURE"].loadFromFile("assets/GUI/hp_bar.png")) {
         std::cerr << "Failed to load ProgressBar Texture\n";
         exit(1);
     }

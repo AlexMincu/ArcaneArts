@@ -16,6 +16,10 @@ void Game::initWindow() {
 void Game::initKeys() {
     this->supportedKeys["Space"] = sf::Keyboard::Key::Space;
     this->supportedKeys["Escape"] = sf::Keyboard::Key::Escape;
+    this->supportedKeys["Up"] = sf::Keyboard::Key::Up;
+    this->supportedKeys["Down"] = sf::Keyboard::Key::Down;
+    this->supportedKeys["Left"] = sf::Keyboard::Key::Left;
+    this->supportedKeys["Right"] = sf::Keyboard::Key::Right;
 }
 
 void Game::initStates() {

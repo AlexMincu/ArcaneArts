@@ -1,6 +1,9 @@
 #pragma once
 
 #include "State.h"
+#include "Game/GUI/PopMessage.h"
+
+enum Levels {minotaur_forest = 1};
 
 class GameState : public State {
 public:
@@ -23,6 +26,7 @@ public:
 private:
     // Variables
     Level *current_level;
+    unsigned short level;
 
     // FPS
     sf::Font font;
@@ -31,9 +35,13 @@ private:
     float dt_average;
     float dt_frames;
 
+    // Pause
+    bool paused;
+    PopMessage *pause_pop;
+
     // Init Private Functions
     void initKeybinds();
     void initTextures();
     void initText();
-    void initBackground();
+    void initPausePop();
 };
