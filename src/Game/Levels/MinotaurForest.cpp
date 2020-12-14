@@ -60,9 +60,12 @@ void MinotaurForest::run() {
         switch(current_enemies){
             case 0:
             case 1:
-            case 2: this->enemy_spawner->spawn_minotaur1(); break;
-            case 3: this->enemy_spawner->spawn_minotaur2(); break;
-            case 4: this->enemy_spawner->spawn_minotaur2(); break;
+            case 2:
+                this->enemy_spawner->spawn(50, Mob::MINOTAUR); break;
+            case 3:
+                this->enemy_spawner->spawn(100, Mob::MINOTAUR2); break;
+            case 4:
+                this->enemy_spawner->spawn(250, Mob::MINOTAUR3); break;
             default: std::cout << "Something's wrong - MinotaurForest - run()\n";
         }
     }

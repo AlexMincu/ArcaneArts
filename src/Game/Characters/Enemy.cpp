@@ -49,7 +49,7 @@ void Enemy::updateInput() {
             setEnemyState(E_ATTACKED);
 
             //debug
-              std::cout << "MLEFT or SPACE pressed\n";
+//              std::cout << "MLEFT or SPACE pressed\n";
         }
 }
 

@@ -2,6 +2,8 @@
 
 #include "Enemy.h"
 
+enum Mob {MINOTAUR = 0, MINOTAUR2, MINOTAUR3};
+
 class EnemySpawner {
 public:
     // Constructor/Destructor
@@ -16,13 +18,12 @@ public:
     // Render
     void render(sf::RenderTarget *target);
 
-    // Functions
-    void spawn_minotaur1();
-    void spawn_minotaur2();
-
     // Getters and Setters
     int getEnemiesKilledCount() const;
     bool isEnemySpawned() const;
+
+    // Functions
+    void spawn(const float& hp, const unsigned short& mob);
 
 private:
     // Variables

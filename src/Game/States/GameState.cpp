@@ -59,6 +59,12 @@ void GameState::updateFPS(const float &dt) {
 
    if(fps_render_timing >= 0.2) {
         float a = dt_frames / dt_average;
+
+       if(a < 500)
+           fps.setFillColor(sf::Color::Red);
+       else
+           fps.setFillColor(sf::Color::Green);
+
         std::ostringstream ss;
         ss << a;
         ss << " FPS\n";
@@ -91,11 +97,11 @@ void GameState::render(sf::RenderTarget *target) {
     if(!target)
         target = this->window;
 
-    // FPS
-    this->window->draw(fps);
-
     // Level
     this->current_level->render(target);
+
+    // FPS
+    this->window->draw(fps);
 }
 
 

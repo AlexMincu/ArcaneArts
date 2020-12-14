@@ -3,13 +3,18 @@
 
 // Init Private Functions
 void EnemySpawner::initTextures() {
-    if(!this->textures["MINOTAUR_SHEET1"].loadFromFile("assets/enemies/minotaur_sheet1.png")) {
+    if(!this->textures["MINOTAUR1_SHEET"].loadFromFile("assets/enemies/minotaur1_sheet.png")) {
         std::cerr << "Failed to load Minotaur1 Sheet\n";
         exit(1);
     }
 
-    if(!this->textures["MINOTAUR_SHEET2"].loadFromFile("assets/enemies/minotaur_sheet2.png")) {
+    if(!this->textures["MINOTAUR2_SHEET"].loadFromFile("assets/enemies/minotaur2_sheet.png")) {
         std::cerr << "Failed to load Minotaur2 Sheet\n";
+        exit(1);
+    }
+
+    if(!this->textures["MINOTAUR3_SHEET"].loadFromFile("assets/enemies/minotaur3_sheet.png")) {
+        std::cerr << "Failed to load Minotaur3 Sheet\n";
         exit(1);
     }
 
@@ -66,31 +71,7 @@ void EnemySpawner::deleteKilledEnemies(){
 void EnemySpawner::render(sf::RenderTarget *target){
     // Mobs
     if(!this->enemies.empty())
-        this->enemies[0]->render(target);
-}
-
-
-// Functions
-void EnemySpawner::spawn_minotaur1() {
-    //DEBUG
-    std::cout << "Spawning minotaru1\n";
-
-    if(this->enemies.empty()){
-        this->enemies.push_back(new Enemy (50, this->spawn_pos_x, this->spawn_pos_y,
-                                           this->textures["MINOTAUR_SHEET1"],
-                                           this->textures["HP_BAR_TEXTURE"]));
-    }
-}
-
-void EnemySpawner::spawn_minotaur2() {
-    //DEBUG
-    std::cout << "Spawning minotaru2\n";
-
-    if(this->enemies.empty()){
-        this->enemies.push_back(new Enemy (100, this->spawn_pos_x, this->spawn_pos_y,
-                                           this->textures["MINOTAUR_SHEET2"],
-                                           this->textures["HP_BAR_TEXTURE"]));
-    }
+        this->enemies.at(0)->render(target);
 }
 
 
@@ -101,4 +82,40 @@ int EnemySpawner::getEnemiesKilledCount() const {
 
 bool EnemySpawner::isEnemySpawned() const {
     return !(enemies.empty());
+}
+
+
+// Functions
+void EnemySpawner::spawn(const float& hp, const unsigned short& mob) {
+    if(this->enemies.empty()){
+
+        if(mob == Mob::MINOTAUR) {
+
+            //DEBUG
+            std::cout << "Spawning minotaru1\n";
+
+            this->enemies.push_back(new Enemy(hp, this->spawn_pos_x, this->spawn_pos_y,
+                                              this->textures["MINOTAUR1_SHEET"],
+                                              this->textures["HP_BAR_TEXTURE"]));
+        }
+        else if(mob == Mob::MINOTAUR2) {
+
+            //DEBUG
+            std::cout << "Spawning minotaru2\n";
+
+            this->enemies.push_back(new Enemy(hp, this->spawn_pos_x, this->spawn_pos_y,
+                                              this->textures["MINOTAUR2_SHEET"],
+                                              this->textures["HP_BAR_TEXTURE"]));
+        }
+        else if(mob == Mob::MINOTAUR3) {
+
+            //DEBUG
+            std::cout << "Spawning minotaru3\n";
+
+            this->enemies.push_back(new Enemy(hp, this->spawn_pos_x, this->spawn_pos_y,
+                                              this->textures["MINOTAUR3_SHEET"],
+                                              this->textures["HP_BAR_TEXTURE"]));
+        }
+    }
+
 }
