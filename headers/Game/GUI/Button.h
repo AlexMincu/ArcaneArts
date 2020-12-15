@@ -12,7 +12,7 @@ public:
     virtual ~Button();
 
     // Update
-    void update(const float &dt);
+    bool isPressed(const sf::Vector2i& mousePos);
 
     // Render
     virtual void render(sf::RenderTarget *target);

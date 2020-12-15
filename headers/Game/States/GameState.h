@@ -5,6 +5,7 @@
 #include "Game/GUI/Button.h"
 
 enum Levels {minotaur_forest = 1};
+enum GameStates {paused = 0, running = 1};
 
 class GameState : public State {
 public:
@@ -37,7 +38,7 @@ private:
     float dt_frames;
 
     // Pause
-    bool paused;
+    unsigned int state;
     PopMessage *pause_pop;
     Button *return_button;
     Button *quit_button;

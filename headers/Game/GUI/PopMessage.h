@@ -11,9 +11,6 @@ public:
     PopMessage();
     virtual ~PopMessage();
 
-    // Update
-    void update(const float &dt);
-
     // Render
     virtual void render(sf::RenderTarget *target);
 

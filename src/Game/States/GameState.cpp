@@ -5,11 +5,6 @@
 void GameState::initKeybinds() {
     this->keybinds ["ATTACK"] = this->supportedKeys->at("Space");
     this->keybinds ["EXIT"] = this->supportedKeys->at("Escape");
-
-    this->keybinds ["UP"] = this->supportedKeys->at("Up");
-    this->keybinds ["DOWN"] = this->supportedKeys->at("Down");
-    this->keybinds ["LEFT"] = this->supportedKeys->at("Left");
-    this->keybinds ["RIGHT"] = this->supportedKeys->at("Right");
 }
 
 void GameState::initTextures() {
@@ -39,6 +34,7 @@ void GameState::initPausePop(){
                                         this->pause_pop->getWindowSize().height / 2 );
 
     this->pause_pop->setMessageTitle("GAME PAUSED");
+    this->pause_pop->centerMessageTitle();
 
     // Return Button
     this->return_button = new Button();
@@ -63,7 +59,7 @@ void GameState::initPausePop(){
 GameState::GameState(sf::RenderWindow *window, std::map<std::string, int> *supportedKeys)
                      : State(window, supportedKeys),
     fps_render_timing{0.f}, dt_frames{0.f}, dt_average{0.f},
-    paused{false}, pause_pop{nullptr} {
+    state{1}, pause_pop{nullptr} {
 
     this->load();
 
@@ -91,23 +87,23 @@ void GameState::updateInput(const float &dt) {
     this->updateMousePosition();
 
     // Keyboard
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("EXIT")))){
-        this->paused = true;
+    if(this->state == running) {
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("EXIT")))) {
+            this->state = paused;
+            sf::sleep(sf::seconds(0.25));
+        }
     }
 
-
-    if(this->paused) {
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("UP")))) {
-
-        } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("DOWN")))) {
-
-        } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("LEFT")))) {
-
-        } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("RIGHT")))) {
-
+    if(this->state == paused){
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("EXIT")))) {
+            this->state = running;
+            sf::sleep(sf::seconds(0.25));
         }
-
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("EXIT")))){
+        if (this->return_button->isPressed(this->mouse_pos_window)) {
+            this->state = running;
+            sf::sleep(sf::seconds(0.25));
+        }
+        if (this->quit_button->isPressed(this->mouse_pos_window)) {
             this->endState();
         }
     }
@@ -149,7 +145,9 @@ void GameState::update(const float &dt) {
     this->updateFPS(dt);
     this->updateInput(dt);
 
-    this->current_level->update(dt);
+    if(this->state == running) {
+        this->current_level->update(dt);
+    }
 }
 
 
@@ -159,15 +157,22 @@ void GameState::render(sf::RenderTarget *target) {
         target = this->window;
 
     // Level
-    this->current_level->render(target);
+    if(this->state == running) {
+        this->current_level->render(target, running);
+    }
+    if(this->state == paused) {
+        this->current_level->render(target, paused);
+    }
 
     // FPS
     this->window->draw(fps);
 
     // Pause Pop
-    this->pause_pop->render(target);
-    this->return_button->render(target);
-    this->quit_button->render(target);
+    if(this->state == paused) {
+        this->pause_pop->render(target);
+        this->return_button->render(target);
+        this->quit_button->render(target);
+    }
 }
 
 

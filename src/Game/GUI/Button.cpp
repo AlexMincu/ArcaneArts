@@ -38,6 +38,14 @@ Button::~Button() {
 }
 
 
+// Update
+bool Button::isPressed(const sf::Vector2i& mousePos){
+    if(this->window.getGlobalBounds().contains(mousePos.x, mousePos.y))
+        if(sf::Mouse::isButtonPressed(sf::Mouse::Left))
+            return true;
+}
+
+
 // Render
 void Button::render(sf::RenderTarget *target) {
     target->draw(this->window);

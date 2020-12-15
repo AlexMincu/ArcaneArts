@@ -15,7 +15,7 @@ public:
     virtual void updateText() = 0;
 
     // Render
-    virtual void render(sf::RenderTarget *target);
+    virtual void render(sf::RenderTarget *target, const unsigned short& state);
 
     // Functions
     virtual void run() = 0;

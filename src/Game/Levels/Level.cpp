@@ -81,18 +81,28 @@ void Level::update(const float &dt){
 }
 
 // Render
-void Level::render(sf::RenderTarget *target) {
+void Level::render(sf::RenderTarget *target, const unsigned short& state) {
 
-    // Background
-    target->draw(this->background);
+    if(state == 1) {    // If the game is running
+        // Background
+        target->draw(this->background);
 
-    // Mobs
-    this->enemy_spawner->render(target);
+        // Mobs
+        this->enemy_spawner->render(target);
 
-    // Texts
-    target->draw(title);
-    target->draw(enemies_killed);
-    target->draw(enemies_killed_count);
+        // Texts
+        target->draw(title);
+        target->draw(enemies_killed);
+        target->draw(enemies_killed_count);
+    }
+
+    if(state == 0) {    // If the game is paused
+        // Background
+        target->draw(this->background);
+
+        // Texts
+        target->draw(title);
+    }
 }
 
 
