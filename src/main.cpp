@@ -2,8 +2,8 @@
 
 int main(){
 
-    Game game;
-    game.run();
+    Game ArcaneArts;
+    ArcaneArts.run();
 
     return 0;
 }

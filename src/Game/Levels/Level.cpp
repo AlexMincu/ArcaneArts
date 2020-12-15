@@ -109,7 +109,7 @@ void Level::render(sf::RenderTarget *target, const unsigned short& state) {
 // Functions
 void Level::save() {
     // Debug
-    std::cout << "Saving Level...\n";
+    std::cout << "[Level] Saving...\n";
 
     std::fstream fout;
     fout.open("save.txt", std::fstream::app);
@@ -120,7 +120,7 @@ void Level::save() {
     }
 
     // Debug
-    std::cout << "Saving Level done\n";
+    std::cout << "[Level] Saving done\n";
 }
 
 

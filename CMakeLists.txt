@@ -11,8 +11,6 @@ add_executable(ArcaneArts
         src/Game/Items/Sword.cpp headers/Game/Items/Sword.h
         src/Game/Characters/Enemy.cpp headers/Game/Characters/Enemy.h
         src/Game/Game.cpp headers/Game/Game.h
-        src/Game/States/State.cpp headers/Game/States/State.h
-        src/Game/States/GameState.cpp headers/Game/States/GameState.h
         src/Game/Animations/AnimationComponent.cpp headers/Game/Animations/AnimationComponent.h
         src/Game/Animations/Animation.cpp headers/Game/Animations/Animation.h
         src/Game/GUI/ProgressBar.cpp headers/Game/GUI/ProgressBar.h src/Game/Characters/EnemySpawner.cpp headers/Game/Characters/EnemySpawner.h src/Game/Levels/Level.cpp headers/Game/Levels/Level.h src/Game/Levels/MinotaurForest.cpp headers/Game/Levels/MinotaurForest.h src/Game/GUI/PopMessage.cpp headers/Game/GUI/PopMessage.h src/Game/GUI/Button.cpp headers/Game/GUI/Button.h)

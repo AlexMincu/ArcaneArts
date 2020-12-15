@@ -66,7 +66,7 @@ void MinotaurForest::run() {
                 this->enemy_spawner->spawn(100, Mob::MINOTAUR2); break;
             case 4:
                 this->enemy_spawner->spawn(250, Mob::MINOTAUR3); break;
-            default: std::cout << "Something's wrong - MinotaurForest - run()\n";
+            default: std::cout << "[Level] Something's wrong in run()\n";
         }
     }
 }
