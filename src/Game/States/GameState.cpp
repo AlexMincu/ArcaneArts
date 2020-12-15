@@ -30,6 +30,7 @@ void GameState::initText() {
 }
 
 void GameState::initPausePop(){
+    // Pop Window
     this->pause_pop = new PopMessage();
 
     this->pause_pop->setWindowPosition( static_cast<float>(this->window->getSize().x) / 2 -
@@ -38,6 +39,24 @@ void GameState::initPausePop(){
                                         this->pause_pop->getWindowSize().height / 2 );
 
     this->pause_pop->setMessageTitle("GAME PAUSED");
+
+    // Return Button
+    this->return_button = new Button();
+    this->return_button->setSize(160, 80);
+    this->return_button->setTextSize(18);
+    this->return_button->setText("Return");
+    this->return_button->setPosition(this->pause_pop->getWindowPosition().x + this->pause_pop->getWindowSize().width/2 - this->return_button->getSize().width/2,
+                                     this->pause_pop->getWindowPosition().y + this->pause_pop->getWindowSize().height/2 - 60);
+    this->return_button->centerText();
+
+    // Quit Button
+    this->quit_button = new Button();
+    this->quit_button->setSize(160, 80);
+    this->quit_button->setTextSize(18);
+    this->quit_button->setText("Quit");
+    this->quit_button->setPosition(this->pause_pop->getWindowPosition().x + this->pause_pop->getWindowSize().width/2 - this->return_button->getSize().width/2,
+                                   this->pause_pop->getWindowPosition().y + this->pause_pop->getWindowSize().height/2 + 60);
+    this->quit_button->centerText();
 }
 
 // Constructor/Destructor
@@ -62,6 +81,8 @@ GameState::~GameState() {
     this->save();
     delete this->current_level;
     delete this->pause_pop;
+    delete this->return_button;
+    delete this->quit_button;
 }
 
 // Update
@@ -145,6 +166,8 @@ void GameState::render(sf::RenderTarget *target) {
 
     // Pause Pop
     this->pause_pop->render(target);
+    this->return_button->render(target);
+    this->quit_button->render(target);
 }
 
 

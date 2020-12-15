@@ -27,6 +27,7 @@ void PopMessage::initText() {
     this->message.setCharacterSize(18);
 }
 
+
 // Constructor
 PopMessage::PopMessage() {
     this->initWindow();
@@ -35,12 +36,6 @@ PopMessage::PopMessage() {
 
 // Destructor
 PopMessage::~PopMessage() {
-
-}
-
-
-// Update
-void PopMessage::update(const float &dt) {
 
 }
 
@@ -54,22 +49,34 @@ void PopMessage::render(sf::RenderTarget *target) {
 
 
 // Getters and Setters
+    // Text - Title
 void PopMessage::setMessageTitle(const std::string &s){
     this->title.setString(s);
+}
+
+void PopMessage::centerMessageTitle(){
     this->title.setPosition(this->window.getPosition().x + this->window.getGlobalBounds().width / 2 -
                             this->title.getGlobalBounds().width / 2,
-                              this->window.getPosition().y + 50);
+                            this->window.getPosition().y + 50);
 }
 
+    // Text - Message
 void PopMessage::setMessage(const std::string &s){
     this->message.setString(s);
-    this->message.setPosition(this->window.getPosition().x + this->window.getGlobalBounds().width / 2 -
-                            this->title.getGlobalBounds().width / 2 - 20,
-                            this->window.getPosition().y + 170);
 }
 
+void PopMessage::centerMessage() {
+    this->message.setPosition(this->window.getPosition().x + this->window.getGlobalBounds().width / 2 -
+                              this->title.getGlobalBounds().width / 2 - 20,
+                              this->window.getPosition().y + 170);
+}
+    // Window
 void PopMessage::setWindowPosition(const float& x, const float& y){
     this->window.setPosition(x, y);
+}
+
+sf::Vector2f PopMessage::getWindowPosition(){
+    return this->window.getPosition();
 }
 
 sf::FloatRect PopMessage::getWindowSize(){

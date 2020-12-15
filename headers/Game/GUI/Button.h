@@ -5,11 +5,11 @@
 
 #include <SFML/Graphics.hpp>
 
-class PopMessage {
+class Button {
 public:
     // Constructor/Destructor
-    PopMessage();
-    virtual ~PopMessage();
+    Button();
+    virtual ~Button();
 
     // Update
     void update(const float &dt);
@@ -18,18 +18,15 @@ public:
     virtual void render(sf::RenderTarget *target);
 
     // Functions
-
-    // Getters and Setters
-        // Title
-    void setMessageTitle(const std::string &s);
-    void centerMessageTitle();
-        // Message
-    void setMessage(const std::string &s);
-    void centerMessage();
+        // Text
+    void setText(const std::string &s);
+    void setTextSize(const unsigned int& size);
+    void centerText();
         // Window
-    void setWindowPosition(const float& x, const float& y);
-    sf::Vector2f getWindowPosition();
-    sf::FloatRect getWindowSize();
+    void setPosition(const float& x, const float& y);
+    void setSize(const float& width, const float& height);
+    sf::Vector2f getPosition();
+    sf::FloatRect getSize();
 
 private:
     // Variables
@@ -40,8 +37,7 @@ private:
 
     // Text
     sf::Font font;
-    sf::Text title;
-    sf::Text message;
+    sf::Text text;
 
     // Init Private Functions
     void initWindow();

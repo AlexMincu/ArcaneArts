@@ -2,6 +2,7 @@
 
 #include "State.h"
 #include "Game/GUI/PopMessage.h"
+#include "Game/GUI/Button.h"
 
 enum Levels {minotaur_forest = 1};
 
@@ -38,6 +39,8 @@ private:
     // Pause
     bool paused;
     PopMessage *pause_pop;
+    Button *return_button;
+    Button *quit_button;
 
     // Init Private Functions
     void initKeybinds();
