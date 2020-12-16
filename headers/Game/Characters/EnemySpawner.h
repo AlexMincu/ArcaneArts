@@ -18,12 +18,14 @@ public:
     // Render
     void render(sf::RenderTarget *target);
 
+    // Functions
+    void spawn(const float& hp, const unsigned short& mob);
+    void attackEnemy();
+
     // Getters and Setters
     int getEnemiesKilledCount() const;
     bool isEnemySpawned() const;
-
-    // Functions
-    void spawn(const float& hp, const unsigned short& mob);
+    bool EnemyHitboxPressed(const sf::Vector2i& mousePos) const;
 
 private:
     // Variables

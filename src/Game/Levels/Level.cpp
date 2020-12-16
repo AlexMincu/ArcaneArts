@@ -107,6 +107,9 @@ void Level::render(sf::RenderTarget *target, const unsigned short& state) {
 
 
 // Functions
+void Level::UseEnemySpawnerAttack() {
+    this->enemy_spawner->attackEnemy();
+}
 void Level::save() {
     // Debug
     std::cout << "[Level] Saving...\n";
@@ -125,6 +128,9 @@ void Level::save() {
 
 
 // Getters and Setters
+bool Level::EnemyHitboxPressed (const sf::Vector2i& mousePos) {
+    return this->enemy_spawner->EnemyHitboxPressed(mousePos);
+}
 std::string Level::getTitle(){
     return this->title.getString();
 }

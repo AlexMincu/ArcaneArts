@@ -75,16 +75,6 @@ void EnemySpawner::render(sf::RenderTarget *target){
 }
 
 
-// Getters and Setters
-int EnemySpawner::getEnemiesKilledCount() const {
-    return enemies_killed_count;
-}
-
-bool EnemySpawner::isEnemySpawned() const {
-    return !(enemies.empty());
-}
-
-
 // Functions
 void EnemySpawner::spawn(const float& hp, const unsigned short& mob) {
     if(this->enemies.empty()){
@@ -118,4 +108,26 @@ void EnemySpawner::spawn(const float& hp, const unsigned short& mob) {
         }
     }
 
+}
+
+void EnemySpawner::attackEnemy() {
+    if(!this->enemies.empty())
+        this->enemies[0]->attack();
+}
+
+bool EnemySpawner::EnemyHitboxPressed(const sf::Vector2i& mousePos) const {
+    if(!this->enemies.empty())
+        return this->enemies[0]->HitboxPressed(mousePos);
+
+    return false;
+}
+
+
+// Getters and Setters
+int EnemySpawner::getEnemiesKilledCount() const {
+    return enemies_killed_count;
+}
+
+bool EnemySpawner::isEnemySpawned() const {
+    return !(enemies.empty());
 }

@@ -19,9 +19,11 @@ public:
 
     // Functions
     virtual void run() = 0;
+    void UseEnemySpawnerAttack();
     void save();
 
     // Getters and Setters
+    bool EnemyHitboxPressed(const sf::Vector2i& mousePos);
     std::string getTitle();
 
 protected:

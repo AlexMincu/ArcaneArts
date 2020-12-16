@@ -125,22 +125,22 @@ Game::~Game() {
 void Game::update() {
     if(this->game_state == paused) {
         this->updateDt();
-        this->updateSFMLEvents();
+        this->updateEvents();
         this->updateFPS();
 
         if(this->focus) {
-            this->updateInput();
+            this->mouse_pos_window = sf::Mouse::getPosition(*this->window);
         }
     }
 
     if(this->game_state == running) {
         this->updateDt();
-        this->updateSFMLEvents();
+        this->updateEvents();
         this->updateFPS();
         this->current_level->update(dt);
 
         if(this->focus) {
-            this->updateInput();
+            this->mouse_pos_window = sf::Mouse::getPosition(*this->window);
         }
     }
 }
@@ -150,20 +150,77 @@ void Game::updateDt() {
     this->dt = this->dtClock.restart().asSeconds();
 }
 
-void Game::updateSFMLEvents() {
+void Game::updateEvents() {
     // Handling events
     while(this->window->pollEvent(this->event)){
         switch(this->event.type){
+
+            ////////// Closing the window //////////
             case sf::Event::EventType::Closed:
                 this->close();
                 break;
+
+
+            ////////// Gain Focus when playing //////////
             case sf::Event::EventType::GainedFocus:
                 this->focus = true;
                 std::cout << "[GameEvent] Gained Focus\n";
                 break;
+
+
+            ////////// Lose Focus on minimize //////////
             case sf::Event::EventType::LostFocus:
                 this->focus = false;
                 std::cout << "[GameEvent] Lost Focus\n";
+                break;
+
+
+            ////////// Keyboard Key Release //////////
+            case sf::Event::EventType::KeyReleased:
+
+                    // -----> EXIT KEY <-----
+                if (this->event.key.code == sf::Keyboard::Key(this->keybinds.at("EXIT"))) {
+                    if(this->game_state == running) {
+                        this->game_state = paused;
+                        std::cout << "[Game] Paused\n";
+                        }
+                    else if(this->game_state == paused) {
+                        this->game_state = running;
+                        std::cout << "[Game] Unpaused\n";
+                    }
+                }
+
+                    // ----> ATTACK KEY <-----
+                else if (this->event.key.code == sf::Keyboard::Key(this->keybinds.at("ATTACK"))) {
+                    if(this->game_state == running){
+                        this->current_level->UseEnemySpawnerAttack();
+                        std::cout << "[Enemy] ATTACK used by Attack Keybind Key\n";
+                    }
+                }
+                break;
+
+
+            ////////// Mouse Buttons Release //////////
+            case sf::Event::EventType::MouseButtonReleased:
+
+                    // ----> MLEFT BUTTON <-----
+                if (this->event.mouseButton.button == sf::Mouse::Left) {
+                    if(this->game_state == running) {
+                        if (this->current_level->EnemyHitboxPressed(this->mouse_pos_window)) {
+                            this->current_level->UseEnemySpawnerAttack();
+                            std::cout << "[Enemy] ATTACK used by MLEFT Button\n";
+                        }
+                    }
+                    else if(this->game_state == paused) {
+                        if (this->return_button->isPressed(this->mouse_pos_window)) {
+                            this->game_state = running;
+                            std::cout << "[Game] Unpaused\n";
+                        }
+                        if (this->quit_button->isPressed(this->mouse_pos_window)) {
+                            this->close();
+                        }
+                    }
+                }
                 break;
         }
     }
@@ -198,37 +255,6 @@ void Game::updateFPS() {
         fps_render_timing = 0.f;
         dt_average = 0.f;
         dt_frames = 0.f;
-    }
-}
-
-void Game::updateInput() {
-    // Mouse
-    this->mouse_pos_window = sf::Mouse::getPosition(*this->window);
-
-    // Keyboard
-    if(this->game_state == running) {
-
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("EXIT")))) {
-            this->game_state = paused;
-            sf::sleep(sf::seconds(0.25));
-            std::cout << "[Game] Paused\n";
-        }
-
-    }
-
-    if(this->game_state == paused){
-
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("EXIT"))) ||
-        (this->return_button->isPressed(this->mouse_pos_window))) {
-
-            this->game_state = running;
-            sf::sleep(sf::seconds(0.25));
-            std::cout << "[Game] Unpaused\n";
-        }
-
-        if (this->quit_button->isPressed(this->mouse_pos_window)) {
-            this->close();
-        }
     }
 }
 

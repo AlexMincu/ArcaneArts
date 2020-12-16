@@ -13,17 +13,15 @@ public:
 
     // Update
     void update(const float &dt) override;
-    void updateInput();
     void updateAnimation(const float &dt);
 
     // Functions
-        //Use createAnimationComponent(sf::Texture &texture_sheet);     from Character
+    void attack();
 
     // Getters and Setters
-        //Use setTexture (sf::Texture &texture);                        from Character
-        //Use setPosition(const float &x, const float &y);              from Character
     unsigned short getEnemyState() const;
     void setEnemyState(enemy_states);
+    bool HitboxPressed(const sf::Vector2i& mousePos) const;
 
 private:
     // Variables
@@ -33,6 +31,4 @@ private:
     // Init Private Functions
     void initAnimationComponent(sf::Texture &char_texture_sheet);
     void initHealthBar(sf::Texture &health_bar_texture_sheet);
-
-
 };

@@ -16,8 +16,7 @@ public:
     // Update
     void update();
     void updateDt();
-    void updateSFMLEvents();
-    void updateInput();
+    void updateEvents();
     void updateFPS();
 
     // Render
@@ -44,7 +43,6 @@ private:
 
     // Inputs
         // Mouse
-    sf::Vector2i mouse_pos_screen;
     sf::Vector2i mouse_pos_window;
         // Keyboard
     std::map<std::string, int> keybinds;

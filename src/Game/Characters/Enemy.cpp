@@ -41,16 +41,11 @@ Enemy::~Enemy() {
 
 
 // Update
-void Enemy::updateInput() {
-    if(this->getCurrentHealth() > 0)
-        if( (sf::Mouse::isButtonPressed(sf::Mouse::Left)) ||
-        (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) ) {
-            this->animationComponent->manual_reset("ATTACK");
-            setEnemyState(E_ATTACKED);
-
-            //debug
-//              std::cout << "[Enemy] MLEFT or SPACE pressed\n";
-        }
+void Enemy::attack() {
+    if(this->getCurrentHealth() > 0) {
+        this->animationComponent->manual_reset("ATTACK");
+        setEnemyState(E_ATTACKED);
+    }
 }
 
 void Enemy::updateAnimation(const float &dt) {
@@ -72,7 +67,6 @@ void Enemy::updateAnimation(const float &dt) {
 }
 
 void Enemy::update(const float &dt) {
-    this->updateInput();
     this->updateAnimation(dt);
 
     // Progress Bars
@@ -88,6 +82,9 @@ void Enemy::setEnemyState(enemy_states state) {
     this->enemy_state = state;
 }
 
+bool Enemy::HitboxPressed(const sf::Vector2i& mousePos) const {
+    return this->sprite.getGlobalBounds().contains(mousePos.x, mousePos.y);
+}
 
 
 
