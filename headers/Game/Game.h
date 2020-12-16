@@ -33,6 +33,7 @@ private:
     sf::RenderWindow *window;
     sf::Event event;
     unsigned int game_state;
+    bool focus;
 
     // Delta Time
     sf::Clock dtClock;

@@ -86,7 +86,7 @@ void Game::initDebug(){
 // Constructor/Destructor
 Game::Game()
         :   window{nullptr}, event{sf::Event()},
-            game_state{running},
+            game_state{running}, focus{true},
             dt{0.f}, dt_frames{0.f}, dt_average{0.f}, fps_render_timing{0.f},
             pause_pop{nullptr}, return_button{nullptr}, quit_button{nullptr},
             current_level{nullptr}, level(1) {
@@ -123,20 +123,25 @@ Game::~Game() {
 
 // Update
 void Game::update() {
-
     if(this->game_state == paused) {
         this->updateDt();
         this->updateSFMLEvents();
         this->updateFPS();
-        this->updateInput();
+
+        if(this->focus) {
+            this->updateInput();
+        }
     }
 
     if(this->game_state == running) {
         this->updateDt();
         this->updateSFMLEvents();
         this->updateFPS();
-        this->updateInput();
         this->current_level->update(dt);
+
+        if(this->focus) {
+            this->updateInput();
+        }
     }
 }
 
@@ -146,12 +151,21 @@ void Game::updateDt() {
 }
 
 void Game::updateSFMLEvents() {
-    // Pulls out an event
+    // Handling events
     while(this->window->pollEvent(this->event)){
-
-        // Closing the window event
-        if (this->event.type == sf::Event::Closed)
-            this->close();
+        switch(this->event.type){
+            case sf::Event::EventType::Closed:
+                this->close();
+                break;
+            case sf::Event::EventType::GainedFocus:
+                this->focus = true;
+                std::cout << "[GameEvent] Gained Focus\n";
+                break;
+            case sf::Event::EventType::LostFocus:
+                this->focus = false;
+                std::cout << "[GameEvent] Lost Focus\n";
+                break;
+        }
     }
 }
 

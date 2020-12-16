@@ -27,6 +27,7 @@ public:
 
 private:
     // Variables
+    sf::Event event;
     short unsigned enemy_state;
 
     // Init Private Functions
