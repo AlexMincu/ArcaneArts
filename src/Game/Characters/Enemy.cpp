@@ -2,16 +2,29 @@
 
 
 // Init Private Functions
-void Enemy::initAnimationComponent(sf::Texture &char_texture_sheet) {
-    this->createAnimationComponent(char_texture_sheet);
-    this->animationComponent->addAnimation("IDLE", 0.6f, 1, 1, 12, 1, 360, 245);
-    this->animationComponent->addAnimation("ATTACK", 0.3f, 1, 2, 12, 1, 360, 245);
-    this->animationComponent->addAnimation("DYING", 0.4f, 1, 3, 15, 1, 360, 245);
+void Enemy::initAnimationComponent(sf::Texture &enemy_texture_sheet) {
+
+    this->animationComponent = new AnimationComponent(this->sprite, enemy_texture_sheet);
+
+    this->animationComponent->addAnimation("IDLE", 0.6f,
+                                           1, 1,
+                                           12, 1,
+                                           360, 245);
+
+    this->animationComponent->addAnimation("ATTACK", 0.3f,
+                                           1, 2,
+                                           12, 1,
+                                           360, 245);
+
+    this->animationComponent->addAnimation("DYING", 0.4f,
+                                           1, 3,
+                                           15, 1,
+                                           360, 245);
 }
 
 void Enemy::initHealthBar(sf::Texture &health_bar_texture_sheet){
     // HP BAR
-    // Find the position to set the HP Bar under the enemy
+        // Find the position to set the HP Bar under the enemy
     float x_spacer = 45.f;
     float y_spacer = this->getSize().height;
 
@@ -25,7 +38,10 @@ void Enemy::initHealthBar(sf::Texture &health_bar_texture_sheet){
 // Constructor/Destructor
 Enemy::Enemy(const float &hp, const float &x, const float &y,
              sf::Texture &char_texture_sheet, sf::Texture &health_bar_texture_sheet)
-             : enemy_state{E_IDLE} {
+             :  base_health{0.f}, current_health{0.f},
+                hp_bar(nullptr),
+                enemy_state{E_IDLE} {
+
     this->initAnimationComponent(char_texture_sheet);
     this->setPosition(x, y);
 
@@ -37,18 +53,21 @@ Enemy::Enemy(const float &hp, const float &x, const float &y,
 
 Enemy::~Enemy() {
     delete this->hp_bar;
+    delete this->animationComponent;
 };
 
 
 // Update
-void Enemy::attack() {
-    if(this->getCurrentHealth() > 0) {
-        this->animationComponent->manual_reset("ATTACK");
-        setEnemyState(E_ATTACKED);
-    }
+void Enemy::update(const float &dt) {
+    // Enemy Animation
+    this->updateAnimation(dt);
+
+    // Progress Bars
+    this->hp_bar->update(this->getCurrentHealthPercentage(), dt);
 }
 
 void Enemy::updateAnimation(const float &dt) {
+
     if(this->enemy_state == E_ATTACKED) {
         if (this->animationComponent->play("ATTACK", dt, &current_health, 10)) {
             if (this->getCurrentHealth() <= 0)
@@ -57,34 +76,82 @@ void Enemy::updateAnimation(const float &dt) {
                 this->enemy_state = E_IDLE;
         }
     }
+
+
     if(this->enemy_state == E_IDLE){
         this->animationComponent->play("IDLE", dt);
     }
+
+
     if(this->enemy_state == E_DYING){
         if(this->animationComponent->play("DYING", dt))
             this->enemy_state = E_IDLE;
     }
+
 }
 
-void Enemy::update(const float &dt) {
-    this->updateAnimation(dt);
+
+// Render
+void Enemy::render(sf::RenderTarget *target) {
+    // Enemy
+    target->draw(this->sprite);
 
     // Progress Bars
-    this->hp_bar->update(this->getCurrentHealthPercentage(), dt);
+    this->hp_bar->render(target);
 }
 
-// Getters and Setters
+
+// Functions
+void Enemy::attack() {
+    if(this->getCurrentHealth() > 0) {
+        this->animationComponent->manual_reset("ATTACK");
+        setEnemyState(E_ATTACKED);
+    }
+}
+
+
+// Getters
+bool Enemy::HitboxPressed(const sf::Vector2i& mousePos) const {
+    return this->sprite.getGlobalBounds().contains(mousePos.x, mousePos.y);
+}
+
 unsigned short Enemy::getEnemyState() const {
     return enemy_state;
 }
 
+const sf::Vector2f &Enemy::getPosition() const {
+    return this->sprite.getPosition();
+}
+
+sf::Rect<float> Enemy::getSize() const {
+    return this->sprite.getGlobalBounds();
+}
+
+float Enemy::getCurrentHealth() const {
+    return this->current_health;
+}
+
+float Enemy::getCurrentHealthPercentage() const {
+    return (this->current_health / this->base_health) * 100.f;
+}
+
+
+// Setters
 void Enemy::setEnemyState(enemy_states state) {
     this->enemy_state = state;
 }
 
-bool Enemy::HitboxPressed(const sf::Vector2i& mousePos) const {
-    return this->sprite.getGlobalBounds().contains(mousePos.x, mousePos.y);
+void Enemy::setTexture(sf::Texture &texture) {
+    this->sprite.setTexture(texture);
 }
+
+void Enemy::setPosition(const float &x, const float &y) {
+    this->sprite.setPosition(x, y);
+}
+
+
+
+
 
 
 

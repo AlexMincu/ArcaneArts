@@ -5,7 +5,6 @@ set(CMAKE_CXX_STANDARD 20)
 
 add_executable(ArcaneArts
         src/main.cpp
-        src/Game/Characters/Character.cpp headers/Game/Characters/Character.h
         src/Game/Items/Item.cpp headers/Game/Items/Item.h
         src/Game/Items/Weapon.cpp headers/Game/Items/Weapon.h
         src/Game/Items/Sword.cpp headers/Game/Items/Sword.h
@@ -13,7 +12,7 @@ add_executable(ArcaneArts
         src/Game/Game.cpp headers/Game/Game.h
         src/Game/Animations/AnimationComponent.cpp headers/Game/Animations/AnimationComponent.h
         src/Game/Animations/Animation.cpp headers/Game/Animations/Animation.h
-        src/Game/GUI/ProgressBar.cpp headers/Game/GUI/ProgressBar.h src/Game/Characters/EnemySpawner.cpp headers/Game/Characters/EnemySpawner.h src/Game/Levels/Level.cpp headers/Game/Levels/Level.h src/Game/Levels/MinotaurForest.cpp headers/Game/Levels/MinotaurForest.h src/Game/GUI/PopMessage.cpp headers/Game/GUI/PopMessage.h src/Game/GUI/Button.cpp headers/Game/GUI/Button.h)
+        src/Game/GUI/ProgressBar.cpp headers/Game/GUI/ProgressBar.h src/Game/Characters/EnemySpawner.cpp headers/Game/Characters/EnemySpawner.h src/Game/Levels/Level.cpp headers/Game/Levels/Level.h src/Game/Levels/MinotaurForest.cpp headers/Game/Levels/MinotaurForest.h src/Game/GUI/PopMessage.cpp headers/Game/GUI/PopMessage.h src/Game/GUI/Button.cpp headers/Game/GUI/Button.h src/Game/Characters/Hero.cpp headers/Game/Characters/Hero.h)
 
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake_modules")
 include_directories(headers assets /usr/include c:/SFML/include)
