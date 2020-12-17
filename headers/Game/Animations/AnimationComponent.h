@@ -15,10 +15,9 @@ public:
                       int frames_x, int frames_y,
                       int width, int height);
 
-    const bool & play(const std::string &key, const float &dt, float* hp = nullptr, const float &damage = 0);
+    const short& play(const std::string &key, const float &dt);
 
     // Getters and Setters
-    const bool &isDone(const std::string &key);
     void manual_reset(const std::string &key);
 
 private:

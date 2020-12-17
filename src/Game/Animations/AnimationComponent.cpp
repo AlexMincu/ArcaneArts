@@ -26,19 +26,12 @@ void AnimationComponent::addAnimation(const std::string &key,
                                           width, height);
 }
 
-const bool & AnimationComponent::play(const std::string &key, const float &dt, float* hp, const float &damage) {
-    if(hp)
-        return this->animations[key]->play(key, dt, hp, damage);
-
+const short& AnimationComponent::play(const std::string &key, const float &dt) {
     return this->animations[key]->play(key, dt);
 }
 
 
 // Getters and Setters
-const bool &AnimationComponent::isDone(const std::string &key){
-    return this->animations[key]->isDone();
-}
-
 void AnimationComponent::manual_reset(const std::string &key) {
     this->animations[key]->manual_reset();
 }

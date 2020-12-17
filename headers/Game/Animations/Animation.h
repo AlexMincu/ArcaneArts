@@ -13,6 +13,8 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 
+enum AnimState {NONE = -1, STARTING = 0, RUNNING = 1, FINISHING = 2};
+
 class Animation {
 public:
     // Constructor/Destructor
@@ -24,10 +26,7 @@ public:
     virtual ~Animation();
 
     // Functions
-    const bool & play(const std::string &key, const float &dt, float* hp = nullptr, const float &damage = 0);
-
-    // Getters and Setter
-    const bool & isDone() const;
+    const short& play(const std::string &key, const float &dt);
     void manual_reset();
 
 private:
@@ -46,5 +45,5 @@ private:
     float animation_timer;
     float timer;
         // Others
-    bool done;
+    short state;
 };

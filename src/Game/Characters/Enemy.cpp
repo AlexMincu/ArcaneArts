@@ -39,8 +39,8 @@ void Enemy::initHealthBar(sf::Texture &health_bar_texture_sheet){
 Enemy::Enemy(const float &hp, const float &x, const float &y,
              sf::Texture &char_texture_sheet, sf::Texture &health_bar_texture_sheet)
              :  base_health{0.f}, current_health{0.f},
-                hp_bar(nullptr),
-                enemy_state{E_IDLE} {
+                enemy_state{E_IDLE},
+                animationComponent{nullptr}, hp_bar(nullptr){
 
     this->initAnimationComponent(char_texture_sheet);
     this->setPosition(x, y);
@@ -54,7 +54,7 @@ Enemy::Enemy(const float &hp, const float &x, const float &y,
 Enemy::~Enemy() {
     delete this->hp_bar;
     delete this->animationComponent;
-};
+}
 
 
 // Update
@@ -69,14 +69,21 @@ void Enemy::update(const float &dt) {
 void Enemy::updateAnimation(const float &dt) {
 
     if(this->enemy_state == E_ATTACKED) {
-        if (this->animationComponent->play("ATTACK", dt, &current_health, 10)) {
-            if (this->getCurrentHealth() <= 0)
+
+        short anim_state = this->animationComponent->play("ATTACK", dt);
+
+        if (anim_state == STARTING) {
+            if(this->current_health > 0) {
+                this->current_health -= 10;
+            }
+        }
+        else if (anim_state == FINISHING){
+            if (this->current_health <= 0)
                 this->enemy_state = E_DYING;
             else
                 this->enemy_state = E_IDLE;
         }
     }
-
 
     if(this->enemy_state == E_IDLE){
         this->animationComponent->play("IDLE", dt);
@@ -84,7 +91,7 @@ void Enemy::updateAnimation(const float &dt) {
 
 
     if(this->enemy_state == E_DYING){
-        if(this->animationComponent->play("DYING", dt))
+        if(this->animationComponent->play("DYING", dt) == FINISHING)
             this->enemy_state = E_IDLE;
     }
 

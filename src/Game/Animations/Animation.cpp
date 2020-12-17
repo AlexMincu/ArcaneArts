@@ -9,7 +9,7 @@ Animation::Animation(sf::Sprite &sprite, sf::Texture &texture_sheet,
                      int frames_x, int frames_y,
                      int width, int height)
                 : sprite(sprite), texture_sheet(texture_sheet),
-                  animation_timer(animation_timer), timer{0.f}, done{false},
+                  animation_timer(animation_timer), timer{0.f}, state{NONE},
                   width(width), height(height) {
 
     // Set the texture for the animation
@@ -28,15 +28,14 @@ Animation::~Animation() {
 
 
 // Functions
-const bool & Animation::play(const std::string &key, const float &dt, float* hp, const float &damage) {
+const short& Animation::play(const std::string &key, const float &dt) {
     /*  this->timer = this->timer + x * dt;
      *      x - number of images inside the sheet
      *      dt - the times is take to update and render a frame
      *
      *      animation_timer - How much time in seconds will an animation render
      */
-
-    this->done = false;
+    this->state = NONE;
     this->timer += 12.f * dt;   // 12 image animation sheet
 
     if(this->timer >= this->animation_timer)
@@ -45,33 +44,35 @@ const bool & Animation::play(const std::string &key, const float &dt, float* hp,
         this->timer = 0.f;
 
         // Deal damage
-        if(this->current_rect == this->start_rect && hp){
-            *hp -= damage;
+        if (this->current_rect == this->start_rect){
+            this->state = STARTING;
+
+            this->current_rect.left += this->width;
         }
 
         // Animate
-        if(this->current_rect != this->end_rect) {
+        else if (this->current_rect != this->end_rect) {
+            this->state = RUNNING;
+
             this->current_rect.left += this->width;
         }
         // Reset the position of the rect to the beginning
         else {
+            this->state = FINISHING;
+
             this->current_rect.left = this->start_rect.left;
-            this->done = true;
+
         }
 
         // Set current frame of animation
         this->sprite.setTextureRect(this->current_rect);
     }
-    return this->done;
+    return this->state;
 }
 
 
 
 // Setters and Getters
-const bool & Animation::isDone() const {
-    return this->done;
-}
-
 void Animation::manual_reset() {
     this->timer = 0.f;
     this->current_rect = this->start_rect;
