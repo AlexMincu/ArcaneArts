@@ -28,7 +28,7 @@ public:
     sf::Vector2f getPosition();
     sf::FloatRect getSize();
 
-    enum Type {Default = 0, Upgrade = 1, Quit_upgrade = 2, Upgrade_click_damage = 3};
+    enum Type {Default = 0, Upgrade = 1, Quit_upgrade = 2, Upgrade_click_damage = 3, Pause_menu = 4};
 
 private:
     // Variables

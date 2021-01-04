@@ -55,6 +55,29 @@ Button::Button(const short& type) {
 
         this->window.setTexture(window_texture);
     }
+
+    else if (type == Type::Pause_menu) {
+        if (!this->window_texture.loadFromFile("assets/GUI/pause_menu_button.png")) {
+            std::cerr << "Failed to load Pause Menu Button Texture\n";
+            exit(1);
+        }
+
+        this->window.setTexture(window_texture);
+
+        // Init Text
+        if (!this->font.loadFromFile("assets/Fonts/langar.ttf")) {
+            std::cerr << "Failed to load Courier Font for Button\n";
+            exit(1);
+        }
+
+        this->text.setFont(font);
+        this->text.setFillColor(sf::Color::White);
+        this->text.setCharacterSize(16);
+        this->text.setPosition(this->window.getPosition().x + this->window.getGlobalBounds().width / 2 -
+                               this->text.getGlobalBounds().width / 2,
+                               this->window.getPosition().y + this->window.getGlobalBounds().height / 2 -
+                               this->text.getGlobalBounds().width / 2);
+    }
 }
 
 // Destructor

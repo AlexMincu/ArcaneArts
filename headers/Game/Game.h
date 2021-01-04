@@ -1,11 +1,11 @@
 #pragma once
 
+#include <Game/GUI/FPS.h>
+#include <Game/GUI/PauseMenu.h>
 #include "Game/Levels/MinotaurForest.h"
-#include "Game/GUI/PopMessage.h"
 #include "Game/GUI/UpgradeMenu.h"
 
-enum Levels {minotaur_forest = 1};
-enum GameStates {paused = 0, running = 1, closing = 2, upgrading = 3};
+
 
 class Game {
 public:
@@ -17,7 +17,6 @@ public:
     void update();
     void updateDt();
     void updateEvents();
-    void updateFPS();
     void updateDamage();
     void updateProgression();
 
@@ -30,12 +29,15 @@ public:
     void load();
     void save();
 
+    enum Levels {minotaur_forest = 1};
+    enum State {paused = 0, running = 1, closing = 2, upgrading = 3};
+
 private:
     sf::RenderWindow *window;
     sf::Event event;
 
     // Running Information
-        unsigned int game_state;
+        unsigned int state;
         bool focus;
         // Game Progression
         int progression;
@@ -50,8 +52,9 @@ private:
     sf::Clock dtClock;
     float dt;
 
-    // Textures
+    // Fonts & Textures
     std::map<std::string, sf::Texture> textures;
+    std::map<std::string, sf::Font> fonts;
 
     // Inputs
         // Mouse
@@ -63,28 +66,16 @@ private:
     Level *current_level;
     unsigned short level;
 
-    //GUI - FPS on-screen Component
-    sf::Font font;
-    sf::Text fps;
-    float fps_render_timing;
-    float dt_average;
-    float dt_frames;
-
-    // GUI - Pause Pop-Up Component
-    PopMessage *pause_pop;
-    Button *return_button;
-    Button *quit_button;
-
-    // GUI - Upgrade Function
+    //GUI
+    FPS *fps;
     UpgradeMenu *upgradeComponent;
+    PauseMenu *pauseComponent;
 
     // Init Private Functions
     void initWindow();
     void initKeybinds();
     void initTextures();
-    void initText();
     void initLevel();
-    void initPausePop();
     void initGUI();
 
     // Debug

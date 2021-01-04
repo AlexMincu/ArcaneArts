@@ -20,51 +20,21 @@ void Game::initKeybinds() {
 }
 
 void Game::initTextures() {
-
-}
-
-void Game::initText() {
-    if(!this->font.loadFromFile("assets/Fonts/courier.ttf")) {
-        std::cerr << "Failed to load Courier Font for Game State\n";
+    if(!this->textures["MessageWindow"].loadFromFile("assets/GUI/message_window.png")){
+        std::cerr << "Failed to load Message Window Texture\n";
         exit(1);
     }
 
-    // FPS
-    this->fps.setFont(font);
-    this->fps.setCharacterSize(20);
-    this->fps.setFillColor(sf::Color::Green);
-    this->fps.setPosition(5.f, 5.f);
-}
 
-void Game::initPausePop(){
-    // Pop Window
-    this->pause_pop = new PopMessage();
+    if(!this->fonts["Courier"].loadFromFile("assets/Fonts/courier.ttf")) {
+        std::cerr << "Failed to load Courier Font\n";
+        exit(1);
+    }
 
-    this->pause_pop->setWindowPosition( static_cast<float>(this->window->getSize().x) / 2 -
-                                        this->pause_pop->getWindowSize().width / 2,
-                                        static_cast<float>(this->window->getSize().y) / 2 -
-                                        this->pause_pop->getWindowSize().height / 2 );
-
-    this->pause_pop->setMessageTitle("GAME PAUSED");
-    this->pause_pop->centerMessageTitle();
-
-    // Return Button
-    this->return_button = new Button(Button::Type::Default);
-    this->return_button->setSize(160, 80);
-    this->return_button->setTextSize(18);
-    this->return_button->setText("Return");
-    this->return_button->setPosition(this->pause_pop->getWindowPosition().x + this->pause_pop->getWindowSize().width/2 - this->return_button->getSize().width/2,
-                                     this->pause_pop->getWindowPosition().y + this->pause_pop->getWindowSize().height/2 - 60);
-    this->return_button->centerText();
-
-    // Quit Button
-    this->quit_button = new Button(Button::Type::Default);
-    this->quit_button->setSize(160, 80);
-    this->quit_button->setTextSize(18);
-    this->quit_button->setText("Quit");
-    this->quit_button->setPosition(this->pause_pop->getWindowPosition().x + this->pause_pop->getWindowSize().width/2 - this->return_button->getSize().width/2,
-                                   this->pause_pop->getWindowPosition().y + this->pause_pop->getWindowSize().height/2 + 60);
-    this->quit_button->centerText();
+    if(!this->fonts["Langar"].loadFromFile("assets/Fonts/langar.ttf")) {
+        std::cerr << "Failed to load Langar Font\n";
+        exit(1);
+    }
 }
 
 void Game::initLevel(){
@@ -84,18 +54,19 @@ void Game::initDebug(){
 }
 
 void Game::initGUI() {
+    this->fps = new FPS(fonts);
     this->upgradeComponent = new UpgradeMenu();
+    this->pauseComponent = new PauseMenu(textures, fonts);
 }
 
 // Constructor/Destructor
-Game::Game() :  window{nullptr}, event{sf::Event()},
-                game_state{running}, focus{true},
-                dt{0.f}, dt_frames{0.f}, dt_average{0.f}, fps_render_timing{0.f},
-                pause_pop{nullptr}, return_button{nullptr}, quit_button{nullptr},
-                current_level{nullptr}, level(1),
-                progression{0}, current_level_progression{-1}, last_current_level_progression{-1},
-                click_damage{1.f}, idle_damage{0.f},
-                upgradeComponent{nullptr} {
+Game::Game() : window{nullptr}, event{sf::Event()},
+               state{Game::State::running}, focus{true},
+               dt{0.f},
+               current_level{nullptr}, level(1),
+               progression{0}, current_level_progression{-1}, last_current_level_progression{-1},
+               click_damage{1.f}, idle_damage{0.f}, damage{0.f},
+               upgradeComponent{nullptr} {
 
     std::cout << "[Game] Starting...\n";
     // Loading previous settings
@@ -105,8 +76,6 @@ Game::Game() :  window{nullptr}, event{sf::Event()},
     this->initWindow();
     this->initKeybinds();
     this->initTextures();
-    this->initText();
-    this->initPausePop();
     this->initGUI();
     this->initLevel();
 
@@ -120,21 +89,20 @@ Game::~Game() {
 
     // Releasing the memory
     delete this->current_level;
-    delete this->return_button;
-    delete this->quit_button;
-    delete this->pause_pop;
     delete this->upgradeComponent;
+    delete this->pauseComponent;
     delete this->window;
+    delete this->fps;
 
     std::cout << "[Game] Closed\n";
 }
 
 // Update
 void Game::update() {
-    if(this->game_state == paused) {
+    if(this->state == Game::State::paused) {
         this->updateDt();
         this->updateEvents();
-        this->updateFPS();
+        this->fps->update(dt);
         this->updateProgression();
         this->updateDamage();
         this->upgradeComponent->update(click_damage);
@@ -144,10 +112,10 @@ void Game::update() {
         }
     }
 
-    else if(this->game_state == running || this->game_state == upgrading) {
+    else if(this->state == Game::State::running || this->state == Game::State::upgrading) {
         this->updateDt();
         this->updateEvents();
-        this->updateFPS();
+        this->fps->update(dt);
         this->updateProgression();
         this->updateDamage();
         this->upgradeComponent->update(click_damage);
@@ -196,23 +164,23 @@ void Game::updateEvents() {
 
                     // -----> EXIT KEY <-----
                 if (this->event.key.code == sf::Keyboard::Key(this->keybinds.at("EXIT"))) {
-                    if(this->game_state == running) {
-                        this->game_state = paused;
+                    if(this->state == Game::State::running) {
+                        this->state = Game::State::paused;
                         std::cout << "[Game] Paused\n";
                         }
-                    else if(this->game_state == paused) {
-                        this->game_state = running;
+                    else if(this->state == Game::State::paused) {
+                        this->state = Game::State::running;
                         std::cout << "[Game] Unpaused\n";
                     }
-                    else if(this->game_state == upgrading) {
+                    else if(this->state == Game::State::upgrading) {
                         this->upgradeComponent->close();
-                        this->game_state = running;
+                        this->state = Game::State::running;
                     }
                 }
 
                     // ----> ATTACK KEY <-----
                 else if (this->event.key.code == sf::Keyboard::Key(this->keybinds.at("ATTACK"))) {
-                    if(this->game_state == running){
+                    if(this->state == Game::State::running){
                         this->current_level->UseEnemySpawnerAttack(damage);
                         std::cout << "[Enemy] ATTACK used by Attack Keybind Key\n";
                     }
@@ -225,7 +193,7 @@ void Game::updateEvents() {
 
                     // ----> MLEFT BUTTON <-----
                 if (this->event.mouseButton.button == sf::Mouse::Left) {
-                    if(this->game_state == running) {
+                    if(this->state == Game::State::running) {
 
                         // Hitting an Enemy
                         if (this->current_level->EnemyHitboxPressed(this->mouse_pos)) {
@@ -236,22 +204,22 @@ void Game::updateEvents() {
                         // Upgrade Icon
                         if (this->upgradeComponent->upgrade_button->isPressed(this->mouse_pos)) {
                             this->upgradeComponent->open();
-                            this->game_state = upgrading;
+                            this->state = Game::State::upgrading;
                         }
                     }
-                    else if(this->game_state == paused) {
-                        if (this->return_button->isPressed(this->mouse_pos)) {
-                            this->game_state = running;
+                    else if(this->state == Game::State::paused) {
+                        if (this->pauseComponent->return_button.isPressed(this->mouse_pos)) {
+                            this->state = Game::State::running;
                             std::cout << "[Game] Unpaused\n";
                         }
-                        if (this->quit_button->isPressed(this->mouse_pos)) {
+                        if (this->pauseComponent->quit_button.isPressed(this->mouse_pos)) {
                             this->close();
                         }
                     }
-                    else if(this->game_state == upgrading) {
+                    else if(this->state == Game::State::upgrading) {
                         if(this->upgradeComponent->quit_upgrade_button->isPressed(this->mouse_pos)) {
                             this->upgradeComponent->close();
-                            this->game_state = running;
+                            this->state = Game::State::running;
                         }
                     }
 
@@ -261,37 +229,6 @@ void Game::updateEvents() {
     }
 }
 
-void Game::updateFPS() {
-    fps_render_timing += dt;
-    dt_average += dt;
-    dt_frames++;
-
-    if(fps_render_timing >= 0.2) {
-        float a = dt_frames / dt_average;
-
-        if(a < 500)
-            fps.setFillColor(sf::Color::Red);
-        else
-            fps.setFillColor(sf::Color::Green);
-
-        std::ostringstream ss;
-        ss << a;
-        ss << " FPS\n";
-
-        a = dt_average / dt_frames;
-        ss << a;
-        ss << " DT";
-
-        std::string de_afisat(ss.str()); // float -> string conversion
-
-        this->fps.setString(de_afisat);
-
-        //Reset
-        fps_render_timing = 0.f;
-        dt_average = 0.f;
-        dt_frames = 0.f;
-    }
-}
 
 void Game::updateProgression() {
     this->current_level_progression = this->current_level->getProgress();
@@ -316,17 +253,15 @@ void Game::render() {
 
 
     // Level
-    this->current_level->render(this->window, game_state);
+    this->current_level->render(this->window, state);
 
     // FPS
-    this->window->draw(fps);
+    this->fps->render(this->window);
 
     // GUI
-        // Pause Pop
-        if(this->game_state == paused) {
-            this->pause_pop->render(this->window);
-            this->return_button->render(this->window);
-            this->quit_button->render(this->window);
+        // Pause Component
+        if(this->state == Game::State::paused) {
+            this->pauseComponent->render(this->window);
         }
 
         // Upgrade Component
