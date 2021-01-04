@@ -110,9 +110,9 @@ void EnemySpawner::spawn(const float& hp, const unsigned short& mob) {
 
 }
 
-void EnemySpawner::attackEnemy() {
+void EnemySpawner::attackEnemy(const float& damage) {
     if(!this->enemies.empty())
-        this->enemies[0]->attack();
+        this->enemies[0]->attack(damage);
 }
 
 bool EnemySpawner::EnemyHitboxPressed(const sf::Vector2i& mousePos) const {

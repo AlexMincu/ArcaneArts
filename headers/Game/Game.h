@@ -2,10 +2,10 @@
 
 #include "Game/Levels/MinotaurForest.h"
 #include "Game/GUI/PopMessage.h"
-#include "Game/GUI/Button.h"
+#include "Game/GUI/UpgradeMenu.h"
 
 enum Levels {minotaur_forest = 1};
-enum GameStates {paused = 0, running = 1, closing = 2};
+enum GameStates {paused = 0, running = 1, closing = 2, upgrading = 3};
 
 class Game {
 public:
@@ -18,6 +18,8 @@ public:
     void updateDt();
     void updateEvents();
     void updateFPS();
+    void updateDamage();
+    void updateProgression();
 
     // Render
     void render();
@@ -31,8 +33,18 @@ public:
 private:
     sf::RenderWindow *window;
     sf::Event event;
-    unsigned int game_state;
-    bool focus;
+
+    // Running Information
+        unsigned int game_state;
+        bool focus;
+        // Game Progression
+        int progression;
+        int current_level_progression;
+        int last_current_level_progression;
+        // Player Damage
+        float damage;
+        float click_damage;
+        float idle_damage;
 
     // Delta Time
     sf::Clock dtClock;
@@ -43,7 +55,7 @@ private:
 
     // Inputs
         // Mouse
-    sf::Vector2i mouse_pos_window;
+    sf::Vector2i mouse_pos;
         // Keyboard
     std::map<std::string, int> keybinds;
 
@@ -51,17 +63,20 @@ private:
     Level *current_level;
     unsigned short level;
 
-    // FPS on-screen Component
+    //GUI - FPS on-screen Component
     sf::Font font;
     sf::Text fps;
     float fps_render_timing;
     float dt_average;
     float dt_frames;
 
-    // Pause Pop-Up Component
+    // GUI - Pause Pop-Up Component
     PopMessage *pause_pop;
     Button *return_button;
     Button *quit_button;
+
+    // GUI - Upgrade Function
+    UpgradeMenu *upgradeComponent;
 
     // Init Private Functions
     void initWindow();
@@ -70,9 +85,11 @@ private:
     void initText();
     void initLevel();
     void initPausePop();
+    void initGUI();
 
     // Debug
     void initDebug();
     void renderDebug();
     sf::RectangleShape line[2];
+
 };

@@ -20,7 +20,7 @@ public:
 
     // Functions
     void spawn(const float& hp, const unsigned short& mob);
-    void attackEnemy();
+    void attackEnemy(const float& damage);
 
     // Getters and Setters
     int getEnemiesKilledCount() const;

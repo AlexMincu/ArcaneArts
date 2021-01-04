@@ -1,35 +1,60 @@
 #include "Game/GUI/Button.h"
 
-
-// Init Private Functions
-void Button::initWindow() {
-    if(!this->window_texture.loadFromFile("assets/GUI/button.png")){
-        std::cerr << "Failed to load Button Texture\n";
-        exit(1);
-    }
-
-    this->window.setTexture(window_texture);
-    this->window.setPosition(0,0);
-}
-
-void Button::initText() {
-    if(!this->font.loadFromFile("assets/Fonts/courier.ttf")){
-        std::cerr << "Failed to load Courier Font for Button\n";
-        exit(1);
-    }
-
-    this->text.setFont(font);
-    this->text.setFillColor(sf::Color::White);
-    this->text.setCharacterSize(16);
-    this->text.setPosition(this->window.getPosition().x + this->window.getGlobalBounds().width/2 - this->text.getGlobalBounds().width/2,
-                           this->window.getPosition().y + this->window.getGlobalBounds().height/2 - this->text.getGlobalBounds().width/2);
-}
-
-
 // Constructor
-Button::Button() {
-    this->initWindow();
-    this->initText();
+Button::Button(const short& type) {
+
+    if (type == Type::Default) {
+        //Init Window(texture)
+        if (!this->window_texture.loadFromFile("assets/GUI/button.png")) {
+            std::cerr << "Failed to load Button Texture\n";
+            exit(1);
+        }
+
+        this->window.setTexture(window_texture);
+
+
+        // Init Text
+        if (!this->font.loadFromFile("assets/Fonts/courier.ttf")) {
+            std::cerr << "Failed to load Courier Font for Button\n";
+            exit(1);
+        }
+
+        this->text.setFont(font);
+        this->text.setFillColor(sf::Color::White);
+        this->text.setCharacterSize(16);
+        this->text.setPosition(this->window.getPosition().x + this->window.getGlobalBounds().width / 2 -
+                               this->text.getGlobalBounds().width / 2,
+                               this->window.getPosition().y + this->window.getGlobalBounds().height / 2 -
+                               this->text.getGlobalBounds().width / 2);
+
+    }
+
+    else if(type == Type::Upgrade) {
+        if (!this->window_texture.loadFromFile("assets/GUI/upgrade_button.png")) {
+            std::cerr << "Failed to load Upgrade Button Texture\n";
+            exit(1);
+        }
+
+        this->window.setTexture(window_texture);
+    }
+
+    else if(type == Type::Quit_upgrade) {
+        if (!this->window_texture.loadFromFile("assets/GUI/quit_upgrade_button.png")) {
+            std::cerr << "Failed to load Quit Upgrade Button Texture\n";
+            exit(1);
+        }
+
+        this->window.setTexture(window_texture);
+    }
+
+    else if(type == Type::Upgrade_click_damage) {
+        if (!this->window_texture.loadFromFile("assets/GUI/upgrade_click_damage_button.png")) {
+            std::cerr << "Failed to load Quit Upgrade Button Texture\n";
+            exit(1);
+        }
+
+        this->window.setTexture(window_texture);
+    }
 }
 
 // Destructor

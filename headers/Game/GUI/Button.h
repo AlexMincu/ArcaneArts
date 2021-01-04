@@ -8,7 +8,7 @@
 class Button {
 public:
     // Constructor/Destructor
-    Button();
+    Button(const short& type);
     virtual ~Button();
 
     // Update
@@ -28,6 +28,8 @@ public:
     sf::Vector2f getPosition();
     sf::FloatRect getSize();
 
+    enum Type {Default = 0, Upgrade = 1, Quit_upgrade = 2, Upgrade_click_damage = 3};
+
 private:
     // Variables
 
@@ -38,8 +40,4 @@ private:
     // Text
     sf::Font font;
     sf::Text text;
-
-    // Init Private Functions
-    void initWindow();
-    void initText();
 };

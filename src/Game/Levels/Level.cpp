@@ -96,7 +96,7 @@ void Level::render(sf::RenderTarget *target, const unsigned short& state) {
         target->draw(enemies_killed_count);
     }
 
-    if(state == 0) {    // If the game is paused
+    if(state == 0 || state == 3) {    // Paused/ Upgrading Menu
         // Background
         target->draw(this->background);
 
@@ -107,8 +107,8 @@ void Level::render(sf::RenderTarget *target, const unsigned short& state) {
 
 
 // Functions
-void Level::UseEnemySpawnerAttack() {
-    this->enemy_spawner->attackEnemy();
+void Level::UseEnemySpawnerAttack(const float& damage) {
+    this->enemy_spawner->attackEnemy(damage);
 }
 void Level::save() {
     // Debug
@@ -131,6 +131,11 @@ void Level::save() {
 bool Level::EnemyHitboxPressed (const sf::Vector2i& mousePos) {
     return this->enemy_spawner->EnemyHitboxPressed(mousePos);
 }
+
 std::string Level::getTitle(){
     return this->title.getString();
+}
+
+const int &Level::getProgress() const {
+    return this->progress;
 }

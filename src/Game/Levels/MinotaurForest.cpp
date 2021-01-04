@@ -49,7 +49,7 @@ void MinotaurForest::update(const float &dt) {
 
 void MinotaurForest::updateProgress(){
     this->current_enemies = this->enemy_spawner->getEnemiesKilledCount();
-    this->progress = (static_cast<float>(this->current_enemies) / static_cast<float>(this->total_enemies))*100;
+    this->progress = current_enemies;
 }
 
 
@@ -61,11 +61,12 @@ void MinotaurForest::run() {
             case 0:
             case 1:
             case 2:
-                this->enemy_spawner->spawn(50, Mob::MINOTAUR); break;
+                this->enemy_spawner->spawn(5, Mob::MINOTAUR); break;
             case 3:
-                this->enemy_spawner->spawn(100, Mob::MINOTAUR2); break;
+                this->enemy_spawner->spawn(5, Mob::MINOTAUR2); break;
             case 4:
-                this->enemy_spawner->spawn(250, Mob::MINOTAUR3); break;
+                this->enemy_spawner->spawn(5, Mob::MINOTAUR3); break;
+            case 5:
             default: std::cout << "[Level] Something's wrong in run()\n";
         }
     }

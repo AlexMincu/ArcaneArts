@@ -72,12 +72,12 @@ void Enemy::updateAnimation(const float &dt) {
 
         short anim_state = this->animationComponent->play("ATTACK", dt);
 
-        if (anim_state == STARTING) {
+        if (anim_state == AnimState::STARTING) {
             if(this->current_health > 0) {
-                this->current_health -= 10;
+                this->current_health -= this->received_damage;
             }
         }
-        else if (anim_state == FINISHING){
+        else if (anim_state == AnimState::FINISHING){
             if (this->current_health <= 0)
                 this->enemy_state = E_DYING;
             else
@@ -91,7 +91,7 @@ void Enemy::updateAnimation(const float &dt) {
 
 
     if(this->enemy_state == E_DYING){
-        if(this->animationComponent->play("DYING", dt) == FINISHING)
+        if(this->animationComponent->play("DYING", dt) == AnimState::FINISHING)
             this->enemy_state = E_IDLE;
     }
 
@@ -109,7 +109,8 @@ void Enemy::render(sf::RenderTarget *target) {
 
 
 // Functions
-void Enemy::attack() {
+void Enemy::attack(const float& damage) {
+    this->received_damage = damage;
     if(this->getCurrentHealth() > 0) {
         this->animationComponent->manual_reset("ATTACK");
         setEnemyState(E_ATTACKED);

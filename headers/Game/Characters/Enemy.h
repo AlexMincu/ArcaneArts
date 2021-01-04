@@ -21,7 +21,7 @@ public:
     void render(sf::RenderTarget *target);
 
     // Functions
-    void attack();
+    void attack(const float& damage);
 
     // Getters
     bool HitboxPressed(const sf::Vector2i& mousePos) const;
@@ -48,6 +48,8 @@ private:
 
     // HP Bar
     ProgressBar *hp_bar;
+
+    float received_damage;
 
     // Init Private Functions
     void initAnimationComponent(sf::Texture &enemy_texture_sheet);

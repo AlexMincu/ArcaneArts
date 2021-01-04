@@ -19,16 +19,17 @@ public:
 
     // Functions
     virtual void run() = 0;
-    void UseEnemySpawnerAttack();
+    void UseEnemySpawnerAttack(const float& damage);
     void save();
 
     // Getters and Setters
     bool EnemyHitboxPressed(const sf::Vector2i& mousePos);
     std::string getTitle();
+    const int& getProgress() const;
 
 protected:
     // Variables
-    float progress;
+    int progress;
     int total_enemies;
     int current_enemies;
 
