@@ -6,7 +6,6 @@
 #include "Game/GUI/UpgradeMenu.h"
 
 
-
 class Game {
 public:
     // Constructor/Destructor
@@ -17,8 +16,7 @@ public:
     void update();
     void updateDt();
     void updateEvents();
-    void updateDamage();
-    void updateProgression();
+    void updatePlayerInfo();
 
     // Render
     void render();
@@ -29,24 +27,15 @@ public:
     void load();
     void save();
 
+
     enum Levels {minotaur_forest = 1};
     enum State {paused = 0, running = 1, closing = 2, upgrading = 3};
 
 private:
     sf::RenderWindow *window;
     sf::Event event;
-
-    // Running Information
-        unsigned int state;
-        bool focus;
-        // Game Progression
-        int progression;
-        int current_level_progression;
-        int last_current_level_progression;
-        // Player Damage
-        float damage;
-        float click_damage;
-        float idle_damage;
+    unsigned int state;
+    bool focus;
 
     // Delta Time
     sf::Clock dtClock;
@@ -72,6 +61,16 @@ private:
     PauseMenu *pauseComponent;
     HealthBar *hp_bar;
 
+    // Player Info
+        // Progression
+        int progression;
+        int current_level_progression;
+        int last_current_level_progression;
+        // Damage
+        float damage;
+        float click_damage;
+        float idle_damage;
+
     // Init Private Functions
     void initWindow();
     void initKeybinds();
@@ -83,5 +82,4 @@ private:
     void initDebug();
     void renderDebug();
     sf::RectangleShape line[2];
-
 };

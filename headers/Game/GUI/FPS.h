@@ -7,10 +7,16 @@
 
 class FPS {
 public:
+    // Constructor/Destructor
     FPS(std::map<std::string, sf::Font>& fonts);
     ~FPS();
+
+    // Update
     void update(const float& dt);
+
+    // Render
     void render(sf::RenderTarget *target);
+
 private:
     sf::Text fps;
     float fps_render_timing;

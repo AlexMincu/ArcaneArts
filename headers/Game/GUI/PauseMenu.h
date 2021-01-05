@@ -11,8 +11,6 @@ public:
     // Render
     void render(sf::RenderTarget *target);
 
-    // Functions
-
 
     Button return_button;
     Button quit_button;

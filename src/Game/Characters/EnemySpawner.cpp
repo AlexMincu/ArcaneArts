@@ -59,7 +59,7 @@ void EnemySpawner::spawn(const float& hp, const unsigned short& mob) {
             std::cout << "[Enemy Spawner] Spawning minotaru1\n";
 
             this->enemies.push_back(new Enemy(hp, this->spawn_pos_x, this->spawn_pos_y,
-                                              (*this->textures)["MINOTAUR1_SHEET"],
+                                              (*this->textures)["Minotaur1"],
                                               (*this->textures)["HP_BAR_TEXTURE"]));
         }
         else if(mob == Mob::MINOTAUR2) {
@@ -68,7 +68,7 @@ void EnemySpawner::spawn(const float& hp, const unsigned short& mob) {
             std::cout << "[Enemy Spawner] Spawning minotaru2\n";
 
             this->enemies.push_back(new Enemy(hp, this->spawn_pos_x, this->spawn_pos_y,
-                                              (*this->textures)["MINOTAUR2_SHEET"],
+                                              (*this->textures)["Minotaur2"],
                                               (*this->textures)["HP_BAR_TEXTURE"]));
         }
         else if(mob == Mob::MINOTAUR3) {
@@ -77,7 +77,7 @@ void EnemySpawner::spawn(const float& hp, const unsigned short& mob) {
             std::cout << "[Enemy Spawner] Spawning minotaru3\n";
 
             this->enemies.push_back(new Enemy(hp, this->spawn_pos_x, this->spawn_pos_y,
-                                              (*this->textures)["MINOTAUR3_SHEET"],
+                                              (*this->textures)["Minotaur3"],
                                               (*this->textures)["HP_BAR_TEXTURE"]));
         }
     }

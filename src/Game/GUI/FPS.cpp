@@ -1,6 +1,9 @@
 #include "Game/GUI/FPS.h"
 
-FPS::FPS(std::map<std::string, sf::Font>& fonts)  :   dt_frames{0.f}, dt_average{0.f}, fps_render_timing{0.f} {
+FPS::FPS(std::map<std::string, sf::Font>& fonts)
+    :   dt_frames{0.f}, dt_average{0.f}, fps_render_timing{0.f} {
+
+    // Init the font for the fps
     this->fps.setFont(fonts["Courier"]);
     this->fps.setCharacterSize(20);
     this->fps.setFillColor(sf::Color::Green);

@@ -6,8 +6,10 @@ HealthBar::HealthBar(const float& x, const float & y,
                      std::map<std::string, sf::Texture>& textures,
                      std::map<std::string, sf::Font>& fonts) {
 
-    this->sprite.setTexture(textures["HP_BAR_TEXTURE"], true);
+    // Init the texture of the health bar
+    this->sprite.setTexture(textures["HealthBar"], true);
     this->sprite.setPosition(x, y);
+
 
     // The resizing part of the bar
     // Create the rectangle that shows % health remaining on the screen
@@ -26,7 +28,6 @@ HealthBar::HealthBar(const float& x, const float & y,
     this->health.setOutlineColor(sf::Color::Black);
     this->health.setOutlineThickness(1);
     this->health.setString("100%");
-
 
     sf::Vector2 text_pos = this->progress.getPosition();
     text_pos.x += this->progress_size.x/2;

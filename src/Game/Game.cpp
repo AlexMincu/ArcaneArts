@@ -21,61 +21,61 @@ void Game::initKeybinds() {
 
 void Game::initTextures() {
     if(!this->textures["MessageWindow"].loadFromFile("assets/GUI/message_window.png")){
-        std::cerr << "Failed to load Message Window Texture\n";
+        std::cerr << "Failed to load MessageWindow Texture\n";
         exit(1);
     }
 
-    if (!this->textures["Button"].loadFromFile("assets/GUI/button.png")) {
+    if (!this->textures["Button"].loadFromFile("assets/GUI/buttons/button.png")) {
         std::cerr << "Failed to load Button Texture\n";
         exit(1);
     }
 
-    if (!this->textures["UpgradeButton"].loadFromFile("assets/GUI/upgrade_button.png")) {
-        std::cerr << "Failed to load Upgrade Button Texture\n";
+    if (!this->textures["UpgradeOpen"].loadFromFile("assets/GUI/buttons/upgrade_open.png")) {
+        std::cerr << "Failed to load UpgradeOpen Texture\n";
         exit(1);
     }
 
-    if (!this->textures["QuitUpgradeButton"].loadFromFile("assets/GUI/quit_upgrade_button.png")) {
-        std::cerr << "Failed to load Quit Upgrade Button Texture\n";
+    if (!this->textures["UpgradeClose"].loadFromFile("assets/GUI/buttons/upgrade_close.png")) {
+        std::cerr << "Failed to load UpgradeClose Texture\n";
         exit(1);
     }
 
-    if (!this->textures["UpgradeClickDamageButton"].loadFromFile("assets/GUI/upgrade_click_damage_button.png")) {
-        std::cerr << "Failed to load Quit Upgrade Button Texture\n";
+    if (!this->textures["UpgradeClickDamage"].loadFromFile("assets/GUI/buttons/upgrade_click_damage.png")) {
+        std::cerr << "Failed to load UpgradeClickDamage Texture\n";
         exit(1);
     }
 
-    if (!this->textures["PauseMenuButton"].loadFromFile("assets/GUI/pause_menu_button.png")) {
-        std::cerr << "Failed to load Pause Menu Button Texture\n";
+    if (!this->textures["Pause"].loadFromFile("assets/GUI/buttons/pause_menu.png")) {
+        std::cerr << "Failed to load Pause Button Texture\n";
         exit(1);
     }
 
     if (!this->textures["UpgradeWindow"].loadFromFile("assets/GUI/upgrade_window.png")) {
-        std::cerr << "Failed to load Upgrade Window Texture\n";
+        std::cerr << "Failed to load UpgradeWindow Texture\n";
         exit(1);
     }
 
-    if (!this->textures["MinotaurForest"].loadFromFile("assets/backgrounds/stage1_background.png")) {
-        std::cerr << "Failed to load Background1 for Game State\n";
+    if (!this->textures["MinotaurForest"].loadFromFile("assets/backgrounds/minotaur_forest.png")) {
+        std::cerr << "Failed to load MinotaurForest Texture\n";
         exit(1);
     }
 
-    if(!this->textures["MINOTAUR1_SHEET"].loadFromFile("assets/enemies/minotaur1_sheet.png")) {
-        std::cerr << "Failed to load Minotaur1 Sheet\n";
+    if(!this->textures["Minotaur1"].loadFromFile("assets/enemies/minotaur1_sheet.png")) {
+        std::cerr << "Failed to load Minotaur1 Texture \n";
         exit(1);
     }
 
-    if(!this->textures["MINOTAUR2_SHEET"].loadFromFile("assets/enemies/minotaur2_sheet.png")) {
-        std::cerr << "Failed to load Minotaur2 Sheet\n";
+    if(!this->textures["Minotaur2"].loadFromFile("assets/enemies/minotaur2_sheet.png")) {
+        std::cerr << "Failed to load Minotaur2 Texture\n";
         exit(1);
     }
 
-    if(!this->textures["MINOTAUR3_SHEET"].loadFromFile("assets/enemies/minotaur3_sheet.png")) {
-        std::cerr << "Failed to load Minotaur3 Sheet\n";
+    if(!this->textures["Minotaur3"].loadFromFile("assets/enemies/minotaur3_sheet.png")) {
+        std::cerr << "Failed to load Minotaur3 Texture\n";
         exit(1);
     }
 
-    if(!this->textures["HP_BAR_TEXTURE"].loadFromFile("assets/GUI/hp_bar.png")) {
+    if(!this->textures["HealthBar"].loadFromFile("assets/GUI/hp_bar.png")) {
         std::cerr << "Failed to load HealthBar Texture\n";
         exit(1);
     }
@@ -119,12 +119,12 @@ void Game::initGUI() {
 
 // Constructor/Destructor
 Game::Game() : window{nullptr}, event{sf::Event()},
-               state{Game::State::running}, focus{true},
-               dt{0.f},
+               state{Game::State::running}, focus{true}, dt{0.f},
                current_level{nullptr}, level(1),
                progression{0}, current_level_progression{-1}, last_current_level_progression{-1},
                click_damage{1.f}, idle_damage{0.f}, damage{0.f},
-               upgradeComponent{nullptr} {
+               upgradeComponent{nullptr}, pauseComponent{nullptr},
+               hp_bar{nullptr}, fps{nullptr}{
 
     std::cout << "[Game] Starting...\n";
     // Loading previous settings
@@ -158,36 +158,22 @@ Game::~Game() {
 
 // Update
 void Game::update() {
-    if(this->state == Game::State::paused) {
-        this->updateDt();
-        this->updateEvents();
-        this->fps->update(dt);
-        this->updateProgression();
-        this->updateDamage();
-        this->upgradeComponent->update(click_damage);
+    this->updateDt();
+    this->updateEvents();
+    this->upgradeComponent->update(click_damage);
+    this->fps->update(dt);
+    this->updatePlayerInfo();
 
-        if(this->focus) {
-            this->mouse_pos = sf::Mouse::getPosition(*this->window);
-        }
-    }
-
-    else if(this->state == Game::State::running || this->state == Game::State::upgrading) {
-        this->updateDt();
-        this->updateEvents();
-        this->fps->update(dt);
-        this->updateProgression();
-        this->updateDamage();
-        this->upgradeComponent->update(click_damage);
-
+    if (this->state == Game::State::running ||
+        this->state == Game::State::upgrading) {
 
         this->current_level->update(dt);
         this->hp_bar->update(this->current_level->getCurrentHealthPercentage(), dt);
-
-        if(this->focus) {
-            this->mouse_pos = sf::Mouse::getPosition(*this->window);
-        }
     }
 
+    if(this->focus) {
+        this->mouse_pos = sf::Mouse::getPosition(*this->window);
+    }
 }
 
 void Game::updateDt() {
@@ -263,7 +249,7 @@ void Game::updateEvents() {
                         }
 
                         // Upgrade Icon
-                        if (this->upgradeComponent->open_upgrade_button.isPressed(this->mouse_pos)) {
+                        if (this->upgradeComponent->upgrade_open_button.isPressed(this->mouse_pos)) {
                             this->upgradeComponent->open();
                             this->state = Game::State::upgrading;
                         }
@@ -278,7 +264,7 @@ void Game::updateEvents() {
                         }
                     }
                     else if(this->state == Game::State::upgrading) {
-                        if(this->upgradeComponent->quit_upgrade_button.isPressed(this->mouse_pos)) {
+                        if(this->upgradeComponent->upgrade_close_button.isPressed(this->mouse_pos)) {
                             this->upgradeComponent->close();
                             this->state = Game::State::running;
                         }
@@ -290,8 +276,8 @@ void Game::updateEvents() {
     }
 }
 
-
-void Game::updateProgression() {
+void Game::updatePlayerInfo() {
+    // Update the player progression
     this->current_level_progression = this->current_level->getProgress();
 
     if(last_current_level_progression != current_level_progression) {
@@ -301,9 +287,8 @@ void Game::updateProgression() {
         // Debug
         std::cout << "[Game] Progression is at " << this->progression << "\n";
     }
-}
 
-void Game::updateDamage() {
+    // Update the player damage
     this->damage = this->click_damage + idle_damage;
 }
 

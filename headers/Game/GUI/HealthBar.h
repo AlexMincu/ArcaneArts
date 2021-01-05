@@ -20,14 +20,10 @@ public:
     virtual void render(sf::RenderTarget *target);
 
 private:
-     // Variables
-        // Texture
     sf::Sprite sprite;
-    sf::RectangleShape progress;
-        // Dynamic component (a resizeable rectangle)
-    sf::Vector2f progress_size;
-        // Text
-    sf::Font font;
     sf::Text health;
 
+    // Dynamic component (a resizeable rectangle)
+    sf::RectangleShape progress;
+    sf::Vector2f progress_size;
 };

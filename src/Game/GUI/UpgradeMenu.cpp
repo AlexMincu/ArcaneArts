@@ -4,9 +4,9 @@
 UpgradeMenu::UpgradeMenu(std::map<std::string, sf::Texture>& textures,
                          std::map<std::string, sf::Font>& fonts)
                          : state{State::closed},
-                           open_upgrade_button(Button::Type::Upgrade, textures, fonts),
-                           quit_upgrade_button(Button::Type::Quit_upgrade, textures, fonts),
-                           upgrade_click_damage_button(Button::Type::Upgrade_click_damage, textures, fonts) {
+                           upgrade_open_button(Button::Type::Upgrade_Open, textures, fonts),
+                           upgrade_close_button(Button::Type::Upgrade_Close, textures, fonts),
+                           upgrade_click_damage_button(Button::Type::Upgrade_Click_Damage, textures, fonts) {
 
 
     // Window
@@ -16,13 +16,13 @@ UpgradeMenu::UpgradeMenu(std::map<std::string, sf::Texture>& textures,
     this->window.setScale(width_multiplier, height_multiplier);
     this->window.setPosition(100, 100);
 
-    // Upgrade Button
-    this->open_upgrade_button.setPosition(20, 680);
-    this->open_upgrade_button.setSize(100, 100);
+    // Upgrade Open Button
+    this->upgrade_open_button.setPosition(20, 680);
+    this->upgrade_open_button.setSize(100, 100);
 
-    // Quit Upgrade Button
-    this->quit_upgrade_button.setPosition(470, 88);
-    this->quit_upgrade_button.setSize(50, 50);
+    // Upgrade Close Button
+    this->upgrade_close_button.setPosition(470, 88);
+    this->upgrade_close_button.setSize(50, 50);
 
     // Upgrade Click Damage Button
     this->upgrade_click_damage_button.setPosition(150, 135);
@@ -55,10 +55,11 @@ void UpgradeMenu::update(const float& damage) {
 
 // Render
 void UpgradeMenu::render(sf::RenderTarget *target) {
-    this->open_upgrade_button.render(target);
+    this->upgrade_open_button.render(target);
+
     if(state == State::opened) {
         target->draw(window);
-        this->quit_upgrade_button.render(target);
+        this->upgrade_close_button.render(target);
         this->upgrade_click_damage_button.render(target);
         target->draw(this->click_damage_text);
     }
@@ -79,6 +80,3 @@ void UpgradeMenu::close() {
     // Debug
     std::cout << "[UpgradeMenu] Close Upgrade Menu Window\n";
 }
-
-
-// Getters and Setters

@@ -13,33 +13,24 @@ public:
            std::map<std::string, sf::Font>& fonts);
     virtual ~Button();
 
-    // Update
-    bool isPressed(const sf::Vector2i& mousePos);
-
     // Render
     virtual void render(sf::RenderTarget *target);
 
-    // Functions
-        // Text
+    // Getters and Setters
     void setText(const std::string &s);
     void setTextSize(const unsigned int& size);
     void centerText();
-        // Window
+
+    bool isPressed(const sf::Vector2i& mousePos);
     void setPosition(const float& x, const float& y);
     void setSize(const float& width, const float& height);
     sf::Vector2f getPosition();
     sf::FloatRect getSize();
 
-    enum Type {Default = 0, Upgrade = 1, Quit_upgrade = 2, Upgrade_click_damage = 3, Pause_menu = 4};
+
+    enum Type {Default = 0, Upgrade_Open = 1, Upgrade_Close = 2, Upgrade_Click_Damage = 3, Pause = 4};
 
 private:
-    // Variables
-
-    // Texture
     sf::Sprite window;
-    sf::Texture window_texture;
-
-    // Text
-    sf::Font font;
     sf::Text text;
 };

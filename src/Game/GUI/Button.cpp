@@ -5,42 +5,47 @@ Button::Button(const short& type,
                std::map<std::string, sf::Texture>& textures,
                std::map<std::string, sf::Font>& fonts) {
 
-    if (type == Type::Default) {
-        this->window.setTexture(textures["Button"]);
+    switch(type){
+        case Type::Pause: {
+            this->window.setTexture(textures["Pause"]);
 
-        // Init Text
-        this->text.setFont(fonts["Courier"]);
-        this->text.setFillColor(sf::Color::White);
-        this->text.setCharacterSize(16);
-        this->text.setPosition(this->window.getPosition().x + this->window.getGlobalBounds().width / 2 -
-                               this->text.getGlobalBounds().width / 2,
-                               this->window.getPosition().y + this->window.getGlobalBounds().height / 2 -
-                               this->text.getGlobalBounds().width / 2);
+            this->text.setFont(fonts["Langar"]);
+            this->text.setFillColor(sf::Color::White);
+            this->text.setCharacterSize(16);
+            this->text.setPosition(this->window.getPosition().x + this->window.getGlobalBounds().width / 2 -
+                                   this->text.getGlobalBounds().width / 2,
+                                   this->window.getPosition().y + this->window.getGlobalBounds().height / 2 -
+                                   this->text.getGlobalBounds().width / 2);
+            break;
+        }
 
-    }
+        case Type::Upgrade_Open: {
+            this->window.setTexture(textures["UpgradeOpen"]);
+            break;
+        }
 
-    else if(type == Type::Upgrade) {
-        this->window.setTexture(textures["UpgradeButton"]);
-    }
+        case Type::Upgrade_Close: {
+            this->window.setTexture(textures["UpgradeClose"]);
+            break;
+        }
 
-    else if(type == Type::Quit_upgrade) {
-        this->window.setTexture(textures["QuitUpgradeButton"]);
-    }
+        case Type::Upgrade_Click_Damage: {
+            this->window.setTexture(textures["UpgradeClickDamage"]);
+            break;
+        }
 
-    else if(type == Type::Upgrade_click_damage) {
-        this->window.setTexture(textures["UpgradeClickDamageButton"]);
-    }
+        default: {
+            this->window.setTexture(textures["Button"]);
 
-    else if (type == Type::Pause_menu) {
-        this->window.setTexture(textures["PauseMenuButton"]);
-
-        this->text.setFont(fonts["Langar"]);
-        this->text.setFillColor(sf::Color::White);
-        this->text.setCharacterSize(16);
-        this->text.setPosition(this->window.getPosition().x + this->window.getGlobalBounds().width / 2 -
-                               this->text.getGlobalBounds().width / 2,
-                               this->window.getPosition().y + this->window.getGlobalBounds().height / 2 -
-                               this->text.getGlobalBounds().width / 2);
+            // Init Text
+            this->text.setFont(fonts["Courier"]);
+            this->text.setFillColor(sf::Color::White);
+            this->text.setCharacterSize(16);
+            this->text.setPosition(this->window.getPosition().x + this->window.getGlobalBounds().width / 2 -
+                                   this->text.getGlobalBounds().width / 2,
+                                   this->window.getPosition().y + this->window.getGlobalBounds().height / 2 -
+                                   this->text.getGlobalBounds().width / 2);
+        }
     }
 }
 

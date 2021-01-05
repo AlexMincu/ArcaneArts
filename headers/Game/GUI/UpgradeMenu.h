@@ -19,21 +19,17 @@ public:
     void open();
     void close();
 
-    // Getters and Setters
-
-    enum State {closed = 0, opened = 1};
 
     // Buttons
-    Button open_upgrade_button;
-    Button quit_upgrade_button;
+    Button upgrade_open_button;
+    Button upgrade_close_button;
     Button upgrade_click_damage_button;
+
+    enum State {closed = 0, opened = 1};
 
 private:
     // Texture
     sf::Sprite window;
-    sf::Texture window_texture;
-
-    sf::Font font;
     sf::Text click_damage_text;
 
     // State
