@@ -5,7 +5,7 @@
 class MinotaurForest : public Level{
 public:
     // Constructor/ Destructor
-    MinotaurForest(const sf::Window *window,
+    MinotaurForest(sf::Vector2i pos,
                    std::map<std::string, sf::Texture>& textures,
                    std::map<std::string, sf::Font>& fonts);
     ~MinotaurForest() override;
@@ -18,21 +18,6 @@ public:
     // Functions
     void run() override;
 
-protected:
-
 private:
-    // Inherited from Level
-    /*
-        float progress;
-        int total_enemies;
-        int current_enemies;
-
-        EnemySpawner* enemy_spawner;
-
-        sf::Text title;
-        sf::Text enemies_killed;
-        sf::Text enemies_killed_count;
-
-        sf::Sprite background;
-    */
+    void initLevel() override;
 };

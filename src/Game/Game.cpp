@@ -95,7 +95,11 @@ void Game::initTextures() {
 }
 
 void Game::initLevel(){
-    this->current_level = new MinotaurForest(window, textures, fonts);
+    this->current_level = new MinotaurForest(
+            sf::Vector2i(window->getSize().x/2.f - 180.f,
+                            window->getSize().y/2.f - 90.f),
+            textures,
+            fonts);
     this->level = minotaur_forest;
 }
 
@@ -228,7 +232,7 @@ void Game::updateEvents() {
                     // ----> ATTACK KEY <-----
                 else if (this->event.key.code == sf::Keyboard::Key(this->keybinds.at("ATTACK"))) {
                     if(this->state == Game::State::running){
-                        this->current_level->UseEnemySpawnerAttack(damage);
+                        this->current_level->attackEnemy(damage);
                         std::cout << "[Enemy] ATTACK used by Attack Keybind Key\n";
                     }
                 }
@@ -244,7 +248,7 @@ void Game::updateEvents() {
 
                         // Hitting an Enemy
                         if (this->current_level->EnemyHitboxPressed(this->mouse_pos)) {
-                            this->current_level->UseEnemySpawnerAttack(damage);
+                            this->current_level->attackEnemy(damage);
                             std::cout << "[Enemy] ATTACK used by MLEFT Button\n";
                         }
 

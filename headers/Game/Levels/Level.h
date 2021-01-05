@@ -1,11 +1,12 @@
 #pragma once
 
-#include "Game/Characters/EnemySpawner.h"
+#include "Game/Characters/Enemy.h"
+enum Mob {MINOTAUR = 0, MINOTAUR2 = 1, MINOTAUR3 = 3};
 
 class Level {
 public:
     // Constructor/ Destructor
-    Level(const sf::Window *window,
+    Level(sf::Vector2i pos,
           std::map<std::string, sf::Texture>& textures,
           std::map<std::string, sf::Font>& fonts);
     virtual ~Level();
@@ -14,35 +15,47 @@ public:
     virtual void update(const float &dt);
     virtual void updateProgress() = 0;
     virtual void updateText() = 0;
+    virtual void updateEnemy(const float &dt);
 
     // Render
     virtual void render(sf::RenderTarget *target, const unsigned short& state);
 
     // Functions
     virtual void run() = 0;
-    void UseEnemySpawnerAttack(const float& damage);
     void save();
 
     // Getters and Setters
-    bool EnemyHitboxPressed(const sf::Vector2i& mousePos);
+    std::string getTitle() const;
+    int getProgress() const;
+    int getEnemiesKilledCount() const;
+
+
+    // Enemy Spawner Component
+    void spawn(const float& hp, const unsigned short& mob);
+    void attackEnemy(const float& damage);
+
+    bool isEnemySpawned() const;
+    bool EnemyHitboxPressed(const sf::Vector2i& mousePos) const;
     float getCurrentHealthPercentage() const;
-    std::string getTitle();
-    const int& getProgress() const;
 
 protected:
-    // Variables
-    int progress;
-    int total_enemies;
-    int current_enemies;
-
-    // Components
-    EnemySpawner enemy_spawner;
         // Text
     sf::Text title;
-    sf::Text enemies_killed;
-    sf::Text enemies_killed_count;
+    sf::Text enemies_killed_text;
+    sf::Text enemies_killed_count_text;
         // Background
     sf::Sprite background;
 
-private:
+    virtual void initLevel() = 0;
+
+
+    // Enemy Spawner Component
+    std::vector<Enemy*> enemies;
+    sf::Vector2i spawn_pos;
+
+    int progress;
+    int total_enemies;
+    int enemies_killed_count;
+
+    std::map<std::string, sf::Texture> *textures;
 };
