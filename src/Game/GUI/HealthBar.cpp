@@ -1,7 +1,15 @@
-#include "Game/GUI/ProgressBar.h"
+#include "Game/GUI/HealthBar.h"
 
-// Init Private Functions
-void ProgressBar::initHealthBar(const float& x, const float & y){
+
+// Constructor
+HealthBar::HealthBar(const float& x, const float & y,
+                     std::map<std::string, sf::Texture>& textures,
+                     std::map<std::string, sf::Font>& fonts) {
+
+    this->sprite.setTexture(textures["HP_BAR_TEXTURE"], true);
+    this->sprite.setPosition(x, y);
+
+    // The resizing part of the bar
     // Create the rectangle that shows % health remaining on the screen
     sf::Color color (240, 39, 39);
     this->progress.setFillColor(color);
@@ -9,20 +17,16 @@ void ProgressBar::initHealthBar(const float& x, const float & y){
     this->progress_size.x = 204;
     this->progress_size.y = 17;
     this->progress.setSize(progress_size);
-}
 
-void ProgressBar::initText(){
-    if(!this->font.loadFromFile("assets/Fonts/langar.ttf")){
-        std::cerr << "Failed to load Langar Font for Progress Bar\n";
-        exit(1);
-    }
 
-    this->health.setFont(font);
+    // Init Text
+    this->health.setFont(fonts["Langar"]);
     this->health.setFillColor(sf::Color::White);
     this->health.setCharacterSize(20);
     this->health.setOutlineColor(sf::Color::Black);
     this->health.setOutlineThickness(1);
     this->health.setString("100%");
+
 
     sf::Vector2 text_pos = this->progress.getPosition();
     text_pos.x += this->progress_size.x/2;
@@ -37,39 +41,22 @@ void ProgressBar::initText(){
     this->health.setPosition(text_pos.x + 10, text_pos.y + 5);
 }
 
-
-// Constructor
-ProgressBar::ProgressBar(const float& x, const float & y, sf::Texture &texture_sheet)
-: texture_sheet{texture_sheet} {
-
-    this->sprite.setTexture(this->texture_sheet, true);
-    this->sprite.setPosition(x, y);
-
-    this->initHealthBar(x, y);
-    this->initText();
-}
-
 //Destructor
-ProgressBar::~ProgressBar() {
+HealthBar::~HealthBar() {
 
 }
 
 
 // Update
-void ProgressBar::update(const float& hp_procent, const float &dt) {
-    this->updateHealthBar(hp_procent);
-    this->updateText(hp_procent);
-}
-
-void ProgressBar::updateHealthBar(const float& hp_procent){
+void HealthBar::update(const float& hp_procent, const float &dt) {
     // Update the rectangle that shows % health remaining on the screen
     // It shrinks based on the health percentage that enemy has
     if(hp_procent >= 0)
         this->progress_size.x = 2.04 * hp_procent;
     this->progress.setSize(progress_size);
-}
 
-void ProgressBar::updateText(const float& hp_procent){
+
+    // Update the text inside the health bar
     std::ostringstream int2string;
     int2string << static_cast<int>(hp_procent);
     int2string << "%";
@@ -80,16 +67,9 @@ void ProgressBar::updateText(const float& hp_procent){
 }
 
 
-
-
 // Render
-void ProgressBar::render(sf::RenderTarget *target) {
+void HealthBar::render(sf::RenderTarget *target) {
     target->draw(this->sprite);
     target->draw(this->progress);
     target->draw(this->health);
 }
-
-
-// Functions
-
-// Getter and Setters

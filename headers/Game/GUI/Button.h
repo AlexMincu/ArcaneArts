@@ -8,7 +8,9 @@
 class Button {
 public:
     // Constructor/Destructor
-    Button(const short& type);
+    Button(const short& type,
+           std::map<std::string, sf::Texture>& textures,
+           std::map<std::string, sf::Font>& fonts);
     virtual ~Button();
 
     // Update

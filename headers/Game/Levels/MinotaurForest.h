@@ -6,7 +6,8 @@ class MinotaurForest : public Level{
 public:
     // Constructor/ Destructor
     MinotaurForest(const sf::Window *window,
-                   const std::map<std::string, sf::Texture>& textures);
+                   std::map<std::string, sf::Texture>& textures,
+                   std::map<std::string, sf::Font>& fonts);
     ~MinotaurForest() override;
 
     // Update
@@ -28,16 +29,10 @@ private:
 
         EnemySpawner* enemy_spawner;
 
-        sf::Font font;
         sf::Text title;
         sf::Text enemies_killed;
         sf::Text enemies_killed_count;
 
         sf::Sprite background;
-        sf::Texture background_texture;
     */
-
-    // Init functions
-    void initSettings();
-
 };

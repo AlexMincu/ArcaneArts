@@ -70,6 +70,7 @@ private:
     FPS *fps;
     UpgradeMenu *upgradeComponent;
     PauseMenu *pauseComponent;
+    HealthBar *hp_bar;
 
     // Init Private Functions
     void initWindow();

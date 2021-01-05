@@ -22,37 +22,22 @@ void Enemy::initAnimationComponent(sf::Texture &enemy_texture_sheet) {
                                            360, 245);
 }
 
-void Enemy::initHealthBar(sf::Texture &health_bar_texture_sheet){
-    // HP BAR
-        // Find the position to set the HP Bar under the enemy
-    float x_spacer = 45.f;
-    float y_spacer = this->getSize().height;
-
-    float hp_bar_pos_x = this->getPosition().x + x_spacer;
-    float hp_bar_pos_y = this->getPosition().y + y_spacer;
-
-    this->hp_bar = new ProgressBar(hp_bar_pos_x, hp_bar_pos_y, health_bar_texture_sheet);
-}
-
 
 // Constructor/Destructor
 Enemy::Enemy(const float &hp, const float &x, const float &y,
              sf::Texture &char_texture_sheet, sf::Texture &health_bar_texture_sheet)
              :  base_health{0.f}, current_health{0.f},
                 enemy_state{E_IDLE},
-                animationComponent{nullptr}, hp_bar(nullptr){
+                animationComponent{nullptr}{
 
     this->initAnimationComponent(char_texture_sheet);
     this->setPosition(x, y);
-
-    this->initHealthBar(health_bar_texture_sheet);
 
     this->base_health = hp;
     this->current_health = this->base_health;
 }
 
 Enemy::~Enemy() {
-    delete this->hp_bar;
     delete this->animationComponent;
 }
 
@@ -61,9 +46,6 @@ Enemy::~Enemy() {
 void Enemy::update(const float &dt) {
     // Enemy Animation
     this->updateAnimation(dt);
-
-    // Progress Bars
-    this->hp_bar->update(this->getCurrentHealthPercentage(), dt);
 }
 
 void Enemy::updateAnimation(const float &dt) {
@@ -102,9 +84,6 @@ void Enemy::updateAnimation(const float &dt) {
 void Enemy::render(sf::RenderTarget *target) {
     // Enemy
     target->draw(this->sprite);
-
-    // Progress Bars
-    this->hp_bar->render(target);
 }
 
 

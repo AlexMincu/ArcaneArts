@@ -8,7 +8,7 @@ class EnemySpawner {
 public:
     // Constructor/Destructor
     EnemySpawner(const float &spawn_pos_x, const float &spawn_pos_y,
-                 const std::map<std::string, sf::Texture>& textures);
+                 std::map<std::string, sf::Texture>& textures);
     virtual ~EnemySpawner();
 
     // Update
@@ -26,6 +26,7 @@ public:
     int getEnemiesKilledCount() const;
     bool isEnemySpawned() const;
     bool EnemyHitboxPressed(const sf::Vector2i& mousePos) const;
+    float getCurrentHealthPercentage() const;
 
 private:
     // Variables
@@ -34,8 +35,5 @@ private:
     float spawn_pos_y;
     int enemies_killed_count;
 
-    std::map<std::string, sf::Texture> textures;
-
-    // Init Private Functions
-    void initTextures();
+    std::map<std::string, sf::Texture> *textures;
 };

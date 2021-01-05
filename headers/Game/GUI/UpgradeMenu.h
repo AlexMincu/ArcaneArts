@@ -5,7 +5,8 @@
 class UpgradeMenu {
 public:
     // Constructor/Destructor
-    UpgradeMenu();
+    UpgradeMenu(std::map<std::string, sf::Texture>& textures,
+                std::map<std::string, sf::Font>& fonts);
     ~UpgradeMenu();
 
     // Update
@@ -23,9 +24,9 @@ public:
     enum State {closed = 0, opened = 1};
 
     // Buttons
-    Button *upgrade_button;
-    Button *quit_upgrade_button;
-    Button *upgrade_click_damage_button;
+    Button open_upgrade_button;
+    Button quit_upgrade_button;
+    Button upgrade_click_damage_button;
 
 private:
     // Texture
@@ -37,8 +38,4 @@ private:
 
     // State
     short state;
-
-    // Init Functions
-    void initWindow();
-    void initButtons();
 };

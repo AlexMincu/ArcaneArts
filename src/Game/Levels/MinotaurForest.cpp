@@ -1,7 +1,11 @@
 #include "Game/Levels/MinotaurForest.h"
 
-// Init Private Functions
-void MinotaurForest::initSettings() {
+// Constructor
+MinotaurForest::MinotaurForest(const sf::Window *window,
+                               std::map<std::string, sf::Texture>& textures,
+                               std::map<std::string, sf::Font>& fonts)
+                               : Level(window, textures, fonts) {
+
     // Variables
     this->progress = 0;
     this->current_enemies = 0;
@@ -9,27 +13,16 @@ void MinotaurForest::initSettings() {
 
     // Text
     this->title.setString("Minotaur Forest");
-        // Repositioning
-        this->title.setPosition(300, 30);
-            // Added half of the text width to x_pos to center it horizontally
-        this->title.setPosition(this->title.getPosition().x - this->title.getGlobalBounds().width/2,
-                                this->title.getPosition().y);
+    // Repositioning
+    this->title.setPosition(300, 30);
+    // Added half of the text width to x_pos to center it horizontally
+    this->title.setPosition(this->title.getPosition().x - this->title.getGlobalBounds().width/2,
+                            this->title.getPosition().y);
 
     // Background
-    if (!background_texture.loadFromFile("assets/backgrounds/stage1_background.png")) {
-        std::cerr << "Failed to load Background1 for Game State\n";
-        exit(1);
-    }
-    background.setTexture(this->background_texture);
+
+    background.setTexture(textures["MinotaurForest"]);
     background.setPosition(0, 0);
-}
-
-// Constructor
-MinotaurForest::MinotaurForest(const sf::Window *window,
-                               const std::map<std::string, sf::Texture>& textures)
-                               : Level(window, textures) {
-
-    this->initSettings();
 }
 
 // Destructor
@@ -48,24 +41,24 @@ void MinotaurForest::update(const float &dt) {
 }
 
 void MinotaurForest::updateProgress(){
-    this->current_enemies = this->enemy_spawner->getEnemiesKilledCount();
+    this->current_enemies = this->enemy_spawner.getEnemiesKilledCount();
     this->progress = current_enemies;
 }
 
 
 // Functions
 void MinotaurForest::run() {
-    if(!this->enemy_spawner->isEnemySpawned() &&
+    if(!this->enemy_spawner.isEnemySpawned() &&
     this->current_enemies < this->total_enemies){
         switch(current_enemies){
             case 0:
             case 1:
             case 2:
-                this->enemy_spawner->spawn(5, Mob::MINOTAUR); break;
+                this->enemy_spawner.spawn(5, Mob::MINOTAUR); break;
             case 3:
-                this->enemy_spawner->spawn(5, Mob::MINOTAUR2); break;
+                this->enemy_spawner.spawn(5, Mob::MINOTAUR2); break;
             case 4:
-                this->enemy_spawner->spawn(5, Mob::MINOTAUR3); break;
+                this->enemy_spawner.spawn(5, Mob::MINOTAUR3); break;
             case 5:
             default: std::cout << "[Level] Something's wrong in run()\n";
         }

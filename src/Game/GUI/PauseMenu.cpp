@@ -3,8 +3,8 @@
 // Constructor
 PauseMenu::PauseMenu(std::map<std::string, sf::Texture>& textures,
                      std::map<std::string, sf::Font>& fonts)
-                     :  return_button(Button::Type::Pause_menu),
-                        quit_button(Button::Type::Pause_menu) {
+                     :  return_button(Button::Type::Pause_menu, textures, fonts),
+                        quit_button(Button::Type::Pause_menu, textures, fonts) {
 
     // Window
     this->window.setTexture(textures["MessageWindow"]);

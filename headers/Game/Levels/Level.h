@@ -6,7 +6,8 @@ class Level {
 public:
     // Constructor/ Destructor
     Level(const sf::Window *window,
-          const std::map<std::string, sf::Texture>& textures);
+          std::map<std::string, sf::Texture>& textures,
+          std::map<std::string, sf::Font>& fonts);
     virtual ~Level();
 
     // Update
@@ -24,6 +25,7 @@ public:
 
     // Getters and Setters
     bool EnemyHitboxPressed(const sf::Vector2i& mousePos);
+    float getCurrentHealthPercentage() const;
     std::string getTitle();
     const int& getProgress() const;
 
@@ -34,19 +36,13 @@ protected:
     int current_enemies;
 
     // Components
-    EnemySpawner* enemy_spawner;
+    EnemySpawner enemy_spawner;
         // Text
-    sf::Font font;
     sf::Text title;
     sf::Text enemies_killed;
     sf::Text enemies_killed_count;
         // Background
     sf::Sprite background;
-    sf::Texture background_texture;
 
 private:
-    // Init functions
-    void initEnemySpawner(const sf::Window *window,
-                          const std::map<std::string, sf::Texture>& textures);
-    void initText();
 };

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Game/Animations/AnimationComponent.h"
-#include <Game/GUI/ProgressBar.h>
+#include <Game/GUI/HealthBar.h>
 
 enum enemy_states {E_IDLE = 0, E_ATTACKED, E_DYING};
 
@@ -46,12 +46,10 @@ private:
     sf::Sprite sprite;
     AnimationComponent *animationComponent;
 
-    // HP Bar
-    ProgressBar *hp_bar;
+
 
     float received_damage;
 
     // Init Private Functions
     void initAnimationComponent(sf::Texture &enemy_texture_sheet);
-    void initHealthBar(sf::Texture &health_bar_texture_sheet);
 };

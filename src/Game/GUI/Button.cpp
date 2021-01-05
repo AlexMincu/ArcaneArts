@@ -1,25 +1,15 @@
 #include "Game/GUI/Button.h"
 
 // Constructor
-Button::Button(const short& type) {
+Button::Button(const short& type,
+               std::map<std::string, sf::Texture>& textures,
+               std::map<std::string, sf::Font>& fonts) {
 
     if (type == Type::Default) {
-        //Init Window(texture)
-        if (!this->window_texture.loadFromFile("assets/GUI/button.png")) {
-            std::cerr << "Failed to load Button Texture\n";
-            exit(1);
-        }
-
-        this->window.setTexture(window_texture);
-
+        this->window.setTexture(textures["Button"]);
 
         // Init Text
-        if (!this->font.loadFromFile("assets/Fonts/courier.ttf")) {
-            std::cerr << "Failed to load Courier Font for Button\n";
-            exit(1);
-        }
-
-        this->text.setFont(font);
+        this->text.setFont(fonts["Courier"]);
         this->text.setFillColor(sf::Color::White);
         this->text.setCharacterSize(16);
         this->text.setPosition(this->window.getPosition().x + this->window.getGlobalBounds().width / 2 -
@@ -30,47 +20,21 @@ Button::Button(const short& type) {
     }
 
     else if(type == Type::Upgrade) {
-        if (!this->window_texture.loadFromFile("assets/GUI/upgrade_button.png")) {
-            std::cerr << "Failed to load Upgrade Button Texture\n";
-            exit(1);
-        }
-
-        this->window.setTexture(window_texture);
+        this->window.setTexture(textures["UpgradeButton"]);
     }
 
     else if(type == Type::Quit_upgrade) {
-        if (!this->window_texture.loadFromFile("assets/GUI/quit_upgrade_button.png")) {
-            std::cerr << "Failed to load Quit Upgrade Button Texture\n";
-            exit(1);
-        }
-
-        this->window.setTexture(window_texture);
+        this->window.setTexture(textures["QuitUpgradeButton"]);
     }
 
     else if(type == Type::Upgrade_click_damage) {
-        if (!this->window_texture.loadFromFile("assets/GUI/upgrade_click_damage_button.png")) {
-            std::cerr << "Failed to load Quit Upgrade Button Texture\n";
-            exit(1);
-        }
-
-        this->window.setTexture(window_texture);
+        this->window.setTexture(textures["UpgradeClickDamageButton"]);
     }
 
     else if (type == Type::Pause_menu) {
-        if (!this->window_texture.loadFromFile("assets/GUI/pause_menu_button.png")) {
-            std::cerr << "Failed to load Pause Menu Button Texture\n";
-            exit(1);
-        }
+        this->window.setTexture(textures["PauseMenuButton"]);
 
-        this->window.setTexture(window_texture);
-
-        // Init Text
-        if (!this->font.loadFromFile("assets/Fonts/langar.ttf")) {
-            std::cerr << "Failed to load Courier Font for Button\n";
-            exit(1);
-        }
-
-        this->text.setFont(font);
+        this->text.setFont(fonts["Langar"]);
         this->text.setFillColor(sf::Color::White);
         this->text.setCharacterSize(16);
         this->text.setPosition(this->window.getPosition().x + this->window.getGlobalBounds().width / 2 -
