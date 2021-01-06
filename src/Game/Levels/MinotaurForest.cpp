@@ -75,8 +75,8 @@ void MinotaurForest::updateText() {
         // Upper half of the screen ( 600x800 resolution )
         this->enemies_killed_count_text.setPosition(300, 200);
         // Added half of the text width to x_pos to center it horizontally
-        this->enemies_killed_count_text.setPosition(
-                this->enemies_killed_count_text.getPosition().x - this->enemies_killed_count_text.getGlobalBounds().width/2,
-                this->enemies_killed_count_text.getPosition().y);
+        this->enemies_killed_count_text.setPosition(this->enemies_killed_count_text.getPosition().x -
+                                                    this->enemies_killed_count_text.getGlobalBounds().width/2,
+                                                    this->enemies_killed_count_text.getPosition().y);
 }
 

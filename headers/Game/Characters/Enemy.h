@@ -1,16 +1,15 @@
 #pragma once
 
 #include "Game/Animations/AnimationComponent.h"
-#include <Game/GUI/HealthBar.h>
-
-enum enemy_states {E_IDLE = 0, E_ATTACKED, E_DYING};
 
 class Enemy {
 public:
+    enum State {IDLE = 0, ATTACKED, DYING};
+
     // Constructor/Destructor
-    Enemy(const float &hp, const float &x, const float &y,
-            sf::Texture &texture_sheet,
-            sf::Texture &health_bar_texture_sheet);
+    Enemy(const float &hp,
+          const float &x, const float &y,
+          sf::Texture &enemy_texture_sheet);
     virtual ~Enemy();
 
     // Update
@@ -23,18 +22,11 @@ public:
     // Functions
     void attack(const float& damage);
 
-    // Getters
+    // Getters & Setters
     bool HitboxPressed(const sf::Vector2i& mousePos) const;
     unsigned short getEnemyState() const;
-    const sf::Vector2f &getPosition() const;
-    sf::Rect<float> getSize() const;
     float getCurrentHealth() const;
     float getCurrentHealthPercentage() const;
-
-    // Setters
-    void setEnemyState(enemy_states);
-    void setTexture (sf::Texture &texture);
-    void setPosition(const float &x, const float &y);
 
 private:
     // Stats
@@ -44,11 +36,8 @@ private:
 
     // Texture
     sf::Sprite sprite;
-    AnimationComponent *animationComponent;
+    AnimationComponent animationComponent;
 
-
-
-    float received_damage;
 
     // Init Private Functions
     void initAnimationComponent(sf::Texture &enemy_texture_sheet);

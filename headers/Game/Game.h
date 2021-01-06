@@ -4,7 +4,7 @@
 #include <Game/GUI/PauseMenu.h>
 #include "Game/Levels/MinotaurForest.h"
 #include "Game/GUI/UpgradeMenu.h"
-
+#include "Game/GUI/HealthBar.h"
 
 class Game {
 public:

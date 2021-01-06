@@ -69,7 +69,7 @@ void Level::updateEnemy(const float &dt) {
 
     // If enemy is killed, delete it
     if (enemies.at(0)->getCurrentHealth() <= 0) {
-        if (enemies.at(0)->getEnemyState() == E_IDLE) {
+        if (enemies.at(0)->getEnemyState() == Enemy::State::IDLE) {
             delete this->enemies.at(0);
             this->enemies.erase(this->enemies.begin());
 
@@ -143,8 +143,7 @@ void Level::spawn(const float& hp, const unsigned short& mob) {
             std::cout << "[Enemy Spawner] Spawning minotaru1\n";
 
             this->enemies.push_back(new Enemy(hp, this->spawn_pos.x, this->spawn_pos.y,
-                                              (*this->textures)["Minotaur1"],
-                                              (*this->textures)["HP_BAR_TEXTURE"]));
+                                              (*this->textures)["Minotaur1"]));
         }
         else if(mob == Mob::MINOTAUR2) {
 
@@ -152,8 +151,7 @@ void Level::spawn(const float& hp, const unsigned short& mob) {
             std::cout << "[Enemy Spawner] Spawning minotaru2\n";
 
             this->enemies.push_back(new Enemy(hp, this->spawn_pos.x, this->spawn_pos.y,
-                                              (*this->textures)["Minotaur2"],
-                                              (*this->textures)["HP_BAR_TEXTURE"]));
+                                              (*this->textures)["Minotaur2"]));
         }
         else if(mob == Mob::MINOTAUR3) {
 
@@ -161,8 +159,7 @@ void Level::spawn(const float& hp, const unsigned short& mob) {
             std::cout << "[Enemy Spawner] Spawning minotaru3\n";
 
             this->enemies.push_back(new Enemy(hp, this->spawn_pos.x, this->spawn_pos.y,
-                                              (*this->textures)["Minotaur3"],
-                                              (*this->textures)["HP_BAR_TEXTURE"]));
+                                              (*this->textures)["Minotaur3"]));
         }
     }
 
