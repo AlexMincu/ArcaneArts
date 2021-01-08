@@ -3,7 +3,7 @@
 #include <Game/GUI/FPS.h>
 #include <Game/GUI/PauseMenu.h>
 #include "Game/Levels/MinotaurForest.h"
-#include "Game/GUI/UpgradeMenu.h"
+#include "Game/GUI/Menu.h"
 #include "Game/GUI/HealthBar.h"
 #include "Game/GUI/TextTagComponent.h"
 
@@ -58,10 +58,9 @@ private:
 
     //GUI
     FPS *fps;
-    UpgradeMenu *upgradeComponent;
+    Menu *menuComponent;
     PauseMenu *pauseComponent;
     HealthBar *hp_bar;
-    sf::Sprite *bottom_gui;
     TextTagComponent *tags;
 
     // Player Info

@@ -133,19 +133,11 @@ void Game::initDebug(){
 void Game::initGUI() {
     this->fps = new FPS(fonts);
 
-    this->upgradeComponent = new UpgradeMenu(textures, fonts);
+    this->menuComponent = new Menu(textures, fonts);
 
     this->pauseComponent = new PauseMenu(textures, fonts);
 
     this->hp_bar = new HealthBar(300.f - 140, 400.f + 160, textures, fonts);
-
-    //Bottom-GUI
-        // Slot1 39x676
-        // Slot2 178x676
-        // Slot3 317x676
-        // Slot4 456x676
-    this->bottom_gui = new sf::Sprite(this->textures["BottomGUI"]);
-    this->bottom_gui->setPosition(0, 650);
 
     this->tags = new TextTagComponent(fonts);
 }
@@ -156,7 +148,7 @@ Game::Game() : window{nullptr}, event{sf::Event()},
                current_level{nullptr}, level(1),
                progression{0}, current_level_progression{-1}, last_current_level_progression{-1},
                click_damage{1.f}, idle_damage{0.f}, damage{0.f},
-               upgradeComponent{nullptr}, pauseComponent{nullptr},
+               menuComponent{nullptr}, pauseComponent{nullptr},
                hp_bar{nullptr}, fps{nullptr}{
 
     std::cout << "[Game] Starting...\n";
@@ -180,12 +172,11 @@ Game::~Game() {
 
     // Releasing the memory
     delete this->current_level;
-    delete this->upgradeComponent;
+    delete this->menuComponent;
     delete this->pauseComponent;
     delete this->window;
     delete this->fps;
     delete this->hp_bar;
-    delete this->bottom_gui;
     delete this->tags;
 
     std::cout << "[Game] Closed\n";
@@ -195,7 +186,7 @@ Game::~Game() {
 void Game::update() {
     this->updateDt();
     this->updateEvents();
-    this->upgradeComponent->update(click_damage);
+    this->menuComponent->update(dt, click_damage);
     this->fps->update(dt);
     this->updatePlayerInfo();
     this->tags->update(dt);
@@ -247,27 +238,26 @@ void Game::updateEvents() {
 
                     // -----> EXIT KEY <-----
                 if (this->event.key.code == sf::Keyboard::Key(this->keybinds.at("EXIT"))) {
+
+                    // ====> RUNNING GAME STATE <====
                     if(this->state == Game::State::running) {
                         this->state = Game::State::paused;
                         std::cout << "[Game] Paused\n";
                         }
+
+                    // ====> PAUSED GAME STATE <====
                     else if(this->state == Game::State::paused) {
                         this->state = Game::State::running;
                         std::cout << "[Game] Unpaused\n";
                     }
+
+                    // ====> UPGRADING GAME STATE <====
                     else if(this->state == Game::State::upgrading) {
-                        this->upgradeComponent->close();
+                        this->menuComponent->close();
                         this->state = Game::State::running;
                     }
                 }
 
-//                    // ----> ATTACK KEY <-----
-//                else if (this->event.key.code == sf::Keyboard::Key(this->keybinds.at("ATTACK"))) {
-//                    if(this->state == Game::State::running){
-//                        this->current_level->attackEnemy(damage);
-//                        std::cout << "[Enemy] ATTACK used by Attack Keybind Key\n";
-//                    }
-//                }
                 break;
 
 
@@ -276,6 +266,8 @@ void Game::updateEvents() {
 
                     // ----> MLEFT BUTTON <-----
                 if (this->event.mouseButton.button == sf::Mouse::Left) {
+
+                    // ====> RUNNING GAME STATE <====
                     if(this->state == Game::State::running) {
 
                         // Hitting an Enemy
@@ -291,12 +283,14 @@ void Game::updateEvents() {
                             std::cout << "[Enemy] ATTACK used by MLEFT Button\n";
                         }
 
-                        // Upgrade Icon
-                        if (this->upgradeComponent->isButtonPressed(this->mouse_pos) == UpgradeMenu::UpgradeButton::Open) {
-                            this->upgradeComponent->open();
+                        // Upgrades Menu
+                        if (this->menuComponent->isButtonPressed(this->mouse_pos) == Menu::UpgradeButton::Open) {
+                            this->menuComponent->open(Menu::Section::Upgrades);
                             this->state = Game::State::upgrading;
                         }
                     }
+
+                    // ====> PAUSED GAME STATE <====
                     else if(this->state == Game::State::paused) {
                         if (this->pauseComponent->isButtonPressed(this->mouse_pos) == PauseMenu::PauseButton::Return) {
                             this->state = Game::State::running;
@@ -306,12 +300,14 @@ void Game::updateEvents() {
                             this->close();
                         }
                     }
+
+                    // ====> UPGRADING GAME STATE <====
                     else if(this->state == Game::State::upgrading) {
-                        if(this->upgradeComponent->isButtonPressed(this->mouse_pos) == UpgradeMenu::UpgradeButton::Close) {
-                            this->upgradeComponent->close();
+                        if(this->menuComponent->isButtonPressed(this->mouse_pos) == Menu::UpgradeButton::Close) {
+                            this->menuComponent->close();
                             this->state = Game::State::running;
                         }
-                        else if(this->upgradeComponent->isButtonPressed(this->mouse_pos) == UpgradeMenu::UpgradeButton::UpgradeClickDamage){
+                        else if(this->menuComponent->isButtonPressed(this->mouse_pos) == Menu::UpgradeButton::UpgradeClickDamage){
                             this->click_damage++;
                             std::cout << "[Game] UpgradeClickDamage to " << this->click_damage << "\n";
                         }
@@ -345,34 +341,38 @@ void Game::render() {
     this->window->clear(sf::Color::Black);
 
 
-    // Level
-    this->current_level->render(this->window, state);
+    if (this->state == Game::State::running ||
+        this->state == Game::State::upgrading) {
+        // Level
+        this->current_level->render(this->window, state);
+        // FPS
+        this->fps->render(this->window);
+        // GUI - HP Bar
+        this->hp_bar->render(this->window);
+        // GUI - Upgrade Component
+        this->menuComponent->render(this->window);
+        // GUI - TextTags
+        this->tags->render(this->window);
+    }
 
-    // FPS
-    this->fps->render(this->window);
 
-    // GUI - Bottom Bar
-    this->window->draw(*this->bottom_gui);
 
-    // GUI - Pause Component
-    if(this->state == Game::State::paused) {
+    if (this->state == Game::State::paused) {
+        // Level
+        this->current_level->render(this->window, state);
+        // FPS
+        this->fps->render(this->window);
+        // GUI - Menu
+        this->menuComponent->render(this->window);
+        // GUI - TextTags
+        this->tags->render(this->window);
+        // GUI - Pause Component
         this->pauseComponent->render(this->window);
     }
 
-    // GUI - Upgrade Component
-    this->upgradeComponent->render(this->window);
-
-    // GUI - HP Bar
-    if(this->state == Game::State::running) {
-        this->hp_bar->render(this->window);
-    }
-
-    // GUI - TextTags
-    this->tags->render(this->window);
 
     // Debug
     this->renderDebug();
-
 
     // Display everything
     this->window->display();

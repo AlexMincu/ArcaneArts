@@ -82,7 +82,7 @@ void Level::render(sf::RenderTarget *target, const unsigned short& state) {
     // Background
     target->draw(this->background);
 
-    if(state == 1) {    // If the game is running
+    if(state != 0) {    // If the game is not paused
         // Mobs
         if(!this->enemies.empty())
             this->enemies.at(0)->render(target);
