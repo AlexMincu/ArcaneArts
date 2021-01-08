@@ -16,12 +16,9 @@ public:
                       int width, int height);
 
     const short& play(const std::string &key, const float &dt);
-
-    // Getters and Setters
     void manual_reset(const std::string &key);
 
 private:
-    // Variables
     sf::Sprite &sprite;
     sf::Texture &texture_sheet;
     std::map<std::string, Animation*> animations;

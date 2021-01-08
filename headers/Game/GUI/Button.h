@@ -21,7 +21,7 @@ public:
     void setTextSize(const unsigned int& size);
     void centerText();
 
-    bool isPressed(const sf::Vector2i& mousePos);
+    bool isPressed(const sf::Vector2i& mousePos) const;
     void setPosition(const float& x, const float& y);
     void setSize(const float& width, const float& height);
     sf::Vector2f getPosition();

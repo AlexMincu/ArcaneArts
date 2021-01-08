@@ -56,7 +56,7 @@ Button::~Button() {
 
 
 // Update
-bool Button::isPressed(const sf::Vector2i& mousePos){
+bool Button::isPressed(const sf::Vector2i& mousePos) const{
     if(this->window.getGlobalBounds().contains(mousePos.x, mousePos.y))
             return true;
 

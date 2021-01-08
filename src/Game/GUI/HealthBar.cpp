@@ -49,11 +49,13 @@ HealthBar::~HealthBar() {
 
 
 // Update
-void HealthBar::update(const float& hp_procent, const float &dt) {
+void HealthBar::update(float hp_procent, const float &dt) {
     // Update the rectangle that shows % health remaining on the screen
     // It shrinks based on the health percentage that enemy has
-    if(hp_procent >= 0)
-        this->progress_size.x = 2.04 * hp_procent;
+    if(hp_procent < 0)
+        hp_procent = 0;
+
+    this->progress_size.x = 2.04 * hp_procent;
     this->progress.setSize(progress_size);
 
 

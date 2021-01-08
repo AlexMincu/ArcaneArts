@@ -17,7 +17,7 @@ UpgradeMenu::UpgradeMenu(std::map<std::string, sf::Texture>& textures,
     this->window.setPosition(100, 100);
 
     // Upgrade Open Button
-    this->upgrade_open_button.setPosition(20, 680);
+    this->upgrade_open_button.setPosition(39, 676);    //Bottom-GUI Slot1 39x676
     this->upgrade_open_button.setSize(100, 100);
 
     // Upgrade Close Button
@@ -31,9 +31,9 @@ UpgradeMenu::UpgradeMenu(std::map<std::string, sf::Texture>& textures,
     // Upgrade Click Damage Text
     this->click_damage_text.setFont(fonts["Langar"]);
     this->click_damage_text.setFillColor(sf::Color::White);
-    this->click_damage_text.setCharacterSize(30);
+    this->click_damage_text.setCharacterSize(25);
     this->click_damage_text.setPosition(275, 165);
-    this->click_damage_text.setString("1 Damage");
+    this->click_damage_text.setString("1 Click Damage");
 }
 
 // Destructor
@@ -47,7 +47,7 @@ void UpgradeMenu::update(const float& damage) {
     // Update Damage Text
     std::ostringstream ss;
     ss << damage;
-    ss << " Damage";
+    ss << " Click Damage";
     std::string to_print(ss.str()); // float -> string conversion
     this->click_damage_text.setString(to_print);
 }
@@ -79,4 +79,21 @@ void UpgradeMenu::close() {
 
     // Debug
     std::cout << "[UpgradeMenu] Close Upgrade Menu Window\n";
+}
+
+
+short UpgradeMenu::isButtonPressed(const sf::Vector2i& mousePos) const {
+    if(this->upgrade_open_button.isPressed(mousePos)) {
+        return UpgradeButton::Open;
+    }
+
+    else if(this->upgrade_close_button.isPressed(mousePos)) {
+        return UpgradeButton::Close;
+    }
+
+    else if(this->upgrade_click_damage_button.isPressed(mousePos)) {
+        return UpgradeButton::UpgradeClickDamage;
+    }
+
+    return UpgradeButton::NoButtonPressed;
 }

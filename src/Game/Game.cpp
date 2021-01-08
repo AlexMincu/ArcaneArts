@@ -15,16 +15,37 @@ void Game::initWindow() {
 }
 
 void Game::initKeybinds() {
-    this->keybinds ["ATTACK"] = sf::Keyboard::Key::Space;
+//    this->keybinds ["ATTACK"] = sf::Keyboard::Key::Space;
     this->keybinds ["EXIT"] = sf::Keyboard::Key::Escape;
 }
 
 void Game::initTextures() {
+
+    // Textures
+
+        // GUI
+    if(!this->textures["BottomGUI"].loadFromFile("assets/GUI/bottom_gui.png")){
+        std::cerr << "Failed to load BottomGUI Texture\n";
+        exit(1);
+    }
+
     if(!this->textures["MessageWindow"].loadFromFile("assets/GUI/message_window.png")){
         std::cerr << "Failed to load MessageWindow Texture\n";
         exit(1);
     }
 
+    if (!this->textures["UpgradeWindow"].loadFromFile("assets/GUI/upgrade_window.png")) {
+        std::cerr << "Failed to load UpgradeWindow Texture\n";
+        exit(1);
+    }
+
+    if(!this->textures["HealthBar"].loadFromFile("assets/GUI/hp_bar.png")) {
+        std::cerr << "Failed to load HealthBar Texture\n";
+        exit(1);
+    }
+
+
+        // GUI - Bottons
     if (!this->textures["Button"].loadFromFile("assets/GUI/buttons/button.png")) {
         std::cerr << "Failed to load Button Texture\n";
         exit(1);
@@ -50,16 +71,16 @@ void Game::initTextures() {
         exit(1);
     }
 
-    if (!this->textures["UpgradeWindow"].loadFromFile("assets/GUI/upgrade_window.png")) {
-        std::cerr << "Failed to load UpgradeWindow Texture\n";
-        exit(1);
-    }
 
+        // MinotaurForest Level
+
+            // Background
     if (!this->textures["MinotaurForest"].loadFromFile("assets/backgrounds/minotaur_forest.png")) {
         std::cerr << "Failed to load MinotaurForest Texture\n";
         exit(1);
     }
 
+            // Enemies
     if(!this->textures["Minotaur1"].loadFromFile("assets/enemies/minotaur1_sheet.png")) {
         std::cerr << "Failed to load Minotaur1 Texture \n";
         exit(1);
@@ -75,14 +96,9 @@ void Game::initTextures() {
         exit(1);
     }
 
-    if(!this->textures["HealthBar"].loadFromFile("assets/GUI/hp_bar.png")) {
-        std::cerr << "Failed to load HealthBar Texture\n";
-        exit(1);
-    }
 
 
-
-
+    // Fonts
     if(!this->fonts["Courier"].loadFromFile("assets/Fonts/courier.ttf")) {
         std::cerr << "Failed to load Courier Font\n";
         exit(1);
@@ -116,9 +132,22 @@ void Game::initDebug(){
 
 void Game::initGUI() {
     this->fps = new FPS(fonts);
+
     this->upgradeComponent = new UpgradeMenu(textures, fonts);
+
     this->pauseComponent = new PauseMenu(textures, fonts);
+
     this->hp_bar = new HealthBar(300.f - 140, 400.f + 160, textures, fonts);
+
+    //Bottom-GUI
+        // Slot1 39x676
+        // Slot2 178x676
+        // Slot3 317x676
+        // Slot4 456x676
+    this->bottom_gui = new sf::Sprite(this->textures["BottomGUI"]);
+    this->bottom_gui->setPosition(0, 650);
+
+    this->tags = new TextTagComponent(fonts);
 }
 
 // Constructor/Destructor
@@ -156,6 +185,8 @@ Game::~Game() {
     delete this->window;
     delete this->fps;
     delete this->hp_bar;
+    delete this->bottom_gui;
+    delete this->tags;
 
     std::cout << "[Game] Closed\n";
 }
@@ -167,6 +198,7 @@ void Game::update() {
     this->upgradeComponent->update(click_damage);
     this->fps->update(dt);
     this->updatePlayerInfo();
+    this->tags->update(dt);
 
     if (this->state == Game::State::running ||
         this->state == Game::State::upgrading) {
@@ -229,13 +261,13 @@ void Game::updateEvents() {
                     }
                 }
 
-                    // ----> ATTACK KEY <-----
-                else if (this->event.key.code == sf::Keyboard::Key(this->keybinds.at("ATTACK"))) {
-                    if(this->state == Game::State::running){
-                        this->current_level->attackEnemy(damage);
-                        std::cout << "[Enemy] ATTACK used by Attack Keybind Key\n";
-                    }
-                }
+//                    // ----> ATTACK KEY <-----
+//                else if (this->event.key.code == sf::Keyboard::Key(this->keybinds.at("ATTACK"))) {
+//                    if(this->state == Game::State::running){
+//                        this->current_level->attackEnemy(damage);
+//                        std::cout << "[Enemy] ATTACK used by Attack Keybind Key\n";
+//                    }
+//                }
                 break;
 
 
@@ -249,28 +281,39 @@ void Game::updateEvents() {
                         // Hitting an Enemy
                         if (this->current_level->EnemyHitboxPressed(this->mouse_pos)) {
                             this->current_level->attackEnemy(damage);
+
+                            std::ostringstream damage_text;
+                            damage_text << click_damage;
+                            std::string to_print(damage_text.str());
+
+                            this->tags->addTag(to_print, this->mouse_pos.x, this->mouse_pos.y, TextTagComponent::Type::Damage);
+
                             std::cout << "[Enemy] ATTACK used by MLEFT Button\n";
                         }
 
                         // Upgrade Icon
-                        if (this->upgradeComponent->upgrade_open_button.isPressed(this->mouse_pos)) {
+                        if (this->upgradeComponent->isButtonPressed(this->mouse_pos) == UpgradeMenu::UpgradeButton::Open) {
                             this->upgradeComponent->open();
                             this->state = Game::State::upgrading;
                         }
                     }
                     else if(this->state == Game::State::paused) {
-                        if (this->pauseComponent->return_button.isPressed(this->mouse_pos)) {
+                        if (this->pauseComponent->isButtonPressed(this->mouse_pos) == PauseMenu::PauseButton::Return) {
                             this->state = Game::State::running;
                             std::cout << "[Game] Unpaused\n";
                         }
-                        if (this->pauseComponent->quit_button.isPressed(this->mouse_pos)) {
+                        if (this->pauseComponent->isButtonPressed(this->mouse_pos) == PauseMenu::PauseButton::Close) {
                             this->close();
                         }
                     }
                     else if(this->state == Game::State::upgrading) {
-                        if(this->upgradeComponent->upgrade_close_button.isPressed(this->mouse_pos)) {
+                        if(this->upgradeComponent->isButtonPressed(this->mouse_pos) == UpgradeMenu::UpgradeButton::Close) {
                             this->upgradeComponent->close();
                             this->state = Game::State::running;
+                        }
+                        else if(this->upgradeComponent->isButtonPressed(this->mouse_pos) == UpgradeMenu::UpgradeButton::UpgradeClickDamage){
+                            this->click_damage++;
+                            std::cout << "[Game] UpgradeClickDamage to " << this->click_damage << "\n";
                         }
                     }
 
@@ -308,20 +351,24 @@ void Game::render() {
     // FPS
     this->fps->render(this->window);
 
-    // GUI
-        // Pause Component
-        if(this->state == Game::State::paused) {
-            this->pauseComponent->render(this->window);
-        }
+    // GUI - Bottom Bar
+    this->window->draw(*this->bottom_gui);
 
+    // GUI - Pause Component
+    if(this->state == Game::State::paused) {
+        this->pauseComponent->render(this->window);
+    }
 
-        // Upgrade Component
-        this->upgradeComponent->render(this->window);
+    // GUI - Upgrade Component
+    this->upgradeComponent->render(this->window);
 
-        if(this->state == Game::State::running) {
-            // HP Bar
-            this->hp_bar->render(this->window);
-        }
+    // GUI - HP Bar
+    if(this->state == Game::State::running) {
+        this->hp_bar->render(this->window);
+    }
+
+    // GUI - TextTags
+    this->tags->render(this->window);
 
     // Debug
     this->renderDebug();

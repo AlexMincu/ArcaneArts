@@ -35,9 +35,9 @@ void FPS::update(const float &dt) {
         ss << a;
         ss << " DT";
 
-        std::string de_afisat(ss.str()); // float -> string conversion
+        std::string to_print(ss.str()); // float -> string conversion
 
-        this->fps.setString(de_afisat);
+        this->fps.setString(to_print);
 
         //Reset
         fps_render_timing = 0.f;

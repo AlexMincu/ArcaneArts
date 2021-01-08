@@ -8,7 +8,8 @@ void MinotaurForest::initLevel() {
 
     // Title
     this->title.setString("Minotaur Forest");
-        // Recenter the title
+    this->title.setPosition(300, 30);
+    // Added half of the text width to x_pos to center it horizontally
     this->title.setPosition(this->title.getPosition().x - this->title.getGlobalBounds().width/2,
                             this->title.getPosition().y);
 

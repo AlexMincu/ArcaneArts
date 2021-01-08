@@ -30,20 +30,18 @@ public:
     void manual_reset();
 
 private:
-    // Variables
-        // Texture
+    // Texture
     sf::Sprite &sprite;
     sf::Texture &texture_sheet;
-        // Positioning inside the sheet
+    short state;
+    // Positioning inside the sheet
     sf::IntRect start_rect;
     sf::IntRect current_rect;
     sf::IntRect end_rect;
-        // Size of a single image
+    // Size of a single image
     int width;
     int height;
-        // Timers for the animation
+    // Timers for the animation
     float animation_timer;
     float timer;
-        // Others
-    short state;
 };

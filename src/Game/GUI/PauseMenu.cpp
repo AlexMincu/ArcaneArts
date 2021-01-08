@@ -3,8 +3,8 @@
 // Constructor
 PauseMenu::PauseMenu(std::map<std::string, sf::Texture>& textures,
                      std::map<std::string, sf::Font>& fonts)
-                     :  return_button(Button::Type::Pause, textures, fonts),
-                        quit_button(Button::Type::Pause, textures, fonts) {
+                     : return_button(Button::Type::Pause, textures, fonts),
+                       close_button(Button::Type::Pause, textures, fonts) {
 
     // Window
     this->window.setTexture(textures["MessageWindow"]);
@@ -30,12 +30,12 @@ PauseMenu::PauseMenu(std::map<std::string, sf::Texture>& textures,
     this->return_button.centerText();
 
     // Quit Button
-    this->quit_button.setSize(160, 80);
-    this->quit_button.setPosition(300 - this->quit_button.getSize().width/2,
+    this->close_button.setSize(160, 80);
+    this->close_button.setPosition(300 - this->close_button.getSize().width / 2,
                                     400 + 20);
-    this->quit_button.setTextSize(18);
-    this->quit_button.setText("Quit");
-    this->quit_button.centerText();
+    this->close_button.setTextSize(18);
+    this->close_button.setText("Quit");
+    this->close_button.centerText();
 }
 
 // Destructor
@@ -48,5 +48,18 @@ void PauseMenu::render(sf::RenderTarget *target) {
     target->draw(this->window);
     target->draw(this->title);
     this->return_button.render(target);
-    this->quit_button.render(target);
+    this->close_button.render(target);
+}
+
+// Functions
+short PauseMenu::isButtonPressed(const sf::Vector2i& mousePos) const {
+    if(this->return_button.isPressed(mousePos)) {
+        return PauseButton::Return;
+    }
+
+    else if(this->close_button.isPressed(mousePos)) {
+        return PauseButton::Close;
+    }
+
+    return PauseButton::NoButtonPressed;
 }

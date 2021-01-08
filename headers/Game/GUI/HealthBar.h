@@ -14,7 +14,7 @@ public:
     virtual ~HealthBar();
 
     // Update
-    void update(const float & hp, const float &dt);
+    void update(float hp_procent, const float &dt);
 
     // Render
     virtual void render(sf::RenderTarget *target);

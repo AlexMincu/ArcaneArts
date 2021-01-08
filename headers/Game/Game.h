@@ -5,6 +5,7 @@
 #include "Game/Levels/MinotaurForest.h"
 #include "Game/GUI/UpgradeMenu.h"
 #include "Game/GUI/HealthBar.h"
+#include "Game/GUI/TextTagComponent.h"
 
 class Game {
 public:
@@ -60,6 +61,8 @@ private:
     UpgradeMenu *upgradeComponent;
     PauseMenu *pauseComponent;
     HealthBar *hp_bar;
+    sf::Sprite *bottom_gui;
+    TextTagComponent *tags;
 
     // Player Info
         // Progression
