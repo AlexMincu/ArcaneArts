@@ -19,18 +19,28 @@ Button::Button(const short& type,
             break;
         }
 
-        case Type::Upgrade_Open: {
-            this->window.setTexture(textures["UpgradeOpen"]);
+        case Type::DirectDamageMenu: {
+            this->window.setTexture(textures["DirectDamageButton"]);
             break;
         }
 
-        case Type::Upgrade_Close: {
-            this->window.setTexture(textures["UpgradeClose"]);
+        case Type::UpgradeDirectDamage: {
+            this->window.setTexture(textures["UpgradeDirectDamage"]);
             break;
         }
 
-        case Type::Upgrade_Click_Damage: {
-            this->window.setTexture(textures["UpgradeClickDamage"]);
+        case Type::IdleDamageMenu: {
+            this->window.setTexture(textures["IdleDamageButton"]);
+            break;
+        }
+
+        case Type::SpellsMenu: {
+            this->window.setTexture(textures["SpellsButton"]);
+            break;
+        }
+
+        case Type::SettingsMenu: {
+            this->window.setTexture(textures["SettingsButton"]);
             break;
         }
 

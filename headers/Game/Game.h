@@ -30,7 +30,7 @@ public:
 
 
     enum Levels {minotaur_forest = 1};
-    enum State {paused = 0, running = 1, closing = 2, upgrading = 3};
+    enum State {paused = 0, running = 1, closing = 2, menuing = 3};
 
 private:
     sf::RenderWindow *window;

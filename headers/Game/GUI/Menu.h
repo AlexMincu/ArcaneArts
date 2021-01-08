@@ -5,8 +5,8 @@
 class Menu {
 public:
     enum State {closed = 0, opened = 1};
-    enum Section {None = 0, Upgrades = 1};
-    enum UpgradeButton {NoButtonPressed = 0, UpgradeClickDamage, Open, Close};
+    enum Section {None = 0, DirectDamage, IdleDamage, Spells, Settings};
+    enum MenuButton {UpgradeDirectDamage, Close, OpenDirectDamage, OpenIdleDamage, OpenSpells, OpenSettings};
     // Constructor/Destructor
     Menu(std::map<std::string, sf::Texture>& textures,
          std::map<std::string, sf::Font>& fonts);
@@ -16,7 +16,10 @@ public:
     void update(const float& dt, const float& damage);
     void updateAnimation(const float& dt);
     void updateSlots();
-    void updateUpdatesSection(const float &damage);
+    void updateDirectDamageSection(const float &damage);
+    void updateIdleDamageSection();
+    void updateSpellsSection();
+    void updateSettingsSection();
 
     // Render
     void render(sf::RenderTarget *target);
@@ -40,12 +43,22 @@ private:
     sf::Vector2f current_pos;
     sf::Vector2f distance;
 
-    // Buttons
-        // Upgrades Menu
-    Button upgrades_button;
-        // Upgrades Menu - Buttons
-    Button upgrade_click_damage_button;
-    sf::Text click_damage_text;
+    // Direct Damage Section
+    Button direct_damage_button;
+    Button upgrade_direct_damage_button;
+    sf::Text direct_damage_text;
 
-    void initUpgradesSection(std::map<std::string, sf::Font> &fonts);
+    // Idle Damage Section
+    Button idle_damage_button;
+
+    // Spells Section
+    Button spells_button;
+
+    // Settings Section
+    Button settings_button;
+
+    void initDirectDamageSection(std::map<std::string, sf::Texture>& textures, std::map<std::string, sf::Font> &fonts);
+    void initIdleDamageSection(std::map<std::string, sf::Texture> &textures, std::map<std::string, sf::Font> &fonts);
+    void initSpellsSection(std::map<std::string, sf::Texture> &textures, std::map<std::string, sf::Font> &fonts);
+    void initSettingsSection(std::map<std::string, sf::Texture> &textures, std::map<std::string, sf::Font> &fonts);
 };

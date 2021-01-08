@@ -24,8 +24,8 @@ void Game::initTextures() {
     // Textures
 
         // GUI
-    if(!this->textures["BottomGUI"].loadFromFile("assets/GUI/bottom_gui.png")){
-        std::cerr << "Failed to load BottomGUI Texture\n";
+    if(!this->textures["MenuGUI"].loadFromFile("assets/GUI/menu_gui.png")){
+        std::cerr << "Failed to load MenuGUI Texture\n";
         exit(1);
     }
 
@@ -45,27 +45,38 @@ void Game::initTextures() {
     }
 
 
-        // GUI - Bottons
+        // GUI - Bottons - Menu
     if (!this->textures["Button"].loadFromFile("assets/GUI/buttons/button.png")) {
         std::cerr << "Failed to load Button Texture\n";
         exit(1);
     }
 
-    if (!this->textures["UpgradeOpen"].loadFromFile("assets/GUI/buttons/upgrade_open.png")) {
-        std::cerr << "Failed to load UpgradeOpen Texture\n";
+    if (!this->textures["DirectDamageButton"].loadFromFile("assets/GUI/buttons/direct_damage.png")) {
+        std::cerr << "Failed to load DirectDamageButton Texture\n";
         exit(1);
     }
 
-    if (!this->textures["UpgradeClose"].loadFromFile("assets/GUI/buttons/upgrade_close.png")) {
-        std::cerr << "Failed to load UpgradeClose Texture\n";
+    if (!this->textures["IdleDamageButton"].loadFromFile("assets/GUI/buttons/idle_damage.png")) {
+        std::cerr << "Failed to load IdleDamageButton Texture\n";
+        exit(1);
+    }
+    if (!this->textures["SpellsButton"].loadFromFile("assets/GUI/buttons/spells.png")) {
+        std::cerr << "Failed to load SpellsButton Texture\n";
+        exit(1);
+    }
+    if (!this->textures["SettingsButton"].loadFromFile("assets/GUI/buttons/settings.png")) {
+        std::cerr << "Failed to load Settings Texture\n";
         exit(1);
     }
 
-    if (!this->textures["UpgradeClickDamage"].loadFromFile("assets/GUI/buttons/upgrade_click_damage.png")) {
+    // GUI - Menu - Direct Damage Section
+    if (!this->textures["UpgradeDirectDamage"].loadFromFile("assets/GUI/buttons/upgrade_click_damage.png")) {
         std::cerr << "Failed to load UpgradeClickDamage Texture\n";
         exit(1);
     }
 
+
+        // GUI - Bottons - Menu
     if (!this->textures["Pause"].loadFromFile("assets/GUI/buttons/pause_menu.png")) {
         std::cerr << "Failed to load Pause Button Texture\n";
         exit(1);
@@ -149,7 +160,7 @@ Game::Game() : window{nullptr}, event{sf::Event()},
                progression{0}, current_level_progression{-1}, last_current_level_progression{-1},
                click_damage{1.f}, idle_damage{0.f}, damage{0.f},
                menuComponent{nullptr}, pauseComponent{nullptr},
-               hp_bar{nullptr}, fps{nullptr}{
+               hp_bar{nullptr}, tags{nullptr}, fps{nullptr}{
 
     std::cout << "[Game] Starting...\n";
     // Loading previous settings
@@ -192,7 +203,7 @@ void Game::update() {
     this->tags->update(dt);
 
     if (this->state == Game::State::running ||
-        this->state == Game::State::upgrading) {
+        this->state == Game::State::menuing) {
 
         this->current_level->update(dt);
         this->hp_bar->update(this->current_level->getCurrentHealthPercentage(), dt);
@@ -252,7 +263,7 @@ void Game::updateEvents() {
                     }
 
                     // ====> UPGRADING GAME STATE <====
-                    else if(this->state == Game::State::upgrading) {
+                    else if(this->state == Game::State::menuing) {
                         this->menuComponent->close();
                         this->state = Game::State::running;
                     }
@@ -283,10 +294,22 @@ void Game::updateEvents() {
                             std::cout << "[Enemy] ATTACK used by MLEFT Button\n";
                         }
 
-                        // Upgrades Menu
-                        if (this->menuComponent->isButtonPressed(this->mouse_pos) == Menu::UpgradeButton::Open) {
-                            this->menuComponent->open(Menu::Section::Upgrades);
-                            this->state = Game::State::upgrading;
+                        // Menu State when Game Running
+                        if (this->menuComponent->isButtonPressed(this->mouse_pos) == Menu::MenuButton::OpenDirectDamage) {
+                            this->menuComponent->open(Menu::Section::DirectDamage);
+                            this->state = Game::State::menuing;
+                        }
+                        else if (this->menuComponent->isButtonPressed(this->mouse_pos) == Menu::MenuButton::OpenIdleDamage) {
+                            this->menuComponent->open(Menu::Section::IdleDamage);
+                            this->state = Game::State::menuing;
+                        }
+                        else if (this->menuComponent->isButtonPressed(this->mouse_pos) == Menu::MenuButton::OpenSpells) {
+                            this->menuComponent->open(Menu::Section::Spells);
+                            this->state = Game::State::menuing;
+                        }
+                        else if (this->menuComponent->isButtonPressed(this->mouse_pos) == Menu::MenuButton::OpenSettings) {
+                            this->menuComponent->open(Menu::Section::Settings);
+                            this->state = Game::State::menuing;
                         }
                     }
 
@@ -301,16 +324,39 @@ void Game::updateEvents() {
                         }
                     }
 
-                    // ====> UPGRADING GAME STATE <====
-                    else if(this->state == Game::State::upgrading) {
-                        if(this->menuComponent->isButtonPressed(this->mouse_pos) == Menu::UpgradeButton::Close) {
-                            this->menuComponent->close();
-                            this->state = Game::State::running;
+                    // ====> MENU STATE <====
+                    else if(this->state == Game::State::menuing) {
+                        // Menu State when Game Menu is opened
+                        short but = this->menuComponent->isButtonPressed(this->mouse_pos);
+                        switch(but) {
+                            case Menu::MenuButton::OpenDirectDamage: {
+                                this->menuComponent->open(Menu::Section::DirectDamage);
+                                break;
+                            }
+                            case Menu::MenuButton::OpenIdleDamage: {
+                                this->menuComponent->open(Menu::Section::IdleDamage);
+                                break;
+                            }
+                            case Menu::MenuButton::OpenSpells: {
+                                this->menuComponent->open(Menu::Section::Spells);
+                                break;
+                            }
+                            case Menu::MenuButton::OpenSettings: {
+                                this->menuComponent->open(Menu::Section::Settings);
+                                break;
+                            }
+                            case Menu::MenuButton::Close: {
+                                this->menuComponent->close();
+                                this->state = Game::State::running;
+                                break;
+                            }
+                            case Menu::MenuButton::UpgradeDirectDamage: {
+                                this->click_damage++;
+                                std::cout << "[Game] UpgradeClickDamage to " << this->click_damage << "\n";
+                                break;
+                            }
                         }
-                        else if(this->menuComponent->isButtonPressed(this->mouse_pos) == Menu::UpgradeButton::UpgradeClickDamage){
-                            this->click_damage++;
-                            std::cout << "[Game] UpgradeClickDamage to " << this->click_damage << "\n";
-                        }
+
                     }
 
                 }
@@ -342,7 +388,7 @@ void Game::render() {
 
 
     if (this->state == Game::State::running ||
-        this->state == Game::State::upgrading) {
+        this->state == Game::State::menuing) {
         // Level
         this->current_level->render(this->window, state);
         // FPS

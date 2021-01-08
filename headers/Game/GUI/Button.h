@@ -28,7 +28,12 @@ public:
     sf::FloatRect getSize();
 
 
-    enum Type {Default = 0, Upgrade_Open = 1, Upgrade_Close = 2, Upgrade_Click_Damage = 3, Pause = 4};
+    enum Type { Default = 0,
+                DirectDamageMenu, UpgradeDirectDamage,
+                IdleDamageMenu,
+                SpellsMenu,
+                SettingsMenu,
+                Pause};
 
 private:
     sf::Sprite window;
