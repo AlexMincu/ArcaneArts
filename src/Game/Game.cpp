@@ -425,8 +425,8 @@ void Game::render() {
 }
 
 void Game::renderDebug(){
-    this->window->draw(line[0]);
-    this->window->draw(line[1]);
+//    this->window->draw(line[0]);
+//    this->window->draw(line[1]);
 }
 
 

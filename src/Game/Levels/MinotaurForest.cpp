@@ -55,9 +55,9 @@ void MinotaurForest::run() {
             case 2:
                 this->spawn(5, Mob::MINOTAUR); break;
             case 3:
-                this->spawn(5, Mob::MINOTAUR2); break;
+                this->spawn(20, Mob::MINOTAUR2); break;
             case 4:
-                this->spawn(5, Mob::MINOTAUR3); break;
+                this->spawn(50, Mob::MINOTAUR3); break;
             case 5:
             default: std::cout << "[Level] Something's wrong in run() from " << this->getTitle() << "\n";
         }

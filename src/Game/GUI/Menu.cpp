@@ -6,7 +6,7 @@ void Menu::initDirectDamageSection(std::map<std::string, sf::Texture>& textures,
 
     // Upgrade Direct Damage Button
     this->upgrade_direct_damage_button.setPosition(this->slots.at(4).x, this->slots.at(4).y);
-    this->upgrade_direct_damage_button.setSize(139, 139);
+    this->upgrade_direct_damage_button.setSize(75, 75);
 
     // Upgrade Direct Damage Text
     this->direct_damage_text.setFont(fonts["Langar"]);
@@ -55,11 +55,11 @@ Menu::Menu(std::map<std::string, sf::Texture>& textures,
 
     // Init Slots
         // Top Slot Size 139 x 100
-        // Slot0 (+19, +11)   | Slot1 (+158, +11)  | Slot3 (+298, +11)  | Slot4 (+437, +11)
+        // Slot0 (+19, +11)   | Slot1 (+158, +11)  | Slot2 (+298, +11)  | Slot3 (+437, +11)
 
         // Slot Size 278 x 100
-        // Slot5 (+19, +116)  | Slot6 (+298, +116)
-        // Slot7 (+19, +221)  | Slot8 (+298, +221)
+        // Slot4 (+19, +116)  | Slot5 (+298, +116)
+        // Slot6 (+19, +221)  | Slot7 (+298, +221)
 
     this->slots.emplace_back(this->window.getPosition().x + 19, this->window.getPosition().y + 11);
     this->slots.emplace_back(this->window.getPosition().x + 158, this->window.getPosition().y + 11);
@@ -124,8 +124,8 @@ void Menu::updateSlots() {
 
     // ----> Direct Damage Section <----
     this->direct_damage_button.setPosition(this->slots.at(0).x, this->slots.at(0).y);
-    this->upgrade_direct_damage_button.setPosition(this->slots.at(4).x, this->slots.at(4).y);
-    this->direct_damage_text.setPosition(this->slots.at(4).x + 139.f, this->slots.at(4).y);
+    this->upgrade_direct_damage_button.setPosition(this->slots.at(4).x + 30.f, this->slots.at(4).y + 30.f);
+    this->direct_damage_text.setPosition(this->slots.at(4).x + 139.f, this->slots.at(4).y + 45.f);
 
     // ----> Idle Damage Section <----
     this->idle_damage_button.setPosition(this->slots.at(1).x, this->slots.at(1).y);
