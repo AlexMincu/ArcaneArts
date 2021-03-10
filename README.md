@@ -1,7 +1,7 @@
 # ArcaneArts
 
 # Description
-  This is my project for OOP in C++ course. It's a simple idle/ clicker game made in C++ using the SFML library. I implemented everything from scratch, starting with the game engine. The game is working with the concept of delta timing that is used to update every frame. This engine contains things like buttons, progress bars, pop-up text, pop-up menu, sliding menu. It uses the mouse but it can also have keyboard binds. Lost of focus is also implemented. The game is based on Levels that are switched with the help of progression (currently there is only one level implemented) and enemies that can be attacked. The enemies are animated including an idle animation, hurting animation and dying animation (there are only 3 characters implementemented so far).
+  This is my project for OOP in C++ course. It's a simple idle/ clicker game made in C++ using the SFML library. I implemented everything from scratch, starting with the game engine. The game is working with the concept of delta timing that is used to update every frame. This engine contains things like buttons, progress bars, pop-up text, pop-up menu, sliding menu. It uses the mouse and/or touchscreen, but it can also have keyboard binds. This way the game can be ported to a smartphone or a tablet into the near future. Focus loss is also implemented. The game is based on Levels that are switched with the help of progression (currently there is only one level implemented) and enemies that can be attacked. The enemies are animated including an idle animation, hurting animation and dying animation (there are only 3 characters implementemented so far).
 
 # Req:
   - SFML 2.5.1 [download](https://www.sfml-dev.org/download/sfml/2.5.1/)
